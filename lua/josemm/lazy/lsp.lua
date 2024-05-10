@@ -55,6 +55,7 @@ return {
 					"jsonls",
 					"cssls",
 					"zls",
+					"somesass_ls",
 				},
 				handlers = {
 					function(server_name)

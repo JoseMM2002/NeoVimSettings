@@ -9,6 +9,8 @@ function setFormatters()
 			"html",
 			"css",
 			"json",
+			"scss",
+			"sass",
 		},
 		stylua = {
 			"lua",
