@@ -19,7 +19,6 @@ return {
 				"go",
 				"cpp",
 				"scss",
-				"sass",
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
