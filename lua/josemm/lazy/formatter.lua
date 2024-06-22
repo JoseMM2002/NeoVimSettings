@@ -9,8 +9,6 @@ function setFormatters()
 			"html",
 			"css",
 			"json",
-			"scss",
-			"sass",
 		},
 		stylua = {
 			"lua",
@@ -18,9 +16,6 @@ function setFormatters()
 	}
 
 	local formatedConfig = {
-		["*"] = {
-			require("formatter.filetypes.any").remove_trailing_whitespace,
-		},
 	}
 
 	for formatter, filetypes in pairs(formatters) do
