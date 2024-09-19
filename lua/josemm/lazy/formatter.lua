@@ -13,10 +13,12 @@ function setFormatters()
 		stylua = {
 			"lua",
 		},
+		taplo = {
+			"toml",
+		},
 	}
 
-	local formatedConfig = {
-	}
+	local formatedConfig = {}
 
 	for formatter, filetypes in pairs(formatters) do
 		for _, filetype in ipairs(filetypes) do

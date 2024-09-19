@@ -33,6 +33,7 @@ return {
 					["java"] = { "jdtls" },
 					["gradle"] = { "gradle_ls" },
 					["prismals"] = { "prisma" },
+					["sqlls"] = { "sql" },
 				},
 			})
 
@@ -63,6 +64,7 @@ return {
 					"jdtls",
 					"gradle_ls",
 					"prismals",
+					"sqlls",
 				},
 				handlers = {
 					function(server_name)
