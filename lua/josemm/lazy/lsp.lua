@@ -47,7 +47,7 @@ return {
 			require("mason").setup({})
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"tsserver",
+					"ts_ls",
 					"rust_analyzer",
 					"volar",
 					"gopls",
@@ -73,12 +73,12 @@ return {
 					volar = function()
 						require("lspconfig").volar.setup({})
 					end,
-					tsserver = function()
+					ts_ls = function()
 						local vue_typescript_plugin = require("mason-registry")
 							.get_package("vue-language-server")
 							:get_install_path() .. "/node_modules/@vue/language-server" .. "/node_modules/@vue/typescript-plugin"
 
-						require("lspconfig").tsserver.setup({
+						require("lspconfig").ts_ls.setup({
 							init_options = {
 								plugins = {
 									{
@@ -115,11 +115,11 @@ return {
 
 			cmp.setup({
 				sources = {
-					{ name = "luasnip" },
-					-- { name = "copilot" },
 					{ name = "nvim_lsp" },
-					{ name = "buffer" },
 					{ name = "nvim_lua" },
+					{ name = "luasnip" },
+					{ name = "buffer" },
+					-- { name = "copilot" },
 				},
 				snippet = {
 					expand = function(args)

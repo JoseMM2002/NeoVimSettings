@@ -14,6 +14,10 @@ return {
 				css = true,
 				css_fn = true,
 			},
+			toml = {
+				css = true,
+				css_fn = true,
+			},
 		})
 	end,
 }
