@@ -11,6 +11,8 @@ return {
 					vim.keymap.set(mode, l, r, opts)
 				end
 
+				vim.cmd("Gitsigns toggle_current_line_blame")
+
 				-- Navigation
 				map("n", "]c", function()
 					if vim.wo.diff then
