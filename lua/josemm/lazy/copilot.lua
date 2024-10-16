@@ -1,4 +1,3 @@
 return {
-	"zbirenbaum/copilot.lua",
-	"zbirenbaum/copilot-cmp",
+	"github/copilot.vim",
 }
