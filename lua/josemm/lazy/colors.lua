@@ -35,8 +35,7 @@ return {
 			})
 		end,
 	},
-	-- Lua
-
+	{ "rose-pine/neovim", name = "rose-pine" },
 	{
 		"olivercederborg/poimandres.nvim",
 		lazy = false,
