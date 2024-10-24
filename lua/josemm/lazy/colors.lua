@@ -6,7 +6,7 @@ return {
 				style = "tokyonight-night",
 				transparent = true,
 			})
-			vim.cmd("colorscheme tokyonight-night")
+			-- vim.cmd("colorscheme tokyonight-night")
 		end,
 	},
 	{
@@ -36,6 +36,13 @@ return {
 		end,
 	},
 	{ "rose-pine/neovim", name = "rose-pine" },
+	{
+		"EdenEast/nightfox.nvim",
+
+		config = function()
+			vim.cmd("colorscheme carbonfox")
+		end,
+	},
 	{
 		"olivercederborg/poimandres.nvim",
 		lazy = false,
