@@ -8,3 +8,4 @@ end
 
 -- Asignar el comando al atajo 'Leader' + 't'
 vim.api.nvim_set_keymap("n", "<Leader>t", ":lua open_terminal()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>vv", ":vsplit | b#<CR>", { noremap = true, silent = true })
