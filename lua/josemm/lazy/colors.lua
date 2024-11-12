@@ -25,6 +25,7 @@ return {
 			require("kanagawa").setup({
 				transparent = true,
 			})
+			vim.cmd("colorscheme kanagawa-dragon")
 		end,
 	},
 	{
@@ -40,7 +41,7 @@ return {
 		"EdenEast/nightfox.nvim",
 
 		config = function()
-			vim.cmd("colorscheme carbonfox")
+			-- vim.cmd("colorscheme carbonfox")
 		end,
 	},
 	{
