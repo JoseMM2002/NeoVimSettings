@@ -16,6 +16,9 @@ function setFormatters()
 		taplo = {
 			"toml",
 		},
+		shfmt = {
+			"sh",
+		},
 	}
 
 	local formatedConfig = {}
