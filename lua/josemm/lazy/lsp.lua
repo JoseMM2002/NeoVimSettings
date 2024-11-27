@@ -20,23 +20,6 @@ return {
 				lsp_zero.default_keymaps({ buffer = bufnr })
 			end)
 
-			lsp_zero.format_on_save({
-				format_opts = {
-					async = false,
-					timeout_ms = 10000,
-				},
-				servers = {
-					["rust_analyzer"] = { "rust" },
-					["gopls"] = { "go" },
-					["bashls"] = { "bash" },
-					["zls"] = { "zig" },
-					["java"] = { "jdtls" },
-					["gradle"] = { "gradle_ls" },
-					["prismals"] = { "prisma" },
-					["sqlls"] = { "sql" },
-				},
-			})
-
 			lsp_zero.set_sign_icons({
 				error = "✘",
 				warn = "▲",
