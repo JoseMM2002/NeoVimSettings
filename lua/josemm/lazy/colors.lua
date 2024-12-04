@@ -55,4 +55,23 @@ return {
 			-- vim.cmd("colorscheme poimandres")
 		end,
 	},
+	{
+		"zaldih/themery.nvim",
+		lazy = false,
+		config = function()
+			require("themery").setup({
+				themes = {
+					"gruvbox",
+					"rose-pine",
+					"tokyonight-night",
+					"catppuccino",
+					"kanagawa-dragon",
+					"nightfox",
+					"poimandres",
+				},
+				livePreview = true,
+			})
+			vim.api.nvim_set_keymap("n", "<leader>tc", ":Themery<CR>", { noremap = true, silent = true })
+		end,
+	},
 }
