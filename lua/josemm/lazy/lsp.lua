@@ -27,6 +27,10 @@ return {
 				info = "»",
 			})
 
+			vim.diagnostic.config({
+				virtual_text = false,
+			})
+
 			require("mason").setup({})
 			require("mason-lspconfig").setup({
 				ensure_installed = {
