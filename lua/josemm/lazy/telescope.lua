@@ -1,27 +1,3 @@
-function printTable(t)
-	for key, value in pairs(t) do
-		if type(value) == "table" then
-			print(key .. ":")
-			printTable(value) -- Recursividad para subtablas
-		else
-			print(key, value)
-		end
-	end
-end
-
-function findGitIgnorePatterns()
-	gitIgnorePath = vim.fn.getcwd() .. "/.gitignore"
-	patterns = {}
-	if vim.fn.filereadable(gitIgnorePath) == 1 then
-		for line in io.lines(gitIgnorePath) do
-			if not line:match("^#") and line ~= "" then
-				table.insert(patterns, line)
-			end
-		end
-	end
-	return patterns
-end
-
 return {
 	"nvim-telescope/telescope.nvim",
 
@@ -34,7 +10,6 @@ return {
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
-		local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 		local lga_actions = require("telescope-live-grep-args.actions")
 
 		require("telescope").setup({
@@ -60,80 +35,22 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
-
-		vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
-		vim.keymap.set("n", "<C-p>", builtin.git_files, {})
-
-		vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "Find Word under Cursor" })
-		vim.keymap.set("n", "<leader>pws", function()
-			local word = vim.fn.expand("<cword>")
-			builtin.grep_string({ search = word })
-		end)
-		vim.keymap.set("n", "<leader>pWs", function()
-			local word = vim.fn.expand("<cWORD>")
-			builtin.grep_string({ search = word })
-		end)
-
-		vim.keymap.set("n", "<leader>gc", live_grep_args_shortcuts.grep_word_under_cursor)
-		vim.keymap.set("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
-		vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
-
-		vim.keymap.set("n", "<leader>pg", function()
-			local patterns = findGitIgnorePatterns()
-			builtin.git_files({
+		vim.keymap.set("n", "<leader>fu", ":lua require('telescope').extensions.undo.list()<CR>")
+		vim.keymap.set("n", "<leader>ff", ":lua require('telescope.builtin').find_files({ hidden = true })<CR>")
+		vim.keymap.set("n", "<leader>fb", ":lua require('telescope.builtin').buffers()<CR>")
+		vim.keymap.set("n", "<leader>fr", ":lua require('telescope.builtin').live_grep()<CR>")
+		vim.keymap.set("n", "<leader>fh", ":lua require('telescope.builtin').help_tags()<CR>")
+		vim.keymap.set("n", "<leader>fs", function()
+			require("telescope.builtin").git_status({
 				git_icons = {
-					changed = "M",
-					staged = "S",
-					untracked = "U",
+					changed = "",
+					added = "",
+					renamed = "",
+					unmerged = "",
+					deleted = "",
+					untracked = "",
+					copied = "󰬸",
 				},
-				git_cmd = {
-					"git",
-					"ls-files",
-					"--exclude-standard",
-					"--others",
-					"--ignored",
-					"--exclude-from",
-					".gitignore",
-				},
-				prompt_title = "Git Files",
-				attach_mappings = function(prompt_bufnr, map)
-					local git_files = function()
-						local selection = require("telescope.actions.state").get_selected_entry()
-						require("telescope.actions").close(prompt_bufnr)
-						vim.cmd("e " .. selection.value)
-					end
-
-					map("i", "<C-t>", git_files)
-					map("n", "<C-t>", git_files)
-
-					return true
-				end,
-			})
-		end)
-
-		vim.keymap.set("n", "<leader>pb", function()
-			builtin.buffers({
-				sort_lastused = true,
-				sort_mru = true,
-				attach_mappings = function(prompt_bufnr, map)
-					local edit = function()
-						local selection = require("telescope.actions.state").get_selected_entry()
-						require("telescope.actions").close(prompt_bufnr)
-						vim.cmd("buffer " .. selection.bufnr)
-					end
-
-					map("i", "<C-t>", edit)
-					map("n", "<C-t>", edit)
-
-					return true
-				end,
-			})
-		end)
-
-		vim.keymap.set("n", "<leader>pp", function()
-			builtin.project({
-				search_dirs = { vim.fn.getcwd() },
 			})
 		end)
 
