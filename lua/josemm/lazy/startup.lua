@@ -33,6 +33,7 @@ local getPokemon = function()
 end
 
 local theme = function()
+	local vim_version = vim.version()
 	return {
 		-- every line should be same width without escaped \
 		header = {
@@ -65,6 +66,17 @@ local theme = function()
 			default_color = "",
 			oldfiles_amount = 0,
 		},
+		footer = {
+			title = "Neovim Version",
+			type = "text",
+			content = { "Neovim v" .. vim_version.major .. "." .. vim_version.minor .. "." .. vim_version.patch },
+			align = "center",
+			fold_section = false,
+			margin = 5,
+			highlight = "Number",
+			default_color = "",
+			oldfiles_amount = 0,
+		},
 		options = {
 			mapping_keys = true,
 			cursor_column = 0.5,
@@ -83,7 +95,7 @@ local theme = function()
 			background = "#1f2227",
 			folded_section = "#56b6c2",
 		},
-		parts = { "header", "body" },
+		parts = { "header", "body", "footer" },
 	}
 end
 return {
@@ -97,5 +109,9 @@ return {
 	config = function()
 		local settings = theme()
 		require("startup").setup(settings)
+		vim.api.nvim_set_keymap("n", "<F2>", "<cmd>PokemonTogglePokedex<cr>", {
+			noremap = true,
+			desc = "PokemonTogglePokedex",
+		})
 	end,
 }
