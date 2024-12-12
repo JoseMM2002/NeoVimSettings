@@ -1,6 +1,32 @@
 local getPokemon = function()
 	local pokemon = require("pokemon")
-	local favorite_pokemons = { "0155", "0156", "0157", "0001", "0158", "0004", "0152" }
+	local favorite_pokemons = {
+		"0155", -- Cyndaquil
+		"0156", -- Quilava
+		"0157", -- Typhlosion
+		"0001", -- Bulbasaur
+		"0158", -- Totodile
+		"0004", -- Charmander
+		"0152", -- Chikorita
+		"0246", -- Larvitar
+		"0248", -- Tyranitar
+		"0658", -- Greninja
+		"0909", -- Fuecoco
+		"0392", -- Infernape
+		"0007", -- Squirtle
+		"0483", -- Dialga
+		"0383", -- Groudon
+		"0384", -- Rayquaza
+		"0491", -- Darkrai
+		"0395", -- Empoleon
+		"0389", -- Torterra
+		"0503", -- Samurott
+		"0376", -- Metagross
+		"0784", -- Kommo-o
+		"0445", -- Garchomp
+		"0887", -- Dragapult
+		"0258", -- Mudkip
+	}
 	local random_pokemon = favorite_pokemons[math.random(#favorite_pokemons)]
 	pokemon.setup({ number = random_pokemon, size = "large" })
 	return pokemon.header()
