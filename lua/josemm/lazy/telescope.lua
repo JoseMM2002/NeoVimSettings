@@ -36,7 +36,13 @@ return {
 		})
 
 		vim.keymap.set("n", "<leader>fu", ":lua require('telescope').extensions.undo.list()<CR>")
-		vim.keymap.set("n", "<leader>ff", ":lua require('telescope.builtin').find_files({ hidden = true })<CR>")
+		vim.keymap.set("n", "<leader>ff", function()
+			builtin.find_files({
+				hidden = true,
+				no_ignore = true,
+				no_ignore_parent = true,
+			})
+		end)
 		vim.keymap.set("n", "<leader>fb", ":lua require('telescope.builtin').buffers()<CR>")
 		vim.keymap.set("n", "<leader>fr", ":lua require('telescope.builtin').live_grep()<CR>")
 		vim.keymap.set("n", "<leader>fh", ":lua require('telescope.builtin').help_tags()<CR>")

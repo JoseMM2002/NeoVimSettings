@@ -1,5 +1,6 @@
 local getPokemon = function()
 	local pokemon = require("pokemon")
+	local env_pokemon_size = require("dotenv").get_env_var("POKEMON_SIZE")
 	local favorite_pokemons = {
 		"0155", -- Cyndaquil
 		"0156", -- Quilava
@@ -28,7 +29,7 @@ local getPokemon = function()
 		"0258", -- Mudkip
 	}
 	local random_pokemon = favorite_pokemons[math.random(#favorite_pokemons)]
-	pokemon.setup({ number = random_pokemon, size = "large" })
+	pokemon.setup({ number = random_pokemon, size = env_pokemon_size or "large" })
 	return pokemon.header()
 end
 
@@ -109,7 +110,7 @@ return {
 	config = function()
 		local settings = theme()
 		require("startup").setup(settings)
-		vim.api.nvim_set_keymap("n", "<F2>", "<cmd>PokemonTogglePokedex<cr>", {
+		vim.api.nvim_set_keymap("n", "<F6>", "<cmd>PokemonTogglePokedex<cr>", {
 			noremap = true,
 			desc = "PokemonTogglePokedex",
 		})
