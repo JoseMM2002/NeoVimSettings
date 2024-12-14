@@ -7,6 +7,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		"debugloop/telescope-undo.nvim",
 		"nvim-telescope/telescope-live-grep-args.nvim",
+		"AckslD/nvim-neoclip.lua",
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
@@ -21,7 +22,6 @@ return {
 						preview_height = 0.8,
 					},
 				},
-
 				live_grep_args = {
 					auto_quoting = true, -- enable/disable auto-quoting
 					-- define mappings, e.g.
@@ -35,17 +35,32 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<leader>fu", ":lua require('telescope').extensions.undo.list()<CR>")
+		require("neoclip").setup({})
+
+		vim.keymap.set("n", "<leader>fu", function()
+			require("telescope").extensions.undo.list()
+		end)
+
 		vim.keymap.set("n", "<leader>ff", function()
 			builtin.find_files({
 				hidden = true,
-				no_ignore = true,
-				no_ignore_parent = true,
 			})
 		end)
-		vim.keymap.set("n", "<leader>fb", ":lua require('telescope.builtin').buffers()<CR>")
-		vim.keymap.set("n", "<leader>fr", ":lua require('telescope.builtin').live_grep()<CR>")
-		vim.keymap.set("n", "<leader>fh", ":lua require('telescope.builtin').help_tags()<CR>")
+
+		vim.keymap.set("n", "<leader>fb", function()
+			require("telescope.builtin").buffers({})
+		end)
+
+		vim.keymap.set("n", "<leader>fr", function()
+			require("telescope.builtin").live_grep({
+				search = vim.fn.input("Search for: "),
+			})
+		end)
+
+		vim.keymap.set("n", "<leader>fh", function()
+			builtin.help_tags({})
+		end)
+
 		vim.keymap.set("n", "<leader>fs", function()
 			require("telescope.builtin").git_status({
 				git_icons = {
@@ -58,6 +73,10 @@ return {
 					copied = "󰬸",
 				},
 			})
+		end)
+
+		vim.keymap.set("n", "<leader>fn", function()
+			require("telescope").extensions.neoclip.default()
 		end)
 
 		require("telescope").load_extension("neoclip")
