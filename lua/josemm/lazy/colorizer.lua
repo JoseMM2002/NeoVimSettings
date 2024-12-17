@@ -18,6 +18,14 @@ return {
 				css = true,
 				css_fn = true,
 			},
+			json = {
+				css = true,
+				css_fn = true,
+			},
+			sh = {
+				css = true,
+				css_fn = true,
+			},
 		})
 	end,
 }

@@ -25,7 +25,7 @@ return {
 			require("kanagawa").setup({
 				transparent = true,
 			})
-			vim.cmd("colorscheme kanagawa-dragon")
+			-- vim.cmd("colorscheme kanagawa-dragon")
 		end,
 	},
 	{
@@ -64,6 +64,12 @@ return {
 				livePreview = true,
 			})
 			vim.api.nvim_set_keymap("n", "<leader>tc", ":Themery<CR>", { noremap = true, silent = true })
+		end,
+	},
+	{
+		"JoseMM2002/walltheme.nvim",
+		config = function()
+			require("walltheme").setup()
 		end,
 	},
 }
