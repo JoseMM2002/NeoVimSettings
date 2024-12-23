@@ -11,6 +11,23 @@ return {
 	{ "rafamadriz/friendly-snippets" },
 	{ "saadparwaiz1/cmp_luasnip" },
 	{
+		"philosofonusus/ecolog.nvim",
+		opts = {
+			integrations = {
+				nvim_cmp = true,
+			},
+			shelter = {
+				configuration = {
+					mask_char = "*",
+				},
+				modules = {
+					cmp = true,
+				},
+			},
+			path = vim.fn.getcwd(),
+		},
+	},
+	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
 		config = function()
@@ -99,6 +116,7 @@ return {
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lua" },
+					{ name = "ecolog" },
 					{ name = "luasnip" },
 					{ name = "buffer" },
 				},
