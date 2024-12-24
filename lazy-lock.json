@@ -7,7 +7,7 @@
   "conform.nvim": { "branch": "master", "commit": "339b3e4519ec49312d34fcfa275aa15bfaa67025" },
   "copilot.vim": { "branch": "release", "commit": "87038123804796ca7af20d1b71c3428d858a9124" },
   "dotenv.nvim": { "branch": "main", "commit": "00dea2e558cd3de6d305832281537c9ca291e767" },
-  "ecolog.nvim": { "branch": "main", "commit": "b1318b6b017ea2d211206fc666d3b051dece4e6a" },
+  "ecolog.nvim": { "branch": "fix/rust-providers", "commit": "4782822c1f89ea96f7885a1bd0c4767b7e63bb45" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
   "gh.nvim": { "branch": "main", "commit": "ebbaac254ef7dd6f85b439825fbce82d0dc84515" },
   "git-conflict.nvim": { "branch": "main", "commit": "4dc906855751096aaeba2edde7c2cdc7bb881c98" },

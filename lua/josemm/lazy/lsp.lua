@@ -11,7 +11,8 @@ return {
 	{ "rafamadriz/friendly-snippets" },
 	{ "saadparwaiz1/cmp_luasnip" },
 	{
-		"philosofonusus/ecolog.nvim",
+		"JoseMM2002/ecolog.nvim",
+		branch = "fix/rust-providers",
 		opts = {
 			integrations = {
 				nvim_cmp = true,
