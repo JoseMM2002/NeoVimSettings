@@ -47,6 +47,7 @@ return {
 			vim.diagnostic.config({
 				virtual_text = false,
 			})
+			require("lspconfig").nushell.setup({})
 
 			require("mason").setup({})
 			require("mason-lspconfig").setup({
