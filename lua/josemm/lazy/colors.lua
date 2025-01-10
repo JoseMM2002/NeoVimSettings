@@ -72,4 +72,8 @@ return {
 			require("walltheme").setup()
 		end,
 	},
+	{
+		"xiyaowong/transparent.nvim",
+		config = function() end,
+	},
 }
