@@ -71,6 +71,7 @@ return {
 				toml = { "taplo" },
 				sh = { "shfmt" },
 				sql = { "sql_formatter" },
+				yaml = { "yamlfmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
