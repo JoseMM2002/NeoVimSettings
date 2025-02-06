@@ -28,6 +28,13 @@ return {
 		},
 	},
 	{
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require("inc_rename").setup()
+			vim.keymap.set("n", "<leader>rn", ":IncRename ")
+		end,
+	},
+	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
 		config = function()
