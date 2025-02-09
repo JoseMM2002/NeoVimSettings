@@ -53,6 +53,10 @@ return {
 						normal = "cd",
 						full_diff = true,
 					},
+					submit_prompt = {
+						normal = "<CR>",
+						insert = "<CR>",
+					},
 				},
 				prompts = prompts,
 				system_prompt = "Hola soy Jose, soy un desarrollador de software mid, mi trabajo principal es desarrollar aplicaciones web en Vue y React en el frontend, en el backend soy experto en Express y me gusta Actix en el lenguaje Rust, afuera de mi trabajo principal me gusta hacer proyectos en Rust y Zig, a veces uso Go y me gusta aprender nuevos paradigmas de programacion y tambien nuevos lenguajes",
