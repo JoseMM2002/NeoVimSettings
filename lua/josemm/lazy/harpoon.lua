@@ -1,32 +1,35 @@
 return {
-	"ThePrimeagen/harpoon",
-	requires = { "nvim-lua/plenary.nvim" },
+	"JoseMM2002/harpoon",
+	branch = "harpoon2-window-position",
+	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
 		local harpoon = require("harpoon")
+		harpoon:setup()
 
-		vim.keymap.set(
-			"n",
-			"<Leader>h",
-			"<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>",
-			{ noremap = true, silent = true }
-		)
-		vim.keymap.set(
-			"n",
-			"<Leader>ha",
-			"<cmd>lua require('harpoon.mark').add_file()<CR>",
-			{ noremap = true, silent = true }
-		)
-		vim.keymap.set(
-			"n",
-			"<Leader>he",
-			"<cmd>lua require('harpoon.ui').nav_next()<CR>",
-			{ noremap = true, silent = true }
-		)
-		vim.keymap.set(
-			"n",
-			"<Leader>hq",
-			"<cmd>lua require('harpoon.ui').nav_prev()<CR>",
-			{ noremap = true, silent = true }
-		)
+		vim.keymap.set("n", "<leader>ha", function()
+			harpoon:list():add()
+		end)
+		vim.keymap.set("n", "<leader>hh", function()
+			harpoon.ui:_create_window(harpoon:list(), {
+				window_position = {
+					row = function()
+						return 0
+					end,
+					col = function(width)
+						return vim.o.columns - width
+					end,
+				},
+			})
+		end)
+
+		vim.keymap.set("n", "<leader>hq", function()
+			harpoon:list():prev()
+		end)
+		vim.keymap.set("n", "<leader>he", function()
+			harpoon:list():next()
+		end)
+
+		local harpoon_extensions = require("harpoon.extensions")
+		harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
 	end,
 }
