@@ -10,7 +10,7 @@ return {
 			harpoon:list():add()
 		end)
 		vim.keymap.set("n", "<leader>hh", function()
-			harpoon.ui:_create_window(harpoon:list(), {
+			harpoon.ui:toggle_quick_menu(harpoon:list(), {
 				window_position = {
 					row = function()
 						return 0
