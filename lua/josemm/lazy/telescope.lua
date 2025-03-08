@@ -79,6 +79,18 @@ return {
 			require("telescope").extensions.neoclip.default()
 		end)
 
+		vim.keymap.set("n", "fr", function()
+			require("telescope.builtin").lsp_references()
+		end, { noremap = true, silent = true })
+
+		vim.keymap.set("n", "fd", function()
+			require("telescope.builtin").lsp_definitions()
+		end, { noremap = true, silent = true })
+
+		vim.keymap.set("n", "fc", function()
+			require("telescope.builtin").get_cursor()
+		end, { noremap = true, silent = true })
+
 		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")
 		require("telescope").load_extension("live_grep_args")
