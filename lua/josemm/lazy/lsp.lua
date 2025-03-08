@@ -76,7 +76,6 @@ return {
 					"html",
 					"tailwindcss",
 					"bashls",
-					"eslint",
 					"lua_ls",
 					"jsonls",
 					"cssls",
