@@ -91,6 +91,10 @@ return {
 			require("telescope.builtin").get_cursor()
 		end, { noremap = true, silent = true })
 
+		vim.keymap.set("n", "fs", function()
+			require("telescope.builtin").lsp_document_symbols()
+		end, { noremap = true, silent = true })
+
 		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")
 		require("telescope").load_extension("live_grep_args")
