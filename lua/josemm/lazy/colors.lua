@@ -69,7 +69,7 @@ return {
 	{
 		"JoseMM2002/walltheme.nvim",
 		config = function()
-			require("walltheme").setup()
+			-- require("walltheme").setup()
 		end,
 	},
 	{

@@ -61,5 +61,6 @@
   "vim-fugitive": { "branch": "master", "commit": "4a745ea72fa93bb15dd077109afbb3d1809383f2" },
   "vim-oscyank": { "branch": "main", "commit": "f0bd4d492503c6615c0804deda8416f7b735f7ed" },
   "vim-vue": { "branch": "master", "commit": "6ae8fa751fbe4c6605961d2309f8326873fa40a6" },
+  "walltheme.nvim": { "branch": "main", "commit": "5ba4a05afbc73bd15b1b86a64cd905ebb315b099" },
   "yazi.nvim": { "branch": "main", "commit": "aae26f6794c2afe2054a0782fb0ff07b2cd2876c" }
 }
