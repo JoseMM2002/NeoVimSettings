@@ -255,6 +255,7 @@ return {
 					"gradle_ls",
 					"prismals",
 					"sqlls",
+					"clangd",
 				},
 				handlers = {
 					function(server_name)
