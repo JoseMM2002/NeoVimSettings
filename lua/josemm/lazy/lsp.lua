@@ -1,3 +1,6 @@
+local kind_icons = {
+	Avante = "",
+}
 return {
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
@@ -106,6 +109,9 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "*",
+		dependencies = {
+			"Kaiser-Yang/blink-cmp-avante",
+		},
 		opts = {
 			keymap = {
 				preset = "default",
@@ -127,7 +133,7 @@ return {
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 			},
 			sources = {
-				default = { "ecolog", "lsp", "path", "snippets", "buffer" },
+				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer" },
 				providers = {
 					ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
 					buffer = {
@@ -140,6 +146,10 @@ return {
 							end,
 						},
 					},
+					avante = {
+						module = "blink-cmp-avante",
+						name = "Avante",
+					},
 				},
 			},
 			completion = {
@@ -151,10 +161,8 @@ return {
 								ellipsis = false,
 								text = function(ctx)
 									local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-									return kind_icon
+									return kind_icons[ctx.kind] or kind_icon
 								end,
-								-- Optionally, you may also use the highlights from mini.icons
-								--
 								highlight = function(ctx)
 									local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
 									return hl

@@ -6,6 +6,6 @@ return {
 	---@module 'render-markdown'
 	---@type render.md.UserConfig
 	opts = {
-		file_types = { "markdown", "copilot-chat" },
+		file_types = { "Avante", "markdown", "copilot-chat" },
 	},
 }
