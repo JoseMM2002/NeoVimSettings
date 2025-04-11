@@ -1,13 +1,15 @@
 return {
 	"nvim-telescope/telescope.nvim",
-
 	tag = "0.1.5",
-
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"debugloop/telescope-undo.nvim",
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"AckslD/nvim-neoclip.lua",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+		},
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
@@ -32,6 +34,10 @@ return {
 						},
 					},
 				},
+				fzy_native = {
+					override_generic_sorter = false,
+					override_file_sorter = true,
+				},
 			},
 		})
 
@@ -42,9 +48,7 @@ return {
 		end)
 
 		vim.keymap.set("n", "<leader>ff", function()
-			builtin.find_files({
-				hidden = true,
-			})
+			builtin.find_files({ hidden = true })
 		end)
 
 		vim.keymap.set("n", "<leader>fb", function()
@@ -98,5 +102,6 @@ return {
 		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")
 		require("telescope").load_extension("live_grep_args")
+		require("telescope").load_extension("fzf")
 	end,
 }
