@@ -1,14 +1,54 @@
 return {
 	{
-		"github/copilot.vim",
+
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
 		config = function()
-			vim.keymap.set("i", "<C-L>", "<Plug>(copilot-accept-word)")
-			vim.keymap.set("i", "<C-K>", "<Plug>(copilot-accept-line)")
-			vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
-				expr = true,
-				replace_keycodes = false,
+			require("copilot").setup({
+				panel = {
+					enabled = true,
+					auto_refresh = false,
+					keymap = {
+						jump_prev = "[[",
+						jump_next = "]]",
+						accept = "<CR>",
+						refresh = "gr",
+						open = "<M-CR>",
+					},
+					layout = {
+						position = "bottom", -- | top | left | right | horizontal | vertical
+						ratio = 0.4,
+					},
+				},
+				suggestion = {
+					enabled = true,
+					auto_trigger = false,
+					hide_during_completion = true,
+					debounce = 75,
+					trigger_on_accept = true,
+					keymap = {
+						accept = "<M-l>",
+						accept_word = false,
+						accept_line = false,
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+				filetypes = {
+					yaml = false,
+					markdown = false,
+					help = false,
+					gitcommit = false,
+					gitrebase = false,
+					hgcommit = false,
+					svn = false,
+					cvs = false,
+					["."] = false,
+				},
+				copilot_model = "claude-3.7-sonnet", -- Current LSP default is gpt-35-turbo, supports gpt-4o-copilot
 			})
-			vim.g.copilot_no_tab_map = true
 		end,
 	},
 	{
