@@ -4,7 +4,6 @@ return {
 		config = function()
 			require("tokyonight").setup({
 				style = "tokyonight-night",
-				transparent = true,
 			})
 			-- vim.cmd("colorscheme tokyonight-night")
 		end,
@@ -14,7 +13,6 @@ return {
 		config = function()
 			require("catppuccin").setup({
 				flavour = "latte",
-				transparent_background = true,
 			})
 			--[[ vim.cmd("colorscheme catppuccin") ]]
 		end,
@@ -22,24 +20,19 @@ return {
 	{
 		"rebelot/kanagawa.nvim",
 		config = function()
-			require("kanagawa").setup({
-				transparent = true,
-			})
+			require("kanagawa").setup({})
 			-- vim.cmd("colorscheme kanagawa-dragon")
 		end,
 	},
 	{
 		"ellisonleao/gruvbox.nvim",
 		config = function()
-			require("gruvbox").setup({
-				transparent_mode = true,
-			})
+			require("gruvbox").setup({})
 		end,
 	},
 	{ "rose-pine/neovim", name = "rose-pine" },
 	{
 		"EdenEast/nightfox.nvim",
-
 		config = function()
 			-- vim.cmd("colorscheme carbonfox")
 		end,
