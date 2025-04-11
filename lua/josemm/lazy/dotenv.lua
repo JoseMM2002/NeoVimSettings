@@ -1,7 +1,3 @@
-function testEnv()
-	local env_vars = require("dotenv").get_env_vars()
-	vim.notify(vim.inspect(env_vars))
-end
 return {
 	"JoseMM2002/dotenv.nvim",
 	priority = 1000,

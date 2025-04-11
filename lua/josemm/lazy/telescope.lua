@@ -56,9 +56,7 @@ return {
 		end)
 
 		vim.keymap.set("n", "<leader>fr", function()
-			require("telescope.builtin").live_grep({
-				search = vim.fn.input("Search for: "),
-			})
+			require("telescope.builtin").live_grep({})
 		end)
 
 		vim.keymap.set("n", "<leader>fh", function()
