@@ -123,7 +123,7 @@ return {
 		},
 		opts = {
 			keymap = {
-				preset = "default",
+				preset = "none",
 				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 				["<C-e>"] = { "hide", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
@@ -140,6 +140,22 @@ return {
 				["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+			},
+			cmdline = {
+				keymap = {
+					preset = "none",
+					["<Tab>"] = { "show", "accept" },
+					["<S-Tab>"] = { "show_and_insert", "select_prev" },
+					["<C-space>"] = { "show", "fallback" },
+					["<C-n>"] = { "select_next", "fallback" },
+					["<C-p>"] = { "select_prev", "fallback" },
+					["<Right>"] = { "select_next", "fallback" },
+					["<Left>"] = { "select_prev", "fallback" },
+					["<C-y>"] = { "select_and_accept" },
+					["<C-e>"] = { "cancel" },
+					["<CR>"] = { "accept_and_enter", "fallback" },
+				},
+				completion = { menu = { auto_show = true }, ghost_text = { enabled = false } },
 			},
 			sources = {
 				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer" },
