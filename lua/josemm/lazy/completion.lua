@@ -144,7 +144,7 @@ return {
 			cmdline = {
 				keymap = {
 					preset = "none",
-					["<Tab>"] = { "show", "accept" },
+					["<Tab>"] = { "show", "select_next" },
 					["<S-Tab>"] = { "show_and_insert", "select_prev" },
 					["<C-space>"] = { "show", "fallback" },
 					["<C-n>"] = { "select_next", "fallback" },
