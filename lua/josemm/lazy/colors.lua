@@ -61,8 +61,9 @@ return {
 	},
 	{
 		"JoseMM2002/walltheme.nvim",
+		enabled = false,
 		config = function()
-			-- require("walltheme").setup()
+			require("walltheme").setup()
 		end,
 	},
 	{
