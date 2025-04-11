@@ -76,4 +76,7 @@ return {
 		"xiyaowong/transparent.nvim",
 		config = function() end,
 	},
+	{
+		"AlexvZyl/nordic.nvim",
+	},
 }
