@@ -91,7 +91,7 @@ return {
 			})
 		end)
 
-		vim.keymap.set("n", "<leader>fs", function()
+		vim.keymap.set("n", "<leader>fls", function()
 			require("telescope.builtin").lsp_document_symbols()
 		end, { noremap = true, silent = true })
 
