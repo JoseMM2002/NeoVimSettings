@@ -23,6 +23,12 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
+
+			vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { desc = "Code actions" })
+			vim.keymap.set("n", "<F2>", function()
+				vim.lsp.buf.rename()
+			end, { desc = "Rename symbol" })
+
 			vim.diagnostic.config({
 				signs = {
 					text = {
