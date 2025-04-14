@@ -73,4 +73,10 @@ return {
 	{
 		"AlexvZyl/nordic.nvim",
 	},
+	{
+		"RomanAverin/charleston.nvim",
+		opts = {
+			darken_background = true,
+		},
+	},
 }
