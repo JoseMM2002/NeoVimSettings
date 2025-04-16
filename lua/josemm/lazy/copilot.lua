@@ -13,7 +13,7 @@ return {
 					keymap = {
 						accept = "<C-J>",
 						accept_word = "<C-K>",
-						accept_line = "<C-L>",
+						accept_line = false,
 						next = "<M-]>",
 						prev = "<M-[>",
 						dismiss = "<C-]>",
@@ -27,7 +27,6 @@ return {
 					vim.b.copilot_suggestion_hidden = true
 				end,
 			})
-
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "BlinkCmpMenuClose",
 				callback = function()
