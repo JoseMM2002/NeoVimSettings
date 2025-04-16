@@ -1,27 +1,47 @@
+local formatters = {
+	prettier = {
+		"javascript",
+		"typescript",
+		"vue",
+		"javascriptreact",
+		"typescriptreact",
+		"html",
+		"css",
+		"json",
+		"jsonc",
+		"scss",
+		"markdown",
+		"sass",
+		"yaml",
+	},
+	stylua = {
+		"lua",
+	},
+	taplo = {
+		"toml",
+	},
+	shfmt = {
+		"sh",
+	},
+	sql_formatter = {
+		"sql",
+	},
+}
+
 return {
 	"stevearc/conform.nvim",
 	config = function()
 		local conform = require("conform")
 		conform.setup({
-			formatters_by_ft = {
-				javascript = { "prettierd" },
-				typescript = { "prettierd" },
-				vue = { "prettierd" },
-				javascriptreact = { "prettierd" },
-				typescriptreact = { "prettierd" },
-				html = { "prettierd" },
-				css = { "prettierd" },
-				json = { "prettierd" },
-				jsonc = { "prettierd" },
-				scss = { "prettierd" },
-				markdown = { "prettierd" },
-				sass = { "prettier" },
-				lua = { "stylua" },
-				toml = { "taplo" },
-				sh = { "shfmt" },
-				sql = { "sql_formatter" },
-				yaml = { "yamlfmt" },
-			},
+			formatters_by_ft = (function()
+				local result = {}
+				for formatter, filetypes in pairs(formatters) do
+					for _, filetype in ipairs(filetypes) do
+						result[filetype] = { formatter }
+					end
+				end
+				return result
+			end)(),
 			format_on_save = {
 				lsp_fallback = true,
 				async = false,
