@@ -1,21 +1,39 @@
 return {
 	{
-		"github/copilot.vim",
+		"zbirenbaum/copilot.lua",
 		config = function()
-			vim.keymap.set("n", "<Leader>ct", function()
-				vim.g.copilot_enabled = not vim.g.copilot_enabled
-				vim.notify(
-					"Copilot " .. (vim.g.copilot_enabled and "enabled" or "disabled"),
-					"info",
-					{ title = "Copilot" }
-				)
-			end)
-			vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
-				expr = true,
-				replace_keycodes = false,
+			require("copilot").setup({
+				panel = { enabled = false },
+				suggestion = {
+					enabled = true,
+					auto_trigger = false,
+					hide_during_completion = true,
+					debounce = 75,
+					trigger_on_accept = true,
+					keymap = {
+						accept = "<C-J>",
+						accept_word = "<C-K>",
+						accept_line = "<C-L>",
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+				copilot_model = "gemini-2.5-pro",
 			})
-			vim.g.copilot_no_tab_map = true
-			vim.g.copilot_enabled = false
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "BlinkCmpMenuOpen",
+				callback = function()
+					vim.b.copilot_suggestion_hidden = true
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "BlinkCmpMenuClose",
+				callback = function()
+					vim.b.copilot_suggestion_hidden = false
+				end,
+			})
 		end,
 	},
 	{
@@ -27,7 +45,7 @@ return {
 			-- for example
 			provider = "copilot",
 			copilot = {
-				model = "claude-3.7-sonnet", -- o1-preview | o1-mini | claude-3.5-sonnet
+				model = "gemini-2.5-pro", -- o1-preview | o1-mini | claude-3.5-sonnet
 			},
 			windows = {
 				---@type "right" | "left" | "top" | "bottom"
