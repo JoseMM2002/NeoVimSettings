@@ -1,6 +1,29 @@
 local kind_icons = {
-	Avante = "",
+	Avante = "󰭹",
+	Copilot = "",
+	Function = "󰊕",
+	Enum = "󰕲",
 }
+
+local function has_value(tab, val)
+	for _, value in ipairs(tab) do
+		if value == val then
+			return true
+		end
+	end
+	return false
+end
+
+local get_providers = function()
+	local providers = { "avante", "ecolog", "lsp", "path", "snippets", "buffer" }
+	local home = vim.fn.expand("~")
+	local target_dirs = { home .. "/.config/nvim", home .. "/.config/kitty" }
+	if has_value(target_dirs, vim.fn.getcwd()) then
+		table.insert(providers, "nerdfont")
+	end
+	return providers
+end
+
 return {
 	{
 		"philosofonusus/ecolog.nvim",
@@ -120,6 +143,7 @@ return {
 		version = "*",
 		dependencies = {
 			"Kaiser-Yang/blink-cmp-avante",
+			"MahanRahmati/blink-nerdfont.nvim",
 		},
 		opts = {
 			keymap = {
@@ -159,7 +183,7 @@ return {
 				completion = { menu = { auto_show = true }, ghost_text = { enabled = false } },
 			},
 			sources = {
-				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer" },
+				default = get_providers(),
 				providers = {
 					ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
 					buffer = {
@@ -184,6 +208,12 @@ return {
 							end
 							return 0
 						end,
+					},
+					nerdfont = {
+						module = "blink-nerdfont",
+						name = "Nerd Fonts",
+						score_offset = 15, -- Tune by preference
+						opts = { insert = true }, -- Insert nerdfont icon (default) or complete its name
 					},
 				},
 			},
