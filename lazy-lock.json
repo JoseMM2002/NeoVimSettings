@@ -16,7 +16,7 @@
   "gitsigns.nvim": { "branch": "main", "commit": "fcfa7a989cd6fed10abf02d9880dc76d7a38167d" },
   "gruvbox.nvim": { "branch": "main", "commit": "a933d8666dad9363dc6908ae72cfc832299c2f59" },
   "harpoon": { "branch": "harpoon2-window-position", "commit": "6bdda48ca6eee94243a0e09e2dd817f1de2fd873" },
-  "hovercraft.nvim": { "branch": "main", "commit": "211d3f75e4e085d3eb4974480727c30e199f4696" },
+  "hovercraft.nvim": { "branch": "main", "commit": "49ce0d3f1a7b832591d8df46339f8999a17bbf37" },
   "img-clip.nvim": { "branch": "main", "commit": "08a02e14c8c0d42fa7a92c30a98fd04d6993b35d" },
   "inc-rename.nvim": { "branch": "main", "commit": "87ebe7bee0b83d3b6e4f1494c74abed21b318175" },
   "kanagawa.nvim": { "branch": "master", "commit": "cc3b68b08e6a0cb6e6bf9944932940091e49bb83" },

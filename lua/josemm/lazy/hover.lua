@@ -44,11 +44,10 @@ return {
 						},
 					},
 				},
-
 				window = {
 					border = "rounded",
+					render_markdown_compat_mode = true,
 				},
-
 				keys = {
 					{
 						"<C-u>",
@@ -83,7 +82,6 @@ return {
 				"K",
 				function()
 					local hovercraft = require("hovercraft")
-
 					if hovercraft.is_visible() then
 						hovercraft.enter_popup()
 					else
