@@ -26,6 +26,9 @@ local formatters = {
 	sql_formatter = {
 		"sql",
 	},
+	gofmt = {
+		"go",
+	},
 }
 
 return {
