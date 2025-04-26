@@ -7,10 +7,73 @@ return {
 		end,
 	},
 	{
+		"rachartier/tiny-code-action.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+		},
+		event = "LspAttach",
+		opts = {
+			--- The backend to use, currently only "vim", "delta" and "difftastic" are supported
+			backend = "vim",
+			-- The picker to use, "telescope", "snacks", "select" are supported
+			-- If you want to use the `fzf-lua` picker, you can simply set it to `select`
+			picker = "telescope",
+			backend_opts = {
+				delta = {
+					-- Header from delta can be quite large.
+					-- You can remove them by setting this to the number of lines to remove
+					header_lines_to_remove = 4,
+
+					-- The arguments to pass to delta
+					-- If you have a custom configuration file, you can set the path to it like so:
+					-- args = {
+					--     "--config" .. os.getenv("HOME") .. "/.config/delta/config.yml",
+					-- }
+					args = {
+						"--line-numbers",
+					},
+				},
+				difftastic = {
+					header_lines_to_remove = 1,
+					args = {
+						"--color=always",
+						"--display=inline",
+						"--syntax-highlight=on",
+					},
+				},
+			},
+			telescope_opts = {
+				layout_strategy = "vertical",
+				layout_config = {
+					width = 0.7,
+					height = 0.9,
+					preview_cutoff = 1,
+					preview_height = function(_, _, max_lines)
+						local h = math.floor(max_lines * 0.5)
+						return math.max(h, 10)
+					end,
+				},
+			},
+			signs = {
+				quickfix = { "󰁨", { link = "DiagnosticInfo" } },
+				others = { "?", { link = "DiagnosticWarning" } },
+				refactor = { "", { link = "DiagnosticWarning" } },
+				["refactor.move"] = { "󰪹", { link = "DiagnosticInfo" } },
+				["refactor.extract"] = { "", { link = "DiagnosticError" } },
+				["source.organizeImports"] = { "", { link = "DiagnosticWarning" } },
+				["source.fixAll"] = { "", { link = "DiagnosticError" } },
+				["source"] = { "", { link = "DiagnosticError" } },
+				["rename"] = { "󰑕", { link = "DiagnosticWarning" } },
+				["codeAction"] = { "", { link = "DiagnosticError" } },
+			},
+		},
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
+			"rachartier/tiny-code-action.nvim",
 		},
 		init_options = {
 			userLanguages = {
@@ -24,7 +87,9 @@ return {
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
 
-			vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { desc = "Code actions" })
+			vim.keymap.set("n", "<F4>", function()
+				require("tiny-code-action").code_action()
+			end, { desc = "Code actions" })
 			vim.keymap.set("n", "<F2>", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
