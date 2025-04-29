@@ -3,7 +3,7 @@ return {
 		"patrickpichler/hovercraft.nvim",
 
 		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-lua/plenary.nvim", "kevinhwang91/nvim-ufo" },
 		},
 		-- this is the default config and can be skipped
 		opts = function()
@@ -81,11 +81,14 @@ return {
 			{
 				"K",
 				function()
-					local hovercraft = require("hovercraft")
-					if hovercraft.is_visible() then
-						hovercraft.enter_popup()
-					else
-						hovercraft.hover()
+					local winid = require("ufo").peekFoldedLinesUnderCursor()
+					if not winid then
+						local hovercraft = require("hovercraft")
+						if hovercraft.is_visible() then
+							hovercraft.enter_popup()
+						else
+							hovercraft.hover()
+						end
 					end
 				end,
 			},

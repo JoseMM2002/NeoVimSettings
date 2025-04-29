@@ -84,6 +84,10 @@ return {
 		},
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			capabilities.textDocument.foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			}
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
 
@@ -211,9 +215,6 @@ return {
 					end,
 				},
 			})
-
-			require("luasnip.loaders.from_vscode").lazy_load()
-			require("luasnip").filetype_extend("vue", { "vue" })
 		end,
 	},
 }
