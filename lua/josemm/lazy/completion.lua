@@ -44,11 +44,6 @@ return {
 	},
 	{
 		"xzbdmw/colorful-menu.nvim",
-		dependencies = {
-			"echasnovski/mini.icons",
-			"philosofonusus/ecolog.nvim",
-			"L3MON4D3/LuaSnip",
-		},
 		config = function()
 			-- You don't need to set these options.
 			require("colorful-menu").setup({
@@ -144,6 +139,10 @@ return {
 		dependencies = {
 			"Kaiser-Yang/blink-cmp-avante",
 			"MahanRahmati/blink-nerdfont.nvim",
+			"echasnovski/mini.icons",
+			"philosofonusus/ecolog.nvim",
+			"rafamadriz/friendly-snippets",
+			"L3MON4D3/LuaSnip",
 		},
 		opts = {
 			keymap = {
@@ -151,34 +150,30 @@ return {
 				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 				["<C-e>"] = { "hide", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
-				["<C-y>"] = { "accept", "fallback" },
-
+				["<C-y>"] = { "accept_and_enter", "fallback" },
 				["<Tab>"] = { "snippet_forward", "fallback" },
 				["<S-Tab>"] = { "snippet_backward", "fallback" },
-
 				["<Up>"] = { "select_prev", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
 				["<C-p>"] = { "select_prev", "fallback_to_mappings" },
 				["<C-n>"] = { "select_next", "fallback_to_mappings" },
-
 				["<C-b>"] = { "scroll_documentation_up", "fallback" },
 				["<C-f>"] = { "scroll_documentation_down", "fallback" },
-
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 			},
 			cmdline = {
 				keymap = {
 					preset = "none",
-					["<Tab>"] = { "show", "select_next" },
+					["<Tab>"] = { "show_and_insert", "select_next" },
 					["<S-Tab>"] = { "show_and_insert", "select_prev" },
 					["<C-space>"] = { "show", "fallback" },
 					["<C-n>"] = { "select_next", "fallback" },
 					["<C-p>"] = { "select_prev", "fallback" },
 					["<Right>"] = { "select_next", "fallback" },
 					["<Left>"] = { "select_prev", "fallback" },
-					["<C-y>"] = { "select_and_accept" },
+					["<C-y>"] = { "accept_and_enter" },
 					["<C-e>"] = { "cancel" },
-					["<CR>"] = { "accept_and_enter", "fallback" },
+					["<CR>"] = { "accept", "fallback" },
 				},
 				completion = { menu = { auto_show = true }, ghost_text = { enabled = false } },
 			},
