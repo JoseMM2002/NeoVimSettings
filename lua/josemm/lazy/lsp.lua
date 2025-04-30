@@ -1,12 +1,5 @@
 return {
 	{
-		"smjonas/inc-rename.nvim",
-		config = function()
-			require("inc_rename").setup()
-			vim.keymap.set("n", "<leader>rn", ":IncRename ")
-		end,
-	},
-	{
 		"rachartier/tiny-code-action.nvim",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
@@ -88,8 +81,12 @@ return {
 				dynamicRegistration = false,
 				lineFoldingOnly = true,
 			}
+			vim.lsp.config("*", {
+				capabilities,
+			})
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
+			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
 
 			vim.keymap.set("n", "<F4>", function()
 				require("tiny-code-action").code_action()
@@ -126,13 +123,12 @@ return {
 					"jdtls",
 					"gradle_ls",
 					"prismals",
-					"sqlls",
 					"clangd",
 					"volar",
 				},
 				handlers = {
 					function(server_name)
-						require("lspconfig")[server_name].setup({ capabilities = capabilities })
+						require("lspconfig")[server_name].setup({ capabilities })
 					end,
 					ts_ls = function()
 						local vue_typescript_plugin = require("mason-registry")
@@ -158,11 +154,12 @@ return {
 								"typescript.tsx",
 								"vue",
 							},
-							capabilities = capabilities,
+							capabilities,
 						})
 					end,
 					jsonls = function()
 						require("lspconfig").jsonls.setup({
+							capabilities,
 							filetypes = { "json", "jsonc" },
 							settings = {
 								json = {
@@ -215,6 +212,14 @@ return {
 					end,
 				},
 			})
+
+			vim.lsp.enable("postgres_lsp")
+			vim.lsp.config["postgres_lsp"] = {
+				cmd = { "postgrestools", "lsp-proxy" },
+				filetypes = { "sql" },
+				root_markers = { "postgrestools.jsonc" },
+				capabilities,
+			}
 		end,
 	},
 }
