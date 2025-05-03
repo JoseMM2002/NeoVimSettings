@@ -6,21 +6,22 @@ return {
 				panel = { enabled = false },
 				suggestion = {
 					enabled = true,
-					auto_trigger = true,
+					auto_trigger = false,
 					hide_during_completion = true,
 					debounce = 75,
 					trigger_on_accept = true,
 					keymap = {
 						accept = "<C-J>",
-						accept_word = "<C-K>",
+						accept_word = "<C-L>",
 						accept_line = false,
-						next = "<M-]>",
-						prev = "<M-[>",
-						dismiss = "<C-]>",
+						next = "<C-]>",
+						prev = "<C-[>",
+						dismiss = "<C-{>",
 					},
 				},
 				copilot_model = "gpt-4.1",
 			})
+
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "BlinkCmpMenuOpen",
 				callback = function()

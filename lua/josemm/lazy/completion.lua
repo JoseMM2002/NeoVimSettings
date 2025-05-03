@@ -5,15 +5,6 @@ local kind_icons = {
 	Enum = "󰕲",
 }
 
-local function has_value(tab, val)
-	for _, value in ipairs(tab) do
-		if value == val then
-			return true
-		end
-	end
-	return false
-end
-
 return {
 	{
 		"philosofonusus/ecolog.nvim",
@@ -132,6 +123,7 @@ return {
 			"philosofonusus/ecolog.nvim",
 			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
+			"kristijanhusak/vim-dadbod-completion",
 		},
 		opts = {
 			keymap = {
@@ -140,7 +132,17 @@ return {
 				["<C-e>"] = { "hide", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
 				["<C-y>"] = { "accept_and_enter", "fallback" },
-				["<Tab>"] = { "snippet_forward", "fallback" },
+				["<Tab>"] = {
+					function(cmp)
+						if cmp.snippet_active() then
+							return cmp.accept()
+						else
+							return cmp.select_and_accept()
+						end
+					end,
+					"snippet_forward",
+					"fallback",
+				},
 				["<S-Tab>"] = { "snippet_backward", "fallback" },
 				["<Up>"] = { "select_prev", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
@@ -151,28 +153,24 @@ return {
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 			},
 			cmdline = {
+				enabled = true,
 				keymap = {
-					preset = "none",
-					["<Tab>"] = { "show_and_insert", "select_next" },
-					["<S-Tab>"] = { "show_and_insert", "select_prev" },
-					["<C-space>"] = { "show", "fallback" },
-					["<C-n>"] = { "select_next", "fallback" },
-					["<C-p>"] = { "select_prev", "fallback" },
-					["<Right>"] = { "select_next", "fallback" },
-					["<Left>"] = { "select_prev", "fallback" },
-					["<C-y>"] = { "accept_and_enter" },
-					["<C-e>"] = { "cancel" },
-					["<CR>"] = { "accept", "fallback" },
+					preset = "cmdline",
 				},
-				completion = { menu = { auto_show = true }, ghost_text = { enabled = false } },
+				completion = {
+					menu = { auto_show = true },
+					ghost_text = { enabled = true },
+				},
 			},
 			sources = {
 				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer" },
+				per_filetype = {
+					sql = { "snippets", "dadbod", "snippets", "buffer" },
+				},
 				providers = {
 					ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
 					buffer = {
 						opts = {
-							-- or (recommended) filter to only "normal" buffers
 							get_bufnrs = function()
 								return vim.tbl_filter(function(bufnr)
 									return vim.bo[bufnr].buftype == ""
@@ -186,13 +184,13 @@ return {
 					},
 					cmdline = {
 						min_keyword_length = function(ctx)
-							-- when typing a command, only show when the keyword is 3 characters or longer
 							if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
 								return 3
 							end
 							return 0
 						end,
 					},
+					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 				},
 			},
 			completion = {
@@ -230,10 +228,13 @@ return {
 				keyword = {
 					range = "full",
 				},
-				list = { selection = { preselect = false } },
+				list = { selection = { preselect = false, auto_insert = true } },
+				trigger = {
+					show_in_snippet = true,
+				},
 			},
 			signature = { window = { border = "rounded" }, enabled = true },
-			fuzzy = { implementation = "prefer_rust_with_warning" },
+			fuzzy = { implementation = "rust" },
 		},
 		opts_extend = { "sources.default" },
 	},

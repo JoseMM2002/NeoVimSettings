@@ -16,6 +16,13 @@ return {
 		local lga_actions = require("telescope-live-grep-args.actions")
 
 		require("telescope").setup({
+			defaults = {
+				mappings = {
+					i = {
+						["<Esc>"] = "close",
+					},
+				},
+			},
 			extensions = {
 				undo = {
 					side_by_side = true,
@@ -95,11 +102,11 @@ return {
 			require("telescope.builtin").lsp_document_symbols()
 		end, { noremap = true, silent = true })
 
-		vim.keymap.set("n", "fr", function()
+		vim.keymap.set("n", "gr", function()
 			require("telescope.builtin").lsp_references()
 		end, { noremap = true, silent = true })
 
-		vim.keymap.set("n", "fd", function()
+		vim.keymap.set("n", "gd", function()
 			require("telescope.builtin").lsp_definitions()
 		end, { noremap = true, silent = true })
 

@@ -212,14 +212,6 @@ return {
 					end,
 				},
 			})
-
-			vim.lsp.enable("postgres_lsp")
-			vim.lsp.config["postgres_lsp"] = {
-				cmd = { "postgrestools", "lsp-proxy" },
-				filetypes = { "sql" },
-				root_markers = { "postgrestools.jsonc" },
-				capabilities,
-			}
 		end,
 	},
 }
