@@ -62,6 +62,12 @@ return {
 				},
 			},
 			fold_virt_text_handler = handler,
+			provider_selector = function(bufnr, filetype, buftype)
+				if filetype == "vue" then
+					return { "treesitter", "indent" }
+				end
+				return { "lsp", "indent" }
+			end,
 		})
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)

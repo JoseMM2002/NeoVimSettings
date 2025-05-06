@@ -52,7 +52,7 @@
   "poimandres.nvim": { "branch": "main", "commit": "a488957d803943a4201ac3b774913fcafa9e6b3a" },
   "pokemon.nvim": { "branch": "main", "commit": "50c618f88f1ee7cbd0e0d8194176b0d47f6f1c40" },
   "promise-async": { "branch": "main", "commit": "119e8961014c9bfaf1487bf3c2a393d254f337e2" },
-  "render-markdown.nvim": { "branch": "main", "commit": "b2d857c848c2c27440c8e5efc8e49a9b5bcf13c6" },
+  "render-markdown.nvim": { "branch": "main", "commit": "3484e3ec3831deacc28a5d1e3307693b8c997c6c" },
   "rose-pine": { "branch": "main", "commit": "614892e32e94378d976a238f287532cfe790c1fe" },
   "sense.nvim": { "branch": "main", "commit": "74e61f251fffc64c4f29160569ccde087316b798" },
   "startup.nvim": { "branch": "master", "commit": "9ca3b9a55f2f2196ef90b39a52029b46fdde5226" },

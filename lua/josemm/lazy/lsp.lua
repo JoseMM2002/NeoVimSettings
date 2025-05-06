@@ -107,7 +107,7 @@ return {
 			})
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"ts_ls",
+					"vtsls",
 					"rust_analyzer",
 					"volar",
 					"gopls",
@@ -130,12 +130,12 @@ return {
 					function(server_name)
 						require("lspconfig")[server_name].setup({ capabilities })
 					end,
-					ts_ls = function()
+					vtsls = function()
 						local vue_typescript_plugin = require("mason-registry")
 							.get_package("vue-language-server")
 							:get_install_path() .. "/node_modules/@vue/language-server" .. "/node_modules/@vue/typescript-plugin"
 
-						require("lspconfig").ts_ls.setup({
+						require("lspconfig").vtsls.setup({
 							init_options = {
 								plugins = {
 									{
@@ -208,6 +208,51 @@ return {
 									},
 								},
 							},
+						})
+					end,
+					lua_ls = function()
+						require("lspconfig").lua_ls.setup({
+							settings = {
+								Lua = {
+									telemetry = {
+										enable = false,
+									},
+								},
+							},
+							on_init = function(client)
+								local join = vim.fs.joinpath
+								local path = client.workspace_folders[1].name
+
+								-- Don't do anything if there is project local config
+								if
+									vim.uv.fs_stat(join(path, ".luarc.json"))
+									or vim.uv.fs_stat(join(path, ".luarc.jsonc"))
+								then
+									return
+								end
+
+								local nvim_settings = {
+									runtime = {
+										-- Tell the language server which version of Lua you're using
+										version = "LuaJIT",
+									},
+									diagnostics = {
+										-- Get the language server to recognize the `vim` global
+										globals = { "vim" },
+									},
+									workspace = {
+										checkThirdParty = false,
+										library = {
+											-- Make the server aware of Neovim runtime files
+											vim.env.VIMRUNTIME,
+											vim.fn.stdpath("config"),
+										},
+									},
+								}
+
+								client.config.settings.Lua =
+									vim.tbl_deep_extend("force", client.config.settings.Lua, nvim_settings)
+							end,
 						})
 					end,
 				},
