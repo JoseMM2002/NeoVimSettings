@@ -61,7 +61,11 @@ local theme = function()
 				{ " Find File", "Telescope find_files", "<leader>ff" },
 				{ "󰍉 Find Word", "Telescope live_grep", "<leader>fr" },
 				{ " Find Buffers", "Telescope buffers", "<leader>fb" },
-				{ " Colorschemes", "Themery", "<leader>tc" },
+				{
+					" Colorschemes",
+					'lua require("telescope.builtin").colorscheme({ enable_preview = true })',
+					"<leader>tc",
+				},
 			},
 			highlight = "String",
 			default_color = "",

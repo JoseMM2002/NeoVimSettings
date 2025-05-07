@@ -49,17 +49,6 @@ return {
 		end,
 	},
 	{
-		"zaldih/themery.nvim",
-		lazy = false,
-		config = function()
-			require("themery").setup({
-				themes = vim.fn.getcompletion("", "color"),
-				livePreview = true,
-			})
-			vim.api.nvim_set_keymap("n", "<leader>tc", ":Themery<CR>", { noremap = true, silent = true })
-		end,
-	},
-	{
 		"JoseMM2002/walltheme.nvim",
 		enabled = false,
 		config = function()
@@ -78,5 +67,11 @@ return {
 		opts = {
 			darken_background = true,
 		},
+	},
+	{
+		"webhooked/kanso.nvim",
+		config = function()
+			vim.cmd("colorscheme kanso-zen")
+		end,
 	},
 }

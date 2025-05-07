@@ -30,6 +30,20 @@ return {
 					layout_config = {
 						preview_height = 0.8,
 					},
+					mappings = {
+						i = {
+							["<cr>"] = require("telescope-undo.actions").yank_additions,
+							["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+							["<C-cr>"] = require("telescope-undo.actions").restore,
+							["<C-y>"] = require("telescope-undo.actions").yank_deletions,
+							["<C-r>"] = require("telescope-undo.actions").restore,
+						},
+						n = {
+							["y"] = require("telescope-undo.actions").yank_additions,
+							["Y"] = require("telescope-undo.actions").yank_deletions,
+							["u"] = require("telescope-undo.actions").restore,
+						},
+					},
 				},
 				live_grep_args = {
 					auto_quoting = true, -- enable/disable auto-quoting
@@ -42,7 +56,7 @@ return {
 					},
 				},
 				fzy_native = {
-					override_generic_sorter = false,
+					override_generic_sorter = true,
 					override_file_sorter = true,
 				},
 			},
@@ -51,7 +65,7 @@ return {
 		require("neoclip").setup({})
 
 		vim.keymap.set("n", "<leader>fu", function()
-			require("telescope").extensions.undo.list()
+			require("telescope").extensions.undo.undo()
 		end)
 
 		vim.keymap.set("n", "<leader>ff", function()
@@ -59,7 +73,7 @@ return {
 		end)
 
 		vim.keymap.set("n", "<leader>fb", function()
-			require("telescope.builtin").buffers({})
+			require("telescope.builtin").buffers({ sort_lastused = true })
 		end)
 
 		vim.keymap.set("n", "<leader>fr", function()
@@ -109,6 +123,10 @@ return {
 		vim.keymap.set("n", "gd", function()
 			require("telescope.builtin").lsp_definitions()
 		end, { noremap = true, silent = true })
+
+		vim.keymap.set("n", "<leader>tc", function()
+			require("telescope.builtin").colorscheme({ enable_preview = true })
+		end)
 
 		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")
