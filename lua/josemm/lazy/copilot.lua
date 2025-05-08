@@ -5,11 +5,11 @@ return {
 			require("copilot").setup({
 				panel = { enabled = false },
 				suggestion = {
-					enabled = true,
+					enabled = false,
 					auto_trigger = false,
 					hide_during_completion = true,
 					debounce = 75,
-					trigger_on_accept = true,
+					trigger_on_accept = false,
 					keymap = {
 						accept = "<C-J>",
 						accept_word = "<C-L>",
@@ -20,6 +20,8 @@ return {
 					},
 				},
 				copilot_model = "gpt-4.1",
+				markdown = true,
+				help = true,
 			})
 
 			vim.api.nvim_create_autocmd("User", {

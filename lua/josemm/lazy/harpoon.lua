@@ -1,6 +1,6 @@
 return {
 	"JoseMM2002/harpoon",
-	enabled = false,
+	enabled = true,
 	branch = "harpoon2-window-position",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()

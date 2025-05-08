@@ -1,8 +1,6 @@
 local kind_icons = {
 	Avante = "󰭹",
 	Copilot = "",
-	Function = "󰊕",
-	Enum = "󰕲",
 }
 
 return {
@@ -119,10 +117,12 @@ return {
 		version = "*",
 		dependencies = {
 			"Kaiser-Yang/blink-cmp-avante",
-			"echasnovski/mini.icons",
+			"onsails/lspkind.nvim",
+			"nvim-tree/nvim-web-devicons",
 			"philosofonusus/ecolog.nvim",
 			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
+			"fang2hou/blink-copilot",
 			"kristijanhusak/vim-dadbod-completion",
 		},
 		opts = {
@@ -174,9 +174,9 @@ return {
 				},
 			},
 			sources = {
-				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer" },
+				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer", "copilot" },
 				per_filetype = {
-					sql = { "snippets", "dadbod", "snippets", "buffer" },
+					sql = { "snippets", "dadbod", "snippets", "buffer", "copilot" },
 				},
 				providers = {
 					ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
@@ -202,6 +202,24 @@ return {
 						end,
 					},
 					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+					copilot = {
+						name = "copilot",
+						module = "blink-copilot",
+						score_offset = 100,
+						async = true,
+						opts = {
+							max_completions = 3,
+							max_attempts = 4,
+							kind_name = "Copilot", ---@type string | false
+							kind_icon = " ", ---@type string | false
+							kind_hl = false, ---@type string | false
+							debounce = 200, ---@type integer | false
+							auto_refresh = {
+								backward = true,
+								forward = true,
+							},
+						},
+					},
 				},
 			},
 			completion = {
@@ -212,11 +230,30 @@ return {
 							kind_icon = {
 								ellipsis = false,
 								text = function(ctx)
-									local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-									return kind_icons[ctx.kind] or kind_icon
+									local lspkind = require("lspkind")
+									local icon = ctx.kind_icon
+									if vim.tbl_contains({ "Path" }, ctx.source_name) then
+										local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+										if dev_icon then
+											icon = dev_icon
+										end
+									else
+										icon = require("lspkind").symbolic(ctx.kind, {
+											mode = "symbol",
+										})
+									end
+									icon = kind_icons[ctx.kind] or icon
+									return icon .. ctx.icon_gap
 								end,
 								highlight = function(ctx)
-									local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+									local hl = "BlinkCmpKind" .. ctx.kind
+										or require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx)
+									if vim.tbl_contains({ "Path" }, ctx.source_name) then
+										local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+										if dev_icon then
+											hl = dev_hl
+										end
+									end
 									return hl
 								end,
 							},

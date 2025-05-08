@@ -10,6 +10,7 @@ return {
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",
 		},
+		{ "nvim-tree/nvim-web-devicons", opts = {} },
 	},
 	config = function()
 		local builtin = require("telescope.builtin")

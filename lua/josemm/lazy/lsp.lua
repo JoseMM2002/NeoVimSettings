@@ -6,22 +6,11 @@ return {
 		},
 		event = "LspAttach",
 		opts = {
-			--- The backend to use, currently only "vim", "delta" and "difftastic" are supported
 			backend = "vim",
-			-- The picker to use, "telescope", "snacks", "select" are supported
-			-- If you want to use the `fzf-lua` picker, you can simply set it to `select`
 			picker = "telescope",
 			backend_opts = {
 				delta = {
-					-- Header from delta can be quite large.
-					-- You can remove them by setting this to the number of lines to remove
 					header_lines_to_remove = 4,
-
-					-- The arguments to pass to delta
-					-- If you have a custom configuration file, you can set the path to it like so:
-					-- args = {
-					--     "--config" .. os.getenv("HOME") .. "/.config/delta/config.yml",
-					-- }
 					args = {
 						"--line-numbers",
 					},
@@ -64,8 +53,8 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
 			"rachartier/tiny-code-action.nvim",
 		},
 		init_options = {
@@ -106,6 +95,7 @@ return {
 				},
 			})
 			require("mason-lspconfig").setup({
+				automatic_enable = true,
 				ensure_installed = {
 					"vtsls",
 					"rust_analyzer",
@@ -125,6 +115,7 @@ return {
 					"prismals",
 					"clangd",
 					"volar",
+					"eslint",
 				},
 				handlers = {
 					function(server_name)
