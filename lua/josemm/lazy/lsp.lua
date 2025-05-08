@@ -115,7 +115,6 @@ return {
 					"prismals",
 					"clangd",
 					"volar",
-					"eslint",
 				},
 				handlers = {
 					function(server_name)
