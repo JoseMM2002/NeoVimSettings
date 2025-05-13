@@ -271,7 +271,7 @@ return {
 						nil,
 					},
 				},
-				documentation = { auto_show = true, auto_show_delay_ms = 200 },
+				documentation = { auto_show = true, auto_show_delay_ms = 200, window = { border = "rounded" } },
 				ghost_text = { enabled = true },
 				keyword = {
 					range = "full",
