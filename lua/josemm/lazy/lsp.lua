@@ -56,6 +56,7 @@ return {
 			"mason-org/mason.nvim",
 			"mason-org/mason-lspconfig.nvim",
 			"rachartier/tiny-code-action.nvim",
+			"saghen/blink.cmp",
 		},
 		init_options = {
 			userLanguages = {
@@ -65,21 +66,20 @@ return {
 			},
 		},
 		config = function()
-			local capabilities = require("blink.cmp").get_lsp_capabilities()
-			capabilities.textDocument.foldingRange = {
-				dynamicRegistration = false,
-				lineFoldingOnly = true,
+			local capabilities = {
+				textDocument = {
+					foldingRange = {
+						dynamicRegistration = false,
+						lineFoldingOnly = true,
+					},
+				},
 			}
-			vim.lsp.config("*", {
-				capabilities,
-			})
+			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
 
-			vim.keymap.set("n", "<F4>", function()
-				require("tiny-code-action").code_action()
-			end, { desc = "Code actions" })
+			vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { desc = "Code actions" })
 			vim.keymap.set("n", "<F2>", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
@@ -94,6 +94,7 @@ return {
 					},
 				},
 			})
+
 			require("mason-lspconfig").setup({
 				automatic_enable = true,
 				ensure_installed = {
