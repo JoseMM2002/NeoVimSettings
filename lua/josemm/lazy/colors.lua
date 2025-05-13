@@ -50,7 +50,6 @@ return {
 	},
 	{
 		"JoseMM2002/walltheme.nvim",
-		enabled = false,
 		config = function()
 			require("walltheme").setup()
 		end,
@@ -70,8 +69,5 @@ return {
 	},
 	{
 		"webhooked/kanso.nvim",
-		config = function()
-			vim.cmd("colorscheme kanso-zen")
-		end,
 	},
 }
