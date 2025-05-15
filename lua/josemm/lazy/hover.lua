@@ -1,11 +1,9 @@
 return {
 	{
 		"patrickpichler/hovercraft.nvim",
-
 		dependencies = {
 			{ "nvim-lua/plenary.nvim", "kevinhwang91/nvim-ufo" },
 		},
-		-- this is the default config and can be skipped
 		opts = function()
 			return {
 				providers = {

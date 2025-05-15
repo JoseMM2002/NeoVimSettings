@@ -10,7 +10,7 @@ return {
 	},
 	config = function()
 		require("render-markdown").setup({
-			completions = { blink = { enabled = true } },
+			completions = { blink = { enabled = true }, lsp = { enabled = false } },
 		})
 	end,
 }
