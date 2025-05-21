@@ -100,7 +100,6 @@ return {
 				ensure_installed = {
 					"vtsls",
 					"rust_analyzer",
-					"volar",
 					"gopls",
 					"pyright",
 					"html",
@@ -115,7 +114,7 @@ return {
 					"gradle_ls",
 					"prismals",
 					"clangd",
-					"volar",
+					"vue_ls",
 				},
 				handlers = {
 					function(server_name)
