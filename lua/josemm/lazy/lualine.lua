@@ -15,9 +15,9 @@ local get_registers_status = function()
 		return "  " .. "[" .. reg .. "]"
 	end
 	if #sessionregisters > 0 then
-		return "󰃽 [" .. table.concat(sessionregisters, ",") .. "]"
+		return "󰴘 [" .. table.concat(sessionregisters, ",") .. "]"
 	else
-		return "󰃽"
+		return " "
 	end
 end
 
