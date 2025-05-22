@@ -1,3 +1,26 @@
+local get_registers_status = function()
+	local reg = vim.fn.reg_recording()
+	local sessionregisters = vim.g.sessionregisters or {}
+	if reg ~= "" then
+		local regExists = false
+		for _, val in ipairs(sessionregisters) do
+			if val == reg then
+				regExists = true
+				break
+			end
+		end
+		if not regExists then
+			vim.g.sessionregisters = vim.list_extend(sessionregisters, { reg })
+		end
+		return "  " .. "[" .. reg .. "]"
+	end
+	if #sessionregisters > 0 then
+		return "󰃽 [" .. table.concat(sessionregisters, ",") .. "]"
+	else
+		return "󰃽"
+	end
+end
+
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -9,15 +32,22 @@ return {
 				},
 				sections = {
 					lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-					lualine_b = { "filename", "branch" },
+					lualine_b = {
+						"filename",
+						"branch",
+						{
+							"macro",
+							fmt = get_registers_status,
+						},
+					},
 					lualine_c = {
-						"%=", --[[ add your center components here in place of this comment ]]
+						"diff",
+						"diagnostics",
 					},
 					lualine_x = {},
-					lualine_y = { "filetype", "progress", { require("recorder").displaySlots } },
+					lualine_y = { "filetype" },
 					lualine_z = {
-						{ "location", separator = { right = "" }, left_padding = 2 },
-						{ require("recorder").recordingStatus },
+						{ "location", separator = { left = "", right = "" } },
 					},
 				},
 				inactive_sections = {
@@ -32,10 +62,5 @@ return {
 				extensions = {},
 			})
 		end,
-	},
-	{
-		"chrisgrieser/nvim-recorder",
-		dependencies = "rcarriga/nvim-notify", -- optional
-		opts = {}, -- required even with default settings, since it calls `setup()`
 	},
 }
