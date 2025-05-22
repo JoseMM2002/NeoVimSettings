@@ -115,6 +115,7 @@ return {
 					"prismals",
 					"clangd",
 					"vue_ls",
+					"eslint",
 				},
 				handlers = {
 					function(server_name)
