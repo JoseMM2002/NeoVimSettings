@@ -5,12 +5,11 @@ return {
 	dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
 	---@module 'render-markdown'
 	---@type render.md.UserConfig
-	opts = {
-		file_types = { "Avante", "markdown", "copilot-chat" },
-	},
-	config = function()
+	opts = {},
+	config = function(_)
 		require("render-markdown").setup({
 			completions = { blink = { enabled = true }, lsp = { enabled = false } },
+			file_types = { "Avante", "markdown", "copilot-chat", "codecompanion" },
 		})
 	end,
 }

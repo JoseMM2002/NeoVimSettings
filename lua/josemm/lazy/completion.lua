@@ -177,6 +177,7 @@ return {
 				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer", "copilot" },
 				per_filetype = {
 					sql = { "snippets", "dadbod", "snippets", "buffer", "copilot" },
+					codecompanion = { "codecompanion" },
 				},
 				providers = {
 					ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
