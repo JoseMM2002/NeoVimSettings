@@ -57,6 +57,7 @@ return {
 			"mason-org/mason-lspconfig.nvim",
 			"rachartier/tiny-code-action.nvim",
 			"saghen/blink.cmp",
+			"esmuellert/nvim-eslint",
 		},
 		init_options = {
 			userLanguages = {
@@ -78,7 +79,6 @@ return {
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
-
 			vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { desc = "Code actions" })
 			vim.keymap.set("n", "<F2>", function()
 				vim.lsp.buf.rename()
@@ -115,7 +115,6 @@ return {
 					"prismals",
 					"clangd",
 					"vue_ls",
-					"eslint",
 				},
 				handlers = {
 					function(server_name)
@@ -244,10 +243,12 @@ return {
 								client.config.settings.Lua =
 									vim.tbl_deep_extend("force", client.config.settings.Lua, nvim_settings)
 							end,
+							capabilities,
 						})
 					end,
 				},
 			})
+			require("nvim-eslint").setup({ capabilities })
 		end,
 	},
 }
