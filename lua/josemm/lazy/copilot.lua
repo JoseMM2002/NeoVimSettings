@@ -29,69 +29,69 @@ return {
 		end,
 	},
 	{
-		"olimorris/codecompanion.nvim",
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		version = false,
+		opts = {
+			provider = "copilot",
+			copilot = {
+				model = "gemini-2.5-pro", -- o1-preview | o1-mini | claude-3.5-sonnet
+			},
+			windows = {
+				---@type "right" | "left" | "top" | "bottom"
+				position = "right", -- the position of the sidebar
+				wrap = true, -- similar to vim.o.wrap
+				width = 30, -- default % based on available width
+				sidebar_header = {
+					enabled = true, -- true, false to enable/disable the header
+					align = "center", -- left, center, right for title
+					rounded = false,
+				},
+				input = {
+					prefix = "> ",
+					height = 8, -- Height of the input window in vertical layout
+				},
+				edit = {
+					start_insert = true, -- Start insert mode when opening the edit window
+					border = "rounded",
+				},
+				ask = {
+					floating = false, -- Open the 'AvanteAsk' prompt in a floating window
+					start_insert = true, -- Start insert mode when opening the ask window
+					---@type "ours" | "theirs"
+					focus_on_apply = "ours", -- which diff to focus after applying
+				},
+			},
+			file_selector = {
+				provider = "telescope",
+			},
+		},
+		build = "make",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
 			{
+				-- support for image pasting
 				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
 				opts = {
-					filetypes = {
-						codecompanion = {
-							prompt_for_file_name = false,
-							template = "[Image]($FILE_PATH)",
-							use_absolute_path = true,
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
 						},
+						-- required for Windows users
+						use_absolute_path = true,
 					},
 				},
 			},
+			{
+				"MeanderingProgrammer/render-markdown.nvim",
+			},
 		},
-		keys = {
-			{ "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "AI Toggle [C]hat" },
-			{ "<leader>an", "<cmd>CodeCompanionChat<cr>", mode = { "n", "v" }, desc = "AI [N]ew Chat" },
-			{ "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "AI [A]ction" },
-			{ "ga", "<cmd>CodeCompanionChat Add<CR>", mode = { "v" }, desc = "AI [A]dd to Chat" },
-		},
-		config = function()
-			require("codecompanion").setup({
-				display = {
-					diff = {
-						enabled = true,
-						close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
-						layout = "vertical", -- vertical|horizontal split for default provider
-						opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
-						provider = "default", -- default|mini_diff
-					},
-					chat = {
-						window = {
-							position = "right",
-						},
-					},
-				},
-				adapters = {
-					copilot = function()
-						return require("codecompanion.adapters").extend("copilot", {
-							schema = {
-								model = {
-									default = "gpt-4.1",
-								},
-							},
-						})
-					end,
-				},
-				strategies = {
-					chat = {
-						keymaps = {
-							close = {
-								modes = {
-									n = "<esc>",
-									i = "<esc>",
-								},
-							},
-						},
-					},
-				},
-			})
-		end,
 	},
 }
