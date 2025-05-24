@@ -1,61 +1,9 @@
 return {
 	{
-		"rachartier/tiny-code-action.nvim",
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-		},
-		event = "LspAttach",
-		opts = {
-			backend = "vim",
-			picker = "telescope",
-			backend_opts = {
-				delta = {
-					header_lines_to_remove = 4,
-					args = {
-						"--line-numbers",
-					},
-				},
-				difftastic = {
-					header_lines_to_remove = 1,
-					args = {
-						"--color=always",
-						"--display=inline",
-						"--syntax-highlight=on",
-					},
-				},
-			},
-			telescope_opts = {
-				layout_strategy = "vertical",
-				layout_config = {
-					width = 0.7,
-					height = 0.9,
-					preview_cutoff = 1,
-					preview_height = function(_, _, max_lines)
-						local h = math.floor(max_lines * 0.5)
-						return math.max(h, 10)
-					end,
-				},
-			},
-			signs = {
-				quickfix = { "󰁨", { link = "DiagnosticInfo" } },
-				others = { "?", { link = "DiagnosticWarning" } },
-				refactor = { "", { link = "DiagnosticWarning" } },
-				["refactor.move"] = { "󰪹", { link = "DiagnosticInfo" } },
-				["refactor.extract"] = { "", { link = "DiagnosticError" } },
-				["source.organizeImports"] = { "", { link = "DiagnosticWarning" } },
-				["source.fixAll"] = { "", { link = "DiagnosticError" } },
-				["source"] = { "", { link = "DiagnosticError" } },
-				["rename"] = { "󰑕", { link = "DiagnosticWarning" } },
-				["codeAction"] = { "", { link = "DiagnosticError" } },
-			},
-		},
-	},
-	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"mason-org/mason.nvim",
 			"mason-org/mason-lspconfig.nvim",
-			"rachartier/tiny-code-action.nvim",
 			"saghen/blink.cmp",
 			"esmuellert/nvim-eslint",
 		},
