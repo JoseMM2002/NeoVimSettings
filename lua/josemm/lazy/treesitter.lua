@@ -21,6 +21,7 @@ return {
 				"scss",
 				"java",
 				"prisma",
+				"vue",
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
