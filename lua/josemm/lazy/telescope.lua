@@ -11,10 +11,17 @@ return {
 			build = "make",
 		},
 		{ "nvim-tree/nvim-web-devicons", opts = {} },
+		{
+			"isak102/telescope-git-file-history.nvim",
+			dependencies = {
+				"tpope/vim-fugitive",
+			},
+		},
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
 		local lga_actions = require("telescope-live-grep-args.actions")
+		local gfh_actions = require("telescope").extensions.git_file_history.actions
 
 		require("telescope").setup({
 			defaults = {
@@ -59,6 +66,18 @@ return {
 				fzy_native = {
 					override_generic_sorter = true,
 					override_file_sorter = true,
+				},
+
+				git_file_history = {
+					mappings = {
+						i = {
+							["<C-g>"] = gfh_actions.open_in_browser,
+						},
+						n = {
+							["<C-g>"] = gfh_actions.open_in_browser,
+						},
+					},
+					browser_command = nil,
 				},
 			},
 		})
@@ -129,9 +148,14 @@ return {
 			require("telescope.builtin").colorscheme({ enable_preview = true })
 		end)
 
+		vim.keymap.set("n", "<leader>fh", function()
+			require("telescope").extensions.git_file_history.git_file_history()
+		end, { noremap = true, silent = true })
+
 		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")
 		require("telescope").load_extension("live_grep_args")
 		require("telescope").load_extension("fzf")
+		require("telescope").load_extension("git_file_history")
 	end,
 }
