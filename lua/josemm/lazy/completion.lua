@@ -20,6 +20,9 @@ return {
 			},
 			path = vim.fn.getcwd(),
 		},
+		keys = {
+			{ "<leader>ge", "<cmd>EcologGoto<cr>", desc = "Go to env file" },
+		},
 	},
 	{
 		"xzbdmw/colorful-menu.nvim",
