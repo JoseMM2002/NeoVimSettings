@@ -37,7 +37,7 @@ return {
 				provider = "copilot",
 				providers = {
 					copilot = {
-						model = "gemini-2.5-pro", -- o1-preview | o1-mini | claude-3.5-sonnet
+						model = "claude-sonnet-4", -- o1-preview | o1-mini | claude-3.5-sonnet
 					},
 				},
 				windows = {
