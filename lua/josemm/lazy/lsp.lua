@@ -27,8 +27,8 @@ return {
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
-			vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { desc = "Code actions" })
-			vim.keymap.set("n", "<F2>", function()
+			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+			vim.keymap.set("n", "<leader>rn", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
 
