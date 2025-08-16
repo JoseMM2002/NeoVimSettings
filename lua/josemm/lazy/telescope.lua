@@ -87,71 +87,71 @@ return {
 
 		vim.keymap.set("n", "<leader>fu", function()
 			require("telescope").extensions.undo.undo()
-		end)
+		end, { desc = "Browse undo history" })
 
 		vim.keymap.set("n", "<leader>ff", function()
 			builtin.find_files({ hidden = true })
-		end)
+		end, { desc = "Find files (including hidden)" })
 
 		vim.keymap.set("n", "<leader>fb", function()
 			require("telescope.builtin").buffers({ sort_lastused = true })
-		end)
+		end, { desc = "Find buffers (sorted by last used)" })
 
 		vim.keymap.set("n", "<leader>fr", function()
 			require("telescope.builtin").live_grep({})
-		end)
+		end, { desc = "Search text in files" })
 
-		vim.keymap.set("n", "<leader>fh", function()
+		vim.keymap.set("n", "<leader>fht", function()
 			builtin.help_tags({})
-		end)
+		end, { desc = "Search help documentation" })
 
 		vim.keymap.set("n", "<leader>fs", function()
 			require("telescope.builtin").git_status({
 				git_icons = {
-					changed = "",
-					added = "",
-					renamed = "",
-					unmerged = "",
-					deleted = "",
-					untracked = "",
+					changed = "",
+					added = "",
+					renamed = "",
+					unmerged = "",
+					deleted = "",
+					untracked = "",
 					copied = "󰬸",
 				},
 			})
-		end)
+		end, { desc = "Git status" })
 
 		vim.keymap.set("n", "<leader>fn", function()
 			require("telescope").extensions.neoclip.default()
-		end)
+		end, { desc = "Neoclip (clipboard history)" })
 
 		vim.keymap.set("n", "<leader>fgd", function()
 			require("telescope.builtin").diagnostics()
-		end)
+		end, { desc = "Search all diagnostics" })
 
 		vim.keymap.set("n", "<leader>fd", function()
 			require("telescope.builtin").diagnostics({
 				bufnr = 0,
 			})
-		end)
+		end, { desc = "Search buffer diagnostics" })
 
 		vim.keymap.set("n", "<leader>fls", function()
 			require("telescope.builtin").lsp_document_symbols()
-		end, { noremap = true, silent = true })
+		end, { noremap = true, silent = true, desc = "Search document symbols" })
 
 		vim.keymap.set("n", "gr", function()
 			require("telescope.builtin").lsp_references()
-		end, { noremap = true, silent = true })
+		end, { noremap = true, silent = true, desc = "Find symbol references" })
 
 		vim.keymap.set("n", "gd", function()
 			require("telescope.builtin").lsp_definitions()
-		end, { noremap = true, silent = true })
+		end, { noremap = true, silent = true, desc = "Go to symbol definition" })
 
 		vim.keymap.set("n", "<leader>tc", function()
 			require("telescope.builtin").colorscheme({ enable_preview = true })
-		end)
+		end, { desc = "Browse colorschemes" })
 
 		vim.keymap.set("n", "<leader>fh", function()
 			require("telescope").extensions.git_file_history.git_file_history()
-		end, { noremap = true, silent = true })
+		end, { noremap = true, silent = true, desc = "Git file history" })
 
 		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")

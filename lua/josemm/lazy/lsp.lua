@@ -26,7 +26,7 @@ return {
 			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 			require("lspconfig").nushell.setup({})
 			require("mason").setup({ ui = { border = "rounded" } })
-			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
+			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 			vim.keymap.set("n", "<leader>rn", function()
 				vim.lsp.buf.rename()

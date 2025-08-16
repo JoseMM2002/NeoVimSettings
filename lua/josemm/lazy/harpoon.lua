@@ -9,7 +9,7 @@ return {
 
 		vim.keymap.set("n", "<leader>ha", function()
 			harpoon:list():add()
-		end)
+		end, { desc = "Add file to harpoon list" })
 		vim.keymap.set("n", "<leader>hh", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list(), {
 				window_position = {
@@ -21,14 +21,14 @@ return {
 					end,
 				},
 			})
-		end)
+		end, { desc = "Toggle harpoon quick menu" })
 
 		vim.keymap.set("n", "<leader>hq", function()
 			harpoon:list():prev()
-		end)
+		end, { desc = "Navigate to previous harpoon file" })
 		vim.keymap.set("n", "<leader>he", function()
 			harpoon:list():next()
-		end)
+		end, { desc = "Navigate to next harpoon file" })
 
 		local harpoon_extensions = require("harpoon.extensions")
 		harpoon:extend(harpoon_extensions.builtins.highlight_current_file())

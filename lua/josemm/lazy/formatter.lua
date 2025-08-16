@@ -57,6 +57,6 @@ return {
 				async = false,
 				timeout_ms = 500,
 			})
-		end)
+		end, { desc = "Format buffer/selection" })
 	end,
 }
