@@ -113,6 +113,21 @@ return {
 					},
 				},
 				{
+					name = "Launch work file with ts-node",
+					type = "pwa-node",
+					request = "launch",
+					cwd = "${workspaceFolder}",
+					runtimeArgs = { "-r", "ts-node/register", "${file}" },
+					runtimeExecutable = "node",
+					sourceMaps = true,
+					protocol = "inspector",
+					skipFiles = { "node_modules/**", "<node_internals>/**" },
+					resolveSourceMapLocations = {
+						"${workspaceFolder}/**",
+						"!**/node_modules/**",
+					},
+				},
+				{
 					type = "pwa-chrome",
 					request = "launch",
 					name = "Launch Chrome (nvim-dap)",
