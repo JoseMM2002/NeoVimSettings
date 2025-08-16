@@ -9,7 +9,7 @@ return {
 					auto_trigger = false,
 					trigger_on_accept = false,
 				},
-				copilot_model = "gpt-4.1",
+				copilot_model = "claude-3.5-sonnet",
 				markdown = true,
 				help = true,
 			})
