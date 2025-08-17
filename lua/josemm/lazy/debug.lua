@@ -1,3 +1,11 @@
+local continue = function()
+	if vim.fn.filereadable(".vscode/launch.json") then
+		vim.notify("Loading launch.json from .vscode directory", vim.log.levels.INFO)
+		require("dap.ext.vscode").load_launchjs()
+	end
+	require("dap").continue()
+end
+
 local function get_args()
 	local args_string = vim.fn.input("Program arguments: ")
 	if args_string == "" then
@@ -129,11 +137,37 @@ return {
 				},
 				{
 					type = "pwa-chrome",
+					name = "Launch Chrome to debug client",
 					request = "launch",
-					name = "Launch Chrome (nvim-dap)",
 					url = enter_launch_url,
-					webRoot = "${workspaceFolder}",
 					sourceMaps = true,
+					protocol = "inspector",
+					port = 9222,
+					webRoot = "${workspaceFolder}/src",
+					skipFiles = { "**/node_modules/**/*", "**/@vite/*", "**/src/client/*", "**/src/*" },
+				},
+				{
+					type = "pwa-chrome",
+					name = "Launch Chrome to debug work client",
+					request = "launch",
+					url = enter_launch_url,
+					webRoot = "${workspaceFolder}/client/src",
+					sourceMapPathOverrides = {
+						["webpack:///src/*"] = "${webRoot}/*",
+						["webpack:///./src/*"] = "${webRoot}/*",
+						["webpack:///./*"] = "${workspaceFolder}/client/*",
+						["webpack:///./~/*"] = "${workspaceFolder}/client/node_modules/*",
+						["webpack://?:*/*"] = "${workspaceFolder}/client/*",
+					},
+					runtimeArgs = {
+						"--disable-web-security",
+						"--disable-features=VizDisplayCompositor",
+					},
+					userDataDir = "${workspaceFolder}/.vscode/chrome-debug-profile",
+					breakOnLoad = true,
+					pathMapping = {
+						["/"] = "${workspaceFolder}/client/",
+					},
 				},
 			}
 		end
@@ -191,7 +225,7 @@ return {
 		end
 
 		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
-		vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Continue debugging" })
+		vim.keymap.set("n", "<leader>dc", continue, { desc = "Continue debugging" })
 		vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step into" })
 		vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step over" })
 		vim.keymap.set("n", "<leader>du", dap.step_out, { desc = "Step out" })
