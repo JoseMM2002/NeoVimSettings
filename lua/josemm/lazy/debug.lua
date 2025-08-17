@@ -1,6 +1,5 @@
 local continue = function()
 	if vim.fn.filereadable(".vscode/launch.json") then
-		vim.notify("Loading launch.json from .vscode directory", vim.log.levels.INFO)
 		require("dap.ext.vscode").load_launchjs()
 	end
 	require("dap").continue()
