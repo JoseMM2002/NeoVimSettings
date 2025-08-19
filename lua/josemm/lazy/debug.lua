@@ -162,7 +162,7 @@ return {
 						"--disable-web-security",
 						"--disable-features=VizDisplayCompositor",
 					},
-					userDataDir = "${workspaceFolder}/.vscode/chrome-debug-profile",
+					userDataDir = "${workspaceFolder}/.vscode/chrome",
 					breakOnLoad = true,
 					pathMapping = {
 						["/"] = "${workspaceFolder}/client/",
