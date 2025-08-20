@@ -162,7 +162,7 @@ return {
 						"--disable-web-security",
 						"--disable-features=VizDisplayCompositor",
 					},
-					userDataDir = "${workspaceFolder}/.vscode/chrome",
+					userDataDir = vim.fn.expand("~") .. "/.cache/vscode-chrome/",
 					breakOnLoad = true,
 					pathMapping = {
 						["/"] = "${workspaceFolder}/client/",
