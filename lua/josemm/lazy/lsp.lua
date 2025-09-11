@@ -45,12 +45,7 @@ return {
 				},
 			},
 			"saghen/blink.cmp",
-			{
-				"esmuellert/nvim-eslint",
-				config = function()
-					require("nvim-eslint").setup({})
-				end,
-			},
+			"esmuellert/nvim-eslint",
 		},
 		init_options = {
 			userLanguages = {
@@ -104,6 +99,7 @@ return {
 			})
 
 			vim.lsp.enable({ "nushell" })
+			require("nvim-eslint").setup({})
 		end,
 	},
 }
