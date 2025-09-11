@@ -121,6 +121,7 @@ return {
 						make_slash_commands = true,
 					},
 				},
+				ui = { window = { border = "rounded" } },
 			})
 			vim.keymap.set("n", "<leader>H", ":MCPHub<CR>", { desc = "Open MCP Hub" })
 		end,
