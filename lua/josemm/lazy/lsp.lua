@@ -62,6 +62,12 @@ return {
 			vim.keymap.set("n", "<leader>rn", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
+			vim.keymap.set("n", "K", function()
+				local winid = require("ufo").peekFoldedLinesUnderCursor()
+				if not winid then
+					vim.lsp.buf.hover({ border = "rounded" })
+				end
+			end, { desc = "Hover symbol details" })
 
 			vim.diagnostic.config({
 				signs = {
