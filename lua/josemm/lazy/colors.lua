@@ -21,7 +21,7 @@ return {
 		"rebelot/kanagawa.nvim",
 		config = function()
 			require("kanagawa").setup({})
-			vim.cmd("colorscheme kanagawa-dragon")
+			-- vim.cmd("colorscheme kanagawa-dragon")
 		end,
 	},
 	{
@@ -34,7 +34,7 @@ return {
 	{
 		"EdenEast/nightfox.nvim",
 		config = function()
-			-- vim.cmd("colorscheme carbonfox")
+			vim.cmd("colorscheme terafox")
 		end,
 	},
 	{
@@ -61,6 +61,11 @@ return {
 	},
 	{
 		"AlexvZyl/nordic.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			-- vim.cmd("colorscheme nordic")
+		end,
 	},
 	{
 		"RomanAverin/charleston.nvim",
