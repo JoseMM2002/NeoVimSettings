@@ -34,7 +34,7 @@ return {
 	{
 		"EdenEast/nightfox.nvim",
 		config = function()
-			vim.cmd("colorscheme terafox")
+			-- vim.cmd("colorscheme terafox")
 		end,
 	},
 	{
@@ -53,7 +53,6 @@ return {
 		config = function()
 			require("walltheme").setup()
 		end,
-		enabled = false,
 	},
 	{
 		"xiyaowong/transparent.nvim",
