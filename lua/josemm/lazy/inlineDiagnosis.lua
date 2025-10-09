@@ -4,8 +4,11 @@ return {
 	priority = 1000, -- needs to be loaded in first
 	config = function()
 		require("tiny-inline-diagnostic").setup({
-			opts = {
-				throttle = 200,
+			preset = "powerline",
+			options = {
+				break_line = {
+					enabled = true,
+				},
 			},
 		})
 	end,
