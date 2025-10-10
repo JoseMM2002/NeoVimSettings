@@ -2,7 +2,8 @@ local lsp_list = {
 	"vtsls",
 	"rust_analyzer",
 	"gopls",
-	"pyright",
+	"basedpyright",
+	"ruff",
 	"html",
 	"tailwindcss",
 	"bashls",
@@ -59,9 +60,14 @@ return {
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+
 			vim.keymap.set("n", "<leader>rn", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
+			vim.keymap.set("n", "<leader>ry", function()
+				vim.lsp.buf.rename(vim.fn.getreg('"'))
+			end, { desc = "Rename symbol with registry" })
+
 			vim.keymap.set("n", "K", function()
 				local winid = require("ufo").peekFoldedLinesUnderCursor()
 				if not winid then
