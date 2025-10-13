@@ -12,13 +12,25 @@ return {
 			},
 			shelter = {
 				configuration = {
+					partial_mode = {
+						show_start = 1,
+						show_end = 1,
+						min_mask = 3,
+					},
 					mask_char = "*",
+					mask_length = nil,
+					skip_comments = false,
 				},
 				modules = {
 					cmp = true,
+					telescope_previewer = true,
+					telescope = true,
+					files = false,
+					peek = true,
 				},
 			},
 			path = vim.fn.getcwd(),
+			provider_patterns = { extract = true, cmp = false },
 		},
 		keys = {
 			{ "<leader>ge", "<cmd>EcologGoto<cr>", desc = "Go to env file" },

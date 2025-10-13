@@ -81,6 +81,18 @@ return {
 					},
 					browser_command = nil,
 				},
+				ecolog = {
+					shelter = {
+						mask_on_copy = false,
+					},
+					mappings = {
+						copy_value = "<C-y>",
+						copy_name = "<C-n>",
+						append_value = "<C-a>",
+						append_name = "<CR>",
+						edit_var = "<C-e>",
+					},
+				},
 			},
 		})
 
@@ -160,5 +172,6 @@ return {
 		require("telescope").load_extension("fzf")
 		require("telescope").load_extension("git_file_history")
 		require("telescope").load_extension("frecency")
+		require("telescope").load_extension("ecolog")
 	end,
 }
