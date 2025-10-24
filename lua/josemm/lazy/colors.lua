@@ -21,7 +21,7 @@ return {
 		"rebelot/kanagawa.nvim",
 		config = function()
 			require("kanagawa").setup({})
-			-- vim.cmd("colorscheme kanagawa-dragon")
+			vim.cmd("colorscheme kanagawa-dragon")
 		end,
 	},
 	{
@@ -53,6 +53,7 @@ return {
 		config = function()
 			require("walltheme").setup()
 		end,
+		enabled = false,
 	},
 	{
 		"xiyaowong/transparent.nvim",
