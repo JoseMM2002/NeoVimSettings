@@ -47,7 +47,8 @@ return {
 					ensure_installed = lsp_list,
 				},
 			},
-			"saghen/blink.cmp",
+			"hrsh7th/nvim-cmp",
+			"hrsh7th/cmp-nvim-lsp",
 		},
 		init_options = {
 			userLanguages = {
@@ -57,7 +58,7 @@ return {
 			},
 		},
 		config = function()
-			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+			capabilities = vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), capabilities)
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })

@@ -9,6 +9,7 @@ return {
 		opts = {
 			integrations = {
 				blink_cmp = true,
+				nvim_cmp = true,
 			},
 			shelter = {
 				configuration = {
@@ -39,63 +40,34 @@ return {
 	{
 		"xzbdmw/colorful-menu.nvim",
 		config = function()
-			-- You don't need to set these options.
 			require("colorful-menu").setup({
 				ls = {
 					lua_ls = {
-						-- Maybe you want to dim arguments a bit.
 						arguments_hl = "@comment",
 					},
 					gopls = {
-						-- By default, we render variable/function's type in the right most side,
-						-- to make them not to crowd together with the original label.
-
-						-- when true:
-						-- foo             *Foo
-						-- ast         "go/ast"
-
-						-- when false:
-						-- foo *Foo
-						-- ast "go/ast"
 						align_type_to_right = true,
-						-- When true, label for field and variable will format like "foo: Foo"
-						-- instead of go's original syntax "foo Foo". If align_type_to_right is
-						-- true, this option has no effect.
 						add_colon_before_type = false,
-						-- See https://github.com/xzbdmw/colorful-menu.nvim/pull/36
 						preserve_type_when_truncate = true,
 					},
-					-- for lsp_config or typescript-tools
 					ts_ls = {
-						-- false means do not include any extra info,
-						-- see https://github.com/xzbdmw/colorful-menu.nvim/issues/42
 						extra_info_hl = "@comment",
 					},
 					vtsls = {
-						-- false means do not include any extra info,
-						-- see https://github.com/xzbdmw/colorful-menu.nvim/issues/42
 						extra_info_hl = "@comment",
 					},
 					["rust-analyzer"] = {
-						-- Such as (as Iterator), (use std::io).
 						extra_info_hl = "@comment",
-						-- Similar to the same setting of gopls.
 						align_type_to_right = true,
-						-- See https://github.com/xzbdmw/colorful-menu.nvim/pull/36
 						preserve_type_when_truncate = true,
 					},
 					clangd = {
-						-- Such as "From <stdio.h>".
 						extra_info_hl = "@comment",
-						-- Similar to the same setting of gopls.
 						align_type_to_right = true,
-						-- the hl group of leading dot of "•std::filesystem::permissions(..)"
 						import_dot_hl = "@comment",
-						-- See https://github.com/xzbdmw/colorful-menu.nvim/pull/36
 						preserve_type_when_truncate = true,
 					},
 					zls = {
-						-- Similar to the same setting of gopls.
 						align_type_to_right = true,
 					},
 					roslyn = {
@@ -104,34 +76,27 @@ return {
 					dartls = {
 						extra_info_hl = "@comment",
 					},
-					-- The same applies to pyright/pylance
 					basedpyright = {
-						-- It is usually import path such as "os"
 						extra_info_hl = "@comment",
 					},
-					-- If true, try to highlight "not supported" languages.
 					fallback = true,
-					-- this will be applied to label description for unsupport languages
 					fallback_extra_info_hl = "@comment",
 				},
-				-- If the built-in logic fails to find a suitable highlight group for a label,
-				-- this highlight is applied to the label.
 				fallback_highlight = "@variable",
-				-- If provided, the plugin truncates the final displayed text to
-				-- this width (measured in display cells). Any highlights that extend
-				-- beyond the truncation point are ignored. When set to a float
-				-- between 0 and 1, it'll be treated as percentage of the width of
-				-- the window: math.floor(max_width * vim.api.nvim_win_get_width(0))
-				-- Default 60.
 				max_width = 60,
 			})
 		end,
 	},
 	{
-		"saghen/blink.cmp",
-		branch = "main",
+		"hrsh7th/nvim-cmp",
 		dependencies = {
-			"Kaiser-Yang/blink-cmp-avante",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-path",
+
 			"onsails/lspkind.nvim",
 			"nvim-tree/nvim-web-devicons",
 			"philosofonusus/ecolog.nvim",
@@ -139,167 +104,128 @@ return {
 			"L3MON4D3/LuaSnip",
 			"fang2hou/blink-copilot",
 			"kristijanhusak/vim-dadbod-completion",
+			{
+				"zbirenbaum/copilot-cmp",
+				config = function()
+					require("copilot_cmp").setup()
+				end,
+			},
 		},
-		opts = {
-			keymap = {
-				preset = "none",
-				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-				["<C-e>"] = { "hide", "fallback" },
-				["<CR>"] = { "accept", "fallback" },
-				["<C-y>"] = { "accept_and_enter", "fallback" },
-				["<Tab>"] = {
-					function(cmp)
-						cmp.accept()
-					end,
-					"snippet_forward",
-					"fallback",
-				},
-				["<S-Tab>"] = { "snippet_backward", "fallback" },
-				["<Up>"] = { "select_prev", "fallback" },
-				["<Down>"] = { "select_next", "fallback" },
-				["<C-p>"] = { "select_prev", "fallback_to_mappings" },
-				["<C-n>"] = { "select_next", "fallback_to_mappings" },
-				["<C-b>"] = { "scroll_documentation_up", "fallback" },
-				["<C-f>"] = { "scroll_documentation_down", "fallback" },
-				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
-			},
-			cmdline = {
-				enabled = true,
-				keymap = {
-					preset = "none",
-					["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-					["<C-e>"] = { "hide", "fallback" },
-					["<CR>"] = { "fallback" },
-					["<C-y>"] = { "accept_and_enter", "fallback" },
-					["<Tab>"] = {
-						"accept",
+		event = { "InsertEnter", "CmdlineEnter" },
+		config = function()
+			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+			local lspkind = require("lspkind")
+
+			lspkind.init({
+				symbol_map = kind_icons,
+			})
+
+			cmp.setup({
+				sources = {
+					{
+						name = "nvim_lsp",
 					},
-					["<S-Tab>"] = { "snippet_backward", "fallback" },
-					["<Up>"] = { "select_prev", "fallback" },
-					["<Down>"] = { "select_next", "fallback" },
-					["<C-p>"] = { "select_prev", "fallback_to_mappings" },
-					["<C-n>"] = { "select_next", "fallback_to_mappings" },
-					["<C-b>"] = { "scroll_documentation_up", "fallback" },
-					["<C-f>"] = { "scroll_documentation_down", "fallback" },
-					["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
-				},
-				completion = {
-					menu = { auto_show = true },
-					ghost_text = { enabled = true },
-				},
-			},
-			sources = {
-				default = { "lsp", "avante", "ecolog", "path", "snippets", "buffer", "copilot" },
-				per_filetype = {
-					sql = { "snippets", "dadbod", "snippets", "buffer", "copilot" },
-					codecompanion = { "codecompanion" },
-				},
-				providers = {
-					ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
-					buffer = {
-						opts = {
-							get_bufnrs = function()
-								return vim.tbl_filter(function(bufnr)
-									return vim.bo[bufnr].buftype == ""
-								end, vim.api.nvim_list_bufs())
-							end,
-						},
+					{
+						name = "ecolog",
 					},
-					avante = {
-						module = "blink-cmp-avante",
-						name = "Avante",
+					{ name = "nvim_lsp_document_symbol" },
+					{ name = "nvim_lsp_signature_help" },
+					{ name = "buffer" },
+					{ name = "luasnip" },
+					{
+						name = "path",
 					},
-					cmdline = {
-						min_keyword_length = function(ctx)
-							if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
-								return 3
-							end
-							return 0
-						end,
-					},
-					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
-					copilot = {
+					{
 						name = "copilot",
-						module = "blink-copilot",
-						score_offset = -1000,
-						async = true,
-						opts = {
-							max_completions = 3,
-							max_attempts = 4,
-							kind_name = "Copilot", ---@type string | false
-							kind_icon = " ", ---@type string | false
-							kind_hl = false, ---@type string | false
-							debounce = 200, ---@type integer | false
-							auto_refresh = {
-								backward = true,
-								forward = true,
-							},
-						},
 					},
 				},
-			},
-			completion = {
-				menu = {
-					border = "rounded",
-					draw = {
-						components = {
-							kind_icon = {
-								ellipsis = false,
-								text = function(ctx)
-									local lspkind = require("lspkind")
-									local icon = ctx.kind_icon
-									if vim.tbl_contains({ "Path" }, ctx.source_name) then
-										local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
-										if dev_icon then
-											icon = dev_icon
-										end
-									else
-										icon = lspkind.symbolic(ctx.kind, {
-											mode = "symbol",
-										})
-									end
-									icon = kind_icons[ctx.kind] or icon
-									return icon .. ctx.icon_gap
-								end,
-								highlight = function(ctx)
-									local hl = "BlinkCmpKind" .. ctx.kind
-										or require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx)
-									if vim.tbl_contains({ "Path" }, ctx.source_name) then
-										local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
-										if dev_icon then
-											hl = dev_hl
-										end
-									end
-									return hl
-								end,
-							},
-							label = {
-								text = function(ctx)
-									return require("colorful-menu").blink_components_text(ctx)
-								end,
-								highlight = function(ctx)
-									return require("colorful-menu").blink_components_highlight(ctx)
-								end,
-							},
-						},
-						columns = { { "kind_icon", "kind", gap = 2 }, { "label", "label_description", gap = 2 } },
-						treesitter = { "lsp" },
-						nil,
-					},
+				formatting = {
+
+					fields = { "kind", "abbr", "menu" },
+
+					format = function(entry, vim_item)
+						local kind = lspkind.cmp_format({
+							mode = "symbol_text",
+						})(entry, vim.deepcopy(vim_item))
+						local highlights_info = require("colorful-menu").cmp_highlights(entry)
+
+						if highlights_info ~= nil then
+							vim_item.abbr_hl_group = highlights_info.highlights
+							vim_item.abbr = highlights_info.text
+						end
+						local strings = vim.split(kind.kind, "%s", { trimempty = true })
+						vim_item.kind = " " .. (strings[1] or "") .. " "
+						vim_item.menu = ""
+
+						return vim_item
+					end,
 				},
-				documentation = { auto_show = true, auto_show_delay_ms = 200, window = { border = "rounded" } },
-				ghost_text = { enabled = true },
-				keyword = {
-					range = "full",
+				window = {
+					completion = { border = "rounded" },
+					documentation = { border = "rounded" },
 				},
-				list = { selection = { preselect = false, auto_insert = true } },
-				trigger = {
-					show_in_snippet = true,
+				mapping = cmp.mapping.preset.insert({
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
+					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-e>"] = cmp.mapping.abort(),
+					["<CR>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							if luasnip.expandable() then
+								luasnip.expand()
+							else
+								cmp.confirm({
+									select = true,
+								})
+							end
+						else
+							fallback()
+						end
+					end),
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.locally_jumpable(1) then
+							luasnip.jump(1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.locally_jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+				}),
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
 				},
-			},
-			signature = { window = { border = "rounded" }, enabled = true },
-			fuzzy = { implementation = "rust" },
-		},
-		opts_extend = { "sources.default" },
+			})
+
+			cmp.setup.cmdline({ "/", "?" }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
+				},
+			})
+
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{ name = "cmdline" },
+				}),
+			})
+
+			require("luasnip.loaders.from_vscode").load()
+		end,
 	},
 }
