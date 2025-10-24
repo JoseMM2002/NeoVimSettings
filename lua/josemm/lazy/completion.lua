@@ -8,7 +8,6 @@ return {
 		"philosofonusus/ecolog.nvim",
 		opts = {
 			integrations = {
-				blink_cmp = true,
 				nvim_cmp = true,
 			},
 			shelter = {
@@ -102,7 +101,6 @@ return {
 			"philosofonusus/ecolog.nvim",
 			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
-			"fang2hou/blink-copilot",
 			"kristijanhusak/vim-dadbod-completion",
 			{
 				"zbirenbaum/copilot-cmp",
@@ -131,7 +129,12 @@ return {
 					},
 					{ name = "nvim_lsp_document_symbol" },
 					{ name = "nvim_lsp_signature_help" },
-					{ name = "buffer" },
+					{
+						name = "buffer",
+						get_bufnrs = function()
+							return vim.api.nvim_list_bufs()
+						end,
+					},
 					{ name = "luasnip" },
 					{
 						name = "path",
@@ -209,15 +212,29 @@ return {
 				},
 			})
 
+			local cmdline_preset = cmp.mapping.preset.cmdline({
+				["<Tab>"] = cmp.mapping({
+					i = function(fallback)
+						if cmp.visible() and cmp.get_active_entry() then
+							cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+						else
+							fallback()
+						end
+					end,
+					s = cmp.mapping.confirm({ select = true }),
+					c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+				}),
+			})
+
 			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
+				mapping = cmdline_preset,
 				sources = {
 					{ name = "buffer" },
 				},
 			})
 
 			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
+				mapping = cmdline_preset,
 				sources = cmp.config.sources({
 					{ name = "path" },
 				}, {

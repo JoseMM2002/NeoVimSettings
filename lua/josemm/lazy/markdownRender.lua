@@ -8,7 +8,7 @@ return {
 	opts = {},
 	config = function(_)
 		require("render-markdown").setup({
-			completions = { blink = { enabled = true }, lsp = { enabled = false } },
+			completions = { lsp = { enabled = false } },
 			file_types = { "Avante", "markdown", "copilot-chat", "codecompanion" },
 			latex = { enabled = false },
 		})
