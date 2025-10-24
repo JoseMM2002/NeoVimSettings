@@ -144,9 +144,7 @@ return {
 					},
 				},
 				formatting = {
-
-					fields = { "kind", "abbr", "menu" },
-
+					fields = { "abbr", "kind", "menu" },
 					format = function(entry, vim_item)
 						local kind = lspkind.cmp_format({
 							mode = "symbol_text",
