@@ -129,7 +129,7 @@ return {
 	},
 	{
 		"saghen/blink.cmp",
-		version = "*",
+		branch = "main",
 		dependencies = {
 			"Kaiser-Yang/blink-cmp-avante",
 			"onsails/lspkind.nvim",
@@ -189,7 +189,7 @@ return {
 				},
 			},
 			sources = {
-				default = { "avante", "ecolog", "lsp", "path", "snippets", "buffer", "copilot" },
+				default = { "lsp", "avante", "ecolog", "path", "snippets", "buffer", "copilot" },
 				per_filetype = {
 					sql = { "snippets", "dadbod", "snippets", "buffer", "copilot" },
 					codecompanion = { "codecompanion" },
