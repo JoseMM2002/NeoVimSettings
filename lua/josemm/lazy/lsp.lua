@@ -58,6 +58,30 @@ return {
 			},
 		},
 		config = function()
+			local diagnostic_signs = {
+				[vim.diagnostic.severity.ERROR] = "✘",
+				[vim.diagnostic.severity.WARN] = "▲",
+				[vim.diagnostic.severity.HINT] = "⚑",
+				[vim.diagnostic.severity.INFO] = "»",
+			}
+
+			local open_float = function()
+				vim.diagnostic.open_float({
+					border = "rounded",
+					prefix = function(diagnostic)
+						local sign = diagnostic_signs[diagnostic.severity] or "•"
+						local signHighlightGroup = {
+							[vim.diagnostic.severity.ERROR] = "DiagnosticError",
+							[vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+							[vim.diagnostic.severity.HINT] = "DiagnosticHint",
+							[vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+						}
+						return string.format("%s ", sign), signHighlightGroup[diagnostic.severity] or "DiagnosticOk"
+					end,
+					header = "",
+				})
+			end
+
 			capabilities = vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), capabilities)
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
@@ -76,15 +100,25 @@ return {
 					vim.lsp.buf.hover({ border = "rounded" })
 				end
 			end, { desc = "Hover symbol details" })
+			vim.keymap.set("n", "<Leader>e", function()
+				open_float()
+			end, { silent = true, desc = "Open diagnostics float" })
+			vim.keymap.set({ "n", "x" }, "]d", function()
+				vim.diagnostic.jump({ count = 1 })
+				vim.schedule(function()
+					open_float()
+				end)
+			end, { desc = "Jump to next diagnostic" })
+			vim.keymap.set({ "n", "x" }, "[d", function()
+				vim.diagnostic.jump({ count = -1 })
+				vim.schedule(function()
+					open_float()
+				end)
+			end, { desc = "Jump to prev diagnostic" })
 
 			vim.diagnostic.config({
 				signs = {
-					text = {
-						[vim.diagnostic.severity.ERROR] = "✘",
-						[vim.diagnostic.severity.WARN] = "▲",
-						[vim.diagnostic.severity.HINT] = "⚑",
-						[vim.diagnostic.severity.INFO] = "»",
-					},
+					text = diagnostic_signs,
 				},
 			})
 
@@ -132,40 +166,6 @@ return {
 			})
 
 			vim.lsp.enable({ "nushell" })
-		end,
-	},
-	{
-		"caliguIa/zendiagram.nvim",
-		config = function()
-			require("zendiagram").setup({
-				header = "Diagnostics", -- Float window title
-				source = true, -- Whether to display diagnostic source
-				relative = "line", -- "line"|"win" - What the float window's position is relative to
-				anchor = "NE", -- "NE"|"SE"|"SW"|"NW" - When 'relative' is set to "win" this sets the position of the floating window
-			})
-
-			local open_diagnostic = function()
-				require("zendiagram").open({ border = "rounded" })
-			end
-			vim.diagnostic.open_float = open_diagnostic
-
-			vim.keymap.set("n", "<Leader>e", function()
-				vim.diagnostic.open_float()
-			end, { silent = true, desc = "Open diagnostics float" })
-
-			vim.keymap.set({ "n", "x" }, "]d", function()
-				vim.diagnostic.jump({ count = 1 })
-				vim.schedule(function()
-					vim.diagnostic.open_float()
-				end)
-			end, { desc = "Jump to next diagnostic" })
-
-			vim.keymap.set({ "n", "x" }, "[d", function()
-				vim.diagnostic.jump({ count = -1 })
-				vim.schedule(function()
-					vim.diagnostic.open_float()
-				end)
-			end, { desc = "Jump to prev diagnostic" })
 		end,
 	},
 }
