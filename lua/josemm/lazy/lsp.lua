@@ -134,4 +134,38 @@ return {
 			vim.lsp.enable({ "nushell" })
 		end,
 	},
+	{
+		"caliguIa/zendiagram.nvim",
+		config = function()
+			require("zendiagram").setup({
+				header = "Diagnostics", -- Float window title
+				source = true, -- Whether to display diagnostic source
+				relative = "line", -- "line"|"win" - What the float window's position is relative to
+				anchor = "NE", -- "NE"|"SE"|"SW"|"NW" - When 'relative' is set to "win" this sets the position of the floating window
+			})
+
+			local open_diagnostic = function()
+				require("zendiagram").open({ border = "rounded" })
+			end
+			vim.diagnostic.open_float = open_diagnostic
+
+			vim.keymap.set("n", "<Leader>e", function()
+				vim.diagnostic.open_float()
+			end, { silent = true, desc = "Open diagnostics float" })
+
+			vim.keymap.set({ "n", "x" }, "]d", function()
+				vim.diagnostic.jump({ count = 1 })
+				vim.schedule(function()
+					vim.diagnostic.open_float()
+				end)
+			end, { desc = "Jump to next diagnostic" })
+
+			vim.keymap.set({ "n", "x" }, "[d", function()
+				vim.diagnostic.jump({ count = -1 })
+				vim.schedule(function()
+					vim.diagnostic.open_float()
+				end)
+			end, { desc = "Jump to prev diagnostic" })
+		end,
+	},
 }
