@@ -127,6 +127,10 @@ return {
 				end,
 			})
 
+			vim.lsp.config("postgres_lsp", {
+				root_markers = { "postgres-language-server.jsonc" },
+			})
+
 			vim.lsp.enable({ "nushell" })
 		end,
 	},
