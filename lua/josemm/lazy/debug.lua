@@ -56,8 +56,6 @@ return {
 		})
 		require("nvim-dap-virtual-text").setup()
 
-		dap.set_log_level("DEBUG")
-
 		dap.adapters = {
 			gdb = {
 				type = "executable",
