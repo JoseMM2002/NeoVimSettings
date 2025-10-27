@@ -10,6 +10,7 @@ return {
 			integrations = {
 				nvim_cmp = true,
 			},
+
 			shelter = {
 				configuration = {
 					partial_mode = {
@@ -29,6 +30,7 @@ return {
 					peek = true,
 				},
 			},
+
 			path = vim.fn.getcwd(),
 			provider_patterns = { extract = true, cmp = false },
 		},
@@ -36,6 +38,7 @@ return {
 			{ "<leader>ge", "<cmd>EcologGoto<cr>", desc = "Go to env file" },
 		},
 	},
+
 	{
 		"xzbdmw/colorful-menu.nvim",
 		config = function()
@@ -87,6 +90,24 @@ return {
 		end,
 	},
 	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
+		build = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip").filetype_extend("vue", { "typescript", "javascript", "html", "css" })
+		end,
+	},
+
+	{
+		"zbirenbaum/copilot-cmp",
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	},
+
+	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -99,17 +120,13 @@ return {
 			"onsails/lspkind.nvim",
 			"nvim-tree/nvim-web-devicons",
 			"philosofonusus/ecolog.nvim",
-			"rafamadriz/friendly-snippets",
 			"L3MON4D3/LuaSnip",
 			"kristijanhusak/vim-dadbod-completion",
-			{
-				"zbirenbaum/copilot-cmp",
-				config = function()
-					require("copilot_cmp").setup()
-				end,
-			},
+			"zbirenbaum/copilot-cmp",
+			"saadparwaiz1/cmp_luasnip",
 		},
 		event = { "InsertEnter", "CmdlineEnter" },
+
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
@@ -123,26 +140,31 @@ return {
 				sources = {
 					{
 						name = "nvim_lsp",
+						priority = 1000,
 					},
+					{ name = "luasnip", priority = 900 },
 					{
 						name = "ecolog",
+						priority = 800,
 					},
-					{ name = "nvim_lsp_document_symbol" },
-					{ name = "nvim_lsp_signature_help" },
+					{
+						name = "copilot",
+						priority = 100,
+					},
 					{
 						name = "buffer",
 						get_bufnrs = function()
 							return vim.api.nvim_list_bufs()
 						end,
+						priority = 50,
 					},
-					{ name = "luasnip" },
+					{ name = "nvim_lsp_document_symbol" },
+					{ name = "nvim_lsp_signature_help" },
 					{
 						name = "path",
 					},
-					{
-						name = "copilot",
-					},
 				},
+
 				formatting = {
 					fields = { "abbr", "kind", "menu" },
 					format = function(entry, vim_item)
@@ -162,10 +184,12 @@ return {
 						return vim_item
 					end,
 				},
+
 				window = {
 					completion = { border = "rounded" },
 					documentation = { border = "rounded" },
 				},
+
 				mapping = cmp.mapping.preset.insert({
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -203,6 +227,7 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
+
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
@@ -239,8 +264,6 @@ return {
 					{ name = "cmdline" },
 				}),
 			})
-
-			require("luasnip.loaders.from_vscode").load()
 		end,
 	},
 }
