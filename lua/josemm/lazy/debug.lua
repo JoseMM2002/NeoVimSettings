@@ -84,6 +84,11 @@ return {
 					},
 				},
 			},
+			go = {
+				type = "executable",
+				command = "node",
+				args = { os.getenv("HOME") .. "/vscode-go/extension/dist/debugAdapter.js" },
+			},
 		}
 
 		for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" }) do
@@ -207,6 +212,16 @@ return {
 		}
 		dap.configurations.cpp = dap.configurations.c
 		dap.configurations.rust = dap.configurations.c
+		dap.configurations.go = {
+			{
+				type = "go",
+				name = "Debug",
+				request = "launch",
+				showLog = false,
+				program = "${file}",
+				dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
+			},
+		}
 
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
