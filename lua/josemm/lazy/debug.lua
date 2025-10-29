@@ -1,7 +1,4 @@
 local continue = function()
-	if vim.fn.filereadable(".vscode/launch.json") then
-		require("dap.ext.vscode").load_launchjs()
-	end
 	require("dap").continue()
 end
 
@@ -86,11 +83,25 @@ return {
 					},
 				},
 			},
-			go = {
-				type = "executable",
-				command = "node",
-				args = { os.getenv("HOME") .. "/vscode-go/extension/dist/debugAdapter.js" },
-			},
+			go = function(callback, config)
+				if config.mode == "remote" and config.request == "attach" then
+					callback({
+						type = "server",
+						host = config.host or "127.0.0.1",
+						port = config.port or "38697",
+					})
+				else
+					callback({
+						type = "server",
+						port = "${port}",
+						executable = {
+							command = "dlv",
+							args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
+							detached = vim.fn.has("win32") == 0,
+						},
+					})
+				end
+			end,
 		}
 
 		for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" }) do
@@ -219,9 +230,16 @@ return {
 				type = "go",
 				name = "Debug",
 				request = "launch",
-				showLog = false,
+				showLog = true,
 				program = "${file}",
-				dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
+			},
+			{
+				name = "Launch Kualibot Server",
+				type = "go",
+				request = "launch",
+				mode = "debug",
+				program = "${workspaceFolder}/main.go",
+				cwd = "${workspaceFolder}",
 			},
 		}
 
