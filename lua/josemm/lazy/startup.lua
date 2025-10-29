@@ -111,6 +111,7 @@ return {
 		"nvim-telescope/telescope-file-browser.nvim",
 		"ColaMint/pokemon.nvim",
 	},
+	enabled = false,
 	config = function()
 		local settings = theme()
 		require("startup").setup(settings)
