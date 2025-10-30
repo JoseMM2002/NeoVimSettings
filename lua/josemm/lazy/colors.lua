@@ -21,7 +21,7 @@ return {
 		"rebelot/kanagawa.nvim",
 		config = function()
 			require("kanagawa").setup({})
-			vim.cmd("colorscheme kanagawa-dragon")
+			-- vim.cmd("colorscheme kanagawa-dragon")
 		end,
 	},
 	{
@@ -64,7 +64,7 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-			-- vim.cmd("colorscheme nordic")
+			vim.cmd("colorscheme nordic")
 		end,
 	},
 	{
@@ -75,5 +75,8 @@ return {
 	},
 	{
 		"webhooked/kanso.nvim",
+		config = function()
+			-- vim.cmd("colorscheme kanso-ink")
+		end,
 	},
 }
