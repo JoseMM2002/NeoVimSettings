@@ -14,6 +14,21 @@ local formatters = {
 		"sass",
 		"yaml",
 	},
+	rustywind = {
+		"javascript",
+		"typescript",
+		"vue",
+		"javascriptreact",
+		"typescriptreact",
+		"html",
+		"css",
+		"json",
+		"jsonc",
+		"scss",
+		"markdown",
+		"sass",
+		"yaml",
+	},
 	stylua = {
 		"lua",
 	},
@@ -47,7 +62,7 @@ return {
 					local result = {}
 					for formatter, filetypes in pairs(formatters) do
 						for _, filetype in ipairs(filetypes) do
-							result[filetype] = { formatter }
+							result[filetype] = vim.list_extend(result[filetype] or {}, { formatter })
 						end
 					end
 					return result
