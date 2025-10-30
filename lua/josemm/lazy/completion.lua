@@ -102,6 +102,7 @@ return {
 
 	{
 		"zbirenbaum/copilot-cmp",
+		dependencies = { "zbirenbaum/copilot.lua" },
 		config = function()
 			require("copilot_cmp").setup()
 		end,
@@ -149,14 +150,14 @@ return {
 					},
 					{
 						name = "copilot",
-						priority = 100,
+						priority = 10,
 					},
 					{
 						name = "buffer",
 						get_bufnrs = function()
 							return vim.api.nvim_list_bufs()
 						end,
-						priority = 50,
+						priority = 5,
 					},
 					{ name = "nvim_lsp_document_symbol" },
 					{ name = "nvim_lsp_signature_help" },
@@ -232,6 +233,21 @@ return {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
 					end,
+				},
+
+				sorting = {
+					priority_weight = 5,
+					comparatos = {
+						cmp.config.compare.offset,
+						cmp.config.compare.exact,
+						cmp.config.compare.score,
+						cmp.config.compare.recently_used,
+						cmp.config.compare.locality,
+						cmp.config.compare.kind,
+						cmp.config.compare.sort_text,
+						cmp.config.compare.length,
+						cmp.config.compare.order,
+					},
 				},
 			})
 
