@@ -18,7 +18,6 @@ local lsp_list = {
 	"clangd",
 	"vue_ls",
 	"eslint",
-	"postgres_lsp",
 }
 
 local capabilities = {
@@ -162,10 +161,12 @@ return {
 			})
 
 			vim.lsp.config("postgres_lsp", {
+				command = { "postgres-language-server", "lsp-proxy" },
+				filetypes = { "sql", "psql" },
 				root_markers = { "postgres-language-server.jsonc" },
 			})
 
-			vim.lsp.enable({ "nushell" })
+			vim.lsp.enable({ "nushell", "postgres_lsp" })
 		end,
 	},
 }
