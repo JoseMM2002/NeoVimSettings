@@ -2,6 +2,7 @@ local ensure_installed = {
 	"vimdoc",
 	"javascript",
 	"typescript",
+	"angular",
 	"c",
 	"lua",
 	"rust",

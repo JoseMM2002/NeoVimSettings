@@ -18,6 +18,7 @@ local lsp_list = {
 	"clangd",
 	"vue_ls",
 	"eslint",
+	"angularls",
 }
 
 local capabilities = {
