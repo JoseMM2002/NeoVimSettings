@@ -166,6 +166,9 @@ return {
 				filetypes = { "sql", "psql" },
 				root_markers = { "postgres-language-server.jsonc" },
 			})
+			vim.lsp.config("angularls", {
+				filetypes = { "typescript", "html", "htmlangular" },
+			})
 
 			vim.lsp.enable({ "nushell", "postgres_lsp" })
 		end,
