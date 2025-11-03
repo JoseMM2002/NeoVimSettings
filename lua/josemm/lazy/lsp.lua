@@ -3,7 +3,6 @@ local lsp_list = {
 	"rust_analyzer",
 	"gopls",
 	"basedpyright",
-	"ruff",
 	"html",
 	"tailwindcss",
 	"bashls",
