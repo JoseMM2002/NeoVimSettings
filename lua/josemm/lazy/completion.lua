@@ -197,7 +197,8 @@ return {
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
 					["<CR>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
+						local entry = cmp.get_selected_entry()
+						if entry then
 							if luasnip.expandable() then
 								luasnip.expand()
 							else
@@ -237,16 +238,33 @@ return {
 
 				sorting = {
 					priority_weight = 5,
-					comparatos = {
+					comparators = {
+						function(entry1, entry2)
+							local kind1 = entry1.source.name
+							local kind2 = entry2.source.name
+							if kind1 == "buffer" and kind2 ~= "buffer" then
+								return false
+							elseif kind1 ~= "bufffer" and kind2 == "buffer" then
+								return true
+							end
+						end,
+						function(entry1, entry2)
+							local kind1 = entry1.source.name
+							local kind2 = entry2.source.name
+							if kind1 == "copilot" and kind2 ~= "copilot" then
+								return false
+							elseif kind1 ~= "copilot" and kind2 == "copilot" then
+								return true
+							end
+						end,
+						cmp.config.compare.order,
 						cmp.config.compare.offset,
 						cmp.config.compare.exact,
 						cmp.config.compare.score,
 						cmp.config.compare.recently_used,
 						cmp.config.compare.locality,
 						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
 						cmp.config.compare.length,
-						cmp.config.compare.order,
 					},
 				},
 			})
