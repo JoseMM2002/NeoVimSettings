@@ -201,7 +201,8 @@ return {
 								luasnip.expand()
 							else
 								cmp.confirm({
-									select = true,
+									behavior = cmp.ConfirmBehavior.Replace,
+									select = false,
 								})
 							end
 						else
@@ -232,6 +233,12 @@ return {
 						luasnip.lsp_expand(args.body)
 					end,
 				},
+
+				experimental = {
+					ghost_text = true,
+				},
+
+				preselect = cmp.PreselectMode.None,
 			})
 
 			local cmdline_preset = cmp.mapping.preset.cmdline({
