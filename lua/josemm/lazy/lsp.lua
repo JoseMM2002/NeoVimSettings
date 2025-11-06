@@ -31,8 +31,10 @@ return {
 						end
 					end
 
-					for lsp, _ in pairs(MasonLsps) do
-						table.insert(ensure_installed, lsp)
+					for _, lsp in pairs(Lsps) do
+						if lsp.install ~= nil then
+							table.insert(ensure_installed, lsp.install)
+						end
 					end
 					return ensure_installed
 				end)(),
@@ -146,17 +148,15 @@ return {
 				filetypes = { "typescript", "html", "htmlangular" },
 			})
 
-			local enabled_lsps = (function()
+			vim.lsp.enable((function()
 				local result = {}
-				for _, lsp in pairs(MasonLsps) do
+				for lsp, _ in pairs(Lsps) do
 					if lsp ~= nil then
 						table.insert(result, lsp)
 					end
 				end
 				return result
-			end)()
-
-			vim.lsp.enable(vim.tbl_extend("force", {}, enabled_lsps, LocalLsps))
+			end)())
 		end,
 	},
 }
