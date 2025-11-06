@@ -1,34 +1,3 @@
-local lsp_list = {
-	"vtsls",
-	"rust_analyzer",
-	"gopls",
-	"basedpyright",
-	"html",
-	"tailwindcss",
-	"bashls",
-	"lua_ls",
-	"jsonls",
-	"cssls",
-	"zls",
-	"somesass_ls",
-	"jdtls",
-	"gradle_ls",
-	"prismals",
-	"clangd",
-	"vue_ls",
-	"eslint",
-	"angularls",
-}
-
-local capabilities = {
-	textDocument = {
-		foldingRange = {
-			dynamicRegistration = false,
-			lineFoldingOnly = true,
-		},
-	},
-}
-
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -43,7 +12,7 @@ return {
 				"mason-org/mason-lspconfig.nvim",
 				opts = {
 					automatic_enable = true,
-					ensure_installed = lsp_list,
+					ensure_installed = MasonLsps,
 				},
 			},
 			"hrsh7th/nvim-cmp",
@@ -81,7 +50,8 @@ return {
 				})
 			end
 
-			capabilities = vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), capabilities)
+			local capabilities =
+				vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), Capabilities)
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
@@ -169,7 +139,11 @@ return {
 				filetypes = { "typescript", "html", "htmlangular" },
 			})
 
-			vim.lsp.enable({ "nushell", "postgres_lsp" })
+			local lsps_to_enable = vim.tbl_filter(function(lsp)
+				return not vim.tbl_contains(DisabledLsps, lsp)
+			end, MasonLsps)
+
+			vim.lsp.enable(vim.tbl_extend("force", {}, lsps_to_enable, LocalLsps))
 		end,
 	},
 }

@@ -1,51 +1,3 @@
-local formatters = {
-	prettier = {
-		"javascript",
-		"typescript",
-		"vue",
-		"javascriptreact",
-		"typescriptreact",
-		"html",
-		"css",
-		"json",
-		"jsonc",
-		"scss",
-		"markdown",
-		"sass",
-		"yaml",
-	},
-	rustywind = {
-		"javascript",
-		"typescript",
-		"vue",
-		"javascriptreact",
-		"typescriptreact",
-		"html",
-		"css",
-		"json",
-		"jsonc",
-		"scss",
-		"markdown",
-		"sass",
-		"yaml",
-	},
-	stylua = {
-		"lua",
-	},
-	taplo = {
-		"toml",
-	},
-	shfmt = {
-		"sh",
-	},
-	sql_formatter = {
-		"sql",
-	},
-	gofmt = {
-		"go",
-	},
-}
-
 return {
 	{
 		"nmac427/guess-indent.nvim",
@@ -60,7 +12,7 @@ return {
 			conform.setup({
 				formatters_by_ft = (function()
 					local result = {}
-					for formatter, filetypes in pairs(formatters) do
+					for formatter, filetypes in pairs(Formatters) do
 						for _, filetype in ipairs(filetypes) do
 							result[filetype] = vim.list_extend(result[filetype] or {}, { formatter })
 						end
