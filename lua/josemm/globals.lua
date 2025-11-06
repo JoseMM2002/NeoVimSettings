@@ -36,56 +36,59 @@ Capabilities = {
 
 Formatters = {
 	prettier = {
-		"javascript",
-		"typescript",
-		"vue",
-		"javascriptreact",
-		"typescriptreact",
-		"html",
-		"css",
-		"json",
-		"jsonc",
-		"scss",
-		"markdown",
-		"sass",
-		"yaml",
+		name = "prettier",
+		filetypes = {
+			"javascript",
+			"typescript",
+			"vue",
+			"javascriptreact",
+			"typescriptreact",
+			"html",
+			"css",
+			"json",
+			"jsonc",
+			"scss",
+			"markdown",
+			"sass",
+			"yaml",
+		},
 	},
 	rustywind = {
-		"javascript",
-		"typescript",
-		"vue",
-		"javascriptreact",
-		"typescriptreact",
-		"html",
-		"css",
-		"json",
-		"jsonc",
-		"scss",
-		"markdown",
-		"sass",
-		"yaml",
+		name = "rustywind",
+		filetypes = {
+			"javascript",
+			"typescript",
+			"vue",
+			"javascriptreact",
+			"typescriptreact",
+			"html",
+			"css",
+			"json",
+			"jsonc",
+			"scss",
+			"markdown",
+			"sass",
+			"yaml",
+		},
 	},
 	stylua = {
-		"lua",
+		name = "stylua",
+		filetypes = { "lua" },
 	},
 	taplo = {
-		"toml",
+		name = "taplo",
+		filetypes = { "toml" },
 	},
 	shfmt = {
-		"sh",
+		name = "taplo",
+		filetypes = { "sh" },
 	},
 	sql_formatter = {
-		"sql",
+		name = "sql-formatter",
+		filetypes = { "sql" },
 	},
 	gofmt = {
-		"go",
+		name = nil,
+		filetypes = { "go" },
 	},
-}
-
-FormattersNameExceptions = {
-	sql_formatter = "sql-formatter",
-}
-
-LocalFormatters = {
-	"gofmt",
 }

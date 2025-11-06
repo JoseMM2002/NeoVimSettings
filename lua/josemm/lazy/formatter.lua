@@ -12,8 +12,8 @@ return {
 			conform.setup({
 				formatters_by_ft = (function()
 					local result = {}
-					for formatter, filetypes in pairs(Formatters) do
-						for _, filetype in ipairs(filetypes) do
+					for formatter, info_table in pairs(Formatters) do
+						for _, filetype in ipairs(info_table.filetypes) do
 							result[filetype] = vim.list_extend(result[filetype] or {}, { formatter })
 						end
 					end

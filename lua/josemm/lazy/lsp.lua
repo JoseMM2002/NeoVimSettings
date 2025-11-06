@@ -25,15 +25,10 @@ return {
 				ensure_installed = (function()
 					local ensure_installed = {}
 
-					for formatter, _ in pairs(Formatters) do
-						if FormattersNameExceptions[formatter] then
-							formatter = FormattersNameExceptions[formatter]
+					for _, info in pairs(Formatters) do
+						if info.name ~= nil then
+							table.insert(ensure_installed, info.name)
 						end
-						if vim.tbl_contains(LocalFormatters, formatter) then
-							goto continue
-						end
-						table.insert(ensure_installed, formatter)
-						::continue::
 					end
 
 					for lsp, _ in pairs(MasonLsps) do
