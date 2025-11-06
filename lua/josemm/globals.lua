@@ -19,6 +19,7 @@ Lsps = {
 	vue_ls = { install = "vue-language-server" },
 	zls = { install = "zls" },
 	nushell = { install = nil },
+	angularls = { install = "angular-language-server", disabled = true },
 }
 
 Capabilities = {

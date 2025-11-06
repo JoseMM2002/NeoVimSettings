@@ -150,8 +150,8 @@ return {
 
 			vim.lsp.enable((function()
 				local result = {}
-				for lsp, _ in pairs(Lsps) do
-					if lsp ~= nil then
+				for lsp, info in pairs(Lsps) do
+					if not info.disabled then
 						table.insert(result, lsp)
 					end
 				end
