@@ -26,8 +26,8 @@ return {
 					local ensure_installed = {}
 
 					for _, info in pairs(Formatters) do
-						if info.name ~= nil then
-							table.insert(ensure_installed, info.name)
+						if info.install ~= nil then
+							table.insert(ensure_installed, info.install)
 						end
 					end
 

@@ -32,7 +32,7 @@ Capabilities = {
 
 Formatters = {
 	prettier = {
-		name = "prettier",
+		install = "prettier",
 		filetypes = {
 			"javascript",
 			"typescript",
@@ -50,7 +50,7 @@ Formatters = {
 		},
 	},
 	rustywind = {
-		name = "rustywind",
+		install = "rustywind",
 		filetypes = {
 			"javascript",
 			"typescript",
@@ -68,23 +68,23 @@ Formatters = {
 		},
 	},
 	stylua = {
-		name = "stylua",
+		install = "stylua",
 		filetypes = { "lua" },
 	},
 	taplo = {
-		name = "taplo",
+		install = "taplo",
 		filetypes = { "toml" },
 	},
 	shfmt = {
-		name = "taplo",
+		install = "taplo",
 		filetypes = { "sh" },
 	},
 	sql_formatter = {
-		name = "sql-formatter",
+		install = "sql-formatter",
 		filetypes = { "sql" },
 	},
 	gofmt = {
-		name = nil,
+		install = nil,
 		filetypes = { "go" },
 	},
 }
