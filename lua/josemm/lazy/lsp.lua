@@ -8,15 +8,10 @@ return {
 					ui = { border = "rounded" },
 				},
 			},
-			{
-				"mason-org/mason-lspconfig.nvim",
-				opts = {
-					automatic_enable = true,
-					ensure_installed = MasonLsps,
-				},
-			},
+			"mason-org/mason-lspconfig.nvim",
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		init_options = {
 			userLanguages = {
@@ -26,6 +21,28 @@ return {
 			},
 		},
 		config = function()
+			require("mason-tool-installer").setup({
+				ensure_installed = (function()
+					local ensure_installed = {}
+
+					for formatter, _ in pairs(Formatters) do
+						if FormattersNameExceptions[formatter] then
+							formatter = FormattersNameExceptions[formatter]
+						end
+						if vim.tbl_contains(LocalFormatters, formatter) then
+							goto continue
+						end
+						table.insert(ensure_installed, formatter)
+						::continue::
+					end
+
+					for lsp, _ in pairs(MasonLsps) do
+						table.insert(ensure_installed, lsp)
+					end
+					return ensure_installed
+				end)(),
+			})
+
 			local diagnostic_signs = {
 				[vim.diagnostic.severity.ERROR] = "✘",
 				[vim.diagnostic.severity.WARN] = "▲",
@@ -130,20 +147,21 @@ return {
 				end,
 			})
 
-			vim.lsp.config("postgres_lsp", {
-				command = { "postgres-language-server", "lsp-proxy" },
-				filetypes = { "sql", "psql" },
-				root_markers = { "postgres-language-server.jsonc" },
-			})
 			vim.lsp.config("angularls", {
 				filetypes = { "typescript", "html", "htmlangular" },
 			})
 
-			local lsps_to_enable = vim.tbl_filter(function(lsp)
-				return not vim.tbl_contains(DisabledLsps, lsp)
-			end, MasonLsps)
+			local enabled_lsps = (function()
+				local result = {}
+				for _, lsp in pairs(MasonLsps) do
+					if lsp ~= nil then
+						table.insert(result, lsp)
+					end
+				end
+				return result
+			end)()
 
-			vim.lsp.enable(vim.tbl_extend("force", {}, lsps_to_enable, LocalLsps))
+			vim.lsp.enable(vim.tbl_extend("force", {}, enabled_lsps, LocalLsps))
 		end,
 	},
 }

@@ -1,32 +1,28 @@
 MasonLsps = {
-	"vtsls",
-	"rust_analyzer",
-	"gopls",
-	"basedpyright",
-	"html",
-	"tailwindcss",
-	"bashls",
-	"lua_ls",
-	"jsonls",
-	"cssls",
-	"zls",
-	"somesass_ls",
-	"jdtls",
-	"gradle_ls",
-	"prismals",
-	"clangd",
-	"vue_ls",
-	"eslint",
-	"angularls",
-}
-
-DisabledLsps = {
-	"angularls",
+	["angular-language-server"] = nil,
+	["basedpyright"] = "basedpyright",
+	["bash-language-server"] = "bashls",
+	["clangd"] = "clangd",
+	["css-lsp"] = "cssls",
+	["eslint-lsp"] = "eslint",
+	["gopls"] = "gopls",
+	["gradle-language-server"] = "gradle_ls",
+	["html-lsp"] = "html",
+	["jdtls"] = "jdtls",
+	["json-lsp"] = "jsonls",
+	["lua-language-server"] = "lua_ls",
+	["postgres-language-server"] = "postgres_lsp",
+	["prisma-language-server"] = "prismals",
+	["rust-analyzer"] = "rust_analyzer",
+	["some-sass-language-server"] = "somesass_ls",
+	["tailwindcss-language-server"] = "tailwindcss",
+	["vtsls"] = "vtsls",
+	["vue-language-server"] = "vue_ls",
+	["zls"] = "zls",
 }
 
 LocalLsps = {
 	"nushell",
-	"postgres_lsp",
 }
 
 Capabilities = {
@@ -84,4 +80,12 @@ Formatters = {
 	gofmt = {
 		"go",
 	},
+}
+
+FormattersNameExceptions = {
+	sql_formatter = "sql-formatter",
+}
+
+LocalFormatters = {
+	"gofmt",
 }
