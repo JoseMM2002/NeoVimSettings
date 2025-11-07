@@ -53,7 +53,7 @@ return {
 					},
 				},
 				file_selector = {
-					provider = "telescope",
+					provider = "snacks",
 				},
 				system_prompt = function()
 					local hub = require("mcphub").get_hub_instance()
