@@ -9,6 +9,22 @@ return {
 		opts = {
 			integrations = {
 				nvim_cmp = true,
+				snacks = {
+					shelter = {
+						mask_on_copy = false, -- Whether to mask values when copying
+					},
+					keys = {
+						copy_value = "<C-y>", -- Copy variable value to clipboard
+						copy_name = "<C-u>", -- Copy variable name to clipboard
+						append_value = "<C-a>", -- Append value at cursor position
+						append_name = "<CR>", -- Append name at cursor position
+						edit_var = "<C-e>", -- Edit environment variable
+					},
+					layout = { -- Any Snacks layout configuration
+						preset = "dropdown",
+						preview = false,
+					},
+				},
 			},
 
 			shelter = {
@@ -24,10 +40,10 @@ return {
 				},
 				modules = {
 					cmp = true,
-					telescope_previewer = true,
-					telescope = true,
 					files = false,
 					peek = true,
+					snacks_previewer = true,
+					snacks = true,
 				},
 			},
 
