@@ -53,7 +53,8 @@ return {
 					},
 				},
 				file_selector = {
-					provider = "snacks",
+					provider = "snacks", -- Avoid native provider issues
+					provider_opts = {},
 				},
 				system_prompt = function()
 					local hub = require("mcphub").get_hub_instance()

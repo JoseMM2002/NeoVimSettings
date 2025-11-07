@@ -11,7 +11,9 @@ return {
 				-- or leave it empty to use the default settings
 				-- refer to the configuration section below
 			},
+			input = { enabled = true },
 			picker = {
+				enabled = true,
 				matcher = { smart_case = true, fuzzy = true },
 				sources = {
 					gh_issue = {
@@ -30,6 +32,10 @@ return {
 			snacks.setup(opts)
 			local P = snacks.picker
 
+			vim.keymap.set("n", "<leader><space>", function()
+				P.smart()
+			end, { desc = "Smart Open" })
+
 			vim.keymap.set("n", "<leader>ff", function()
 				P.files({ hidden = true, ignored = true })
 			end, { desc = "Find files" })
@@ -38,9 +44,21 @@ return {
 				P.buffers({ sort_lastused = true })
 			end, { desc = "Find buffers" })
 
+			vim.keymap.set("n", "<leader>fc", function()
+				P.command_history({})
+			end, { desc = "Commands" })
+
 			vim.keymap.set("n", "<leader>fr", function()
 				P.grep({})
 			end, { desc = "Live grep" })
+
+			vim.keymap.set("n", "<leader>fR", function()
+				P.grep_buffers({})
+			end, { desc = "Recent files" })
+
+			vim.keymap.set("n", "<leader>fm", function()
+				P.marks({})
+			end, { desc = "Marks" })
 
 			vim.keymap.set("n", "<leader>fh", function()
 				P.help({})
