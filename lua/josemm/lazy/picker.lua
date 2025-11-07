@@ -5,6 +5,7 @@ return {
 			{ "nvim-tree/nvim-web-devicons" },
 			{ "tpope/vim-fugitive" },
 		},
+		---@type snacks.Config
 		opts = {
 			gh = {
 				-- your gh configuration comes here
@@ -27,82 +28,126 @@ return {
 				},
 			},
 		},
-		config = function(_, opts)
-			local snacks = require("snacks")
-			snacks.setup(opts)
-			local P = snacks.picker
-
-			vim.keymap.set("n", "<leader><space>", function()
-				P.smart()
-			end, { desc = "Smart Open" })
-
-			vim.keymap.set("n", "<leader>ff", function()
-				P.files({ hidden = true, ignored = true })
-			end, { desc = "Find files" })
-
-			vim.keymap.set("n", "<leader>fb", function()
-				P.buffers({ sort_lastused = true })
-			end, { desc = "Find buffers" })
-
-			vim.keymap.set("n", "<leader>fc", function()
-				P.command_history({})
-			end, { desc = "Commands" })
-
-			vim.keymap.set("n", "<leader>fr", function()
-				P.grep({})
-			end, { desc = "Live grep" })
-
-			vim.keymap.set("n", "<leader>fR", function()
-				P.grep_buffers({})
-			end, { desc = "Recent files" })
-
-			vim.keymap.set("n", "<leader>fm", function()
-				P.marks({})
-			end, { desc = "Marks" })
-
-			vim.keymap.set("n", "<leader>fh", function()
-				P.help({})
-			end, { desc = "Help" })
-
-			vim.keymap.set("n", "<leader>fs", function()
-				P.git_status({})
-			end, { desc = "Git status" })
-
-			vim.keymap.set("n", "<leader>fD", function()
-				P.diagnostics({})
-			end, { desc = "Diagnostics (workspace)" })
-
-			vim.keymap.set("n", "<leader>fd", function()
-				P.diagnostics_buffer({})
-			end, { desc = "Diagnostics (buffer)" })
-
-			vim.keymap.set("n", "<leader>fS", function()
-				P.lsp_symbols({})
-			end, { desc = "Symbols" })
-
-			vim.keymap.set("n", "gr", function()
-				P.lsp_references({})
-			end, { desc = "LSP refs" })
-
-			vim.keymap.set("n", "gd", function()
-				P.lsp_definitions({})
-			end, { desc = "LSP defs" })
-
-			vim.keymap.set("n", "<leader>tc", function()
-				P.colorschemes()
-			end, { desc = "Colorschemes" })
-
-			vim.keymap.set("n", "<leader>fn", function()
-				if P.registers then
-					P.registers()
-				end
-			end, { desc = "Registers" })
-
-			vim.keymap.set("n", "<leader>fu", function()
-				if P.undo then
-					P.undo()
-				end
-			end, { desc = "Undo history" })
-		end,
+		keys = {
+			{
+				"<leader>ff",
+				function()
+					Snacks.picker.files({ hidden = true, ignored = true })
+				end,
+				desc = "Find files",
+			},
+			{
+				"<leader>fb",
+				function()
+					Snacks.picker.buffers({ sort_lastused = true })
+				end,
+				desc = "Find buffers",
+			},
+			{
+				"<leader>fc",
+				function()
+					Snacks.picker.command_history({})
+				end,
+				desc = "Commands",
+			},
+			{
+				"<leader>fr",
+				function()
+					Snacks.picker.grep({})
+				end,
+				desc = "Live grep",
+			},
+			{
+				"<leader>fR",
+				function()
+					Snacks.picker.grep_buffers({})
+				end,
+				desc = "Recent files",
+			},
+			{
+				"<leader>fm",
+				function()
+					Snacks.picker.marks({})
+				end,
+				desc = "Marks",
+			},
+			{
+				"<leader>fh",
+				function()
+					Snacks.picker.help({})
+				end,
+				desc = "Help",
+			},
+			{
+				"<leader>fS",
+				function()
+					Snacks.picker.git_status({})
+				end,
+				desc = "Git status",
+			},
+			{
+				"<leader>fD",
+				function()
+					Snacks.picker.diagnostics({})
+				end,
+				desc = "Diagnostics (workspace)",
+			},
+			{
+				"<leader>fd",
+				function()
+					Snacks.picker.diagnostics_buffer({})
+				end,
+				desc = "Diagnostics (buffer)",
+			},
+			{
+				"<leader>fs",
+				function()
+					Snacks.picker.lsp_symbols({})
+				end,
+				desc = "Symbols",
+			},
+			{
+				"gr",
+				function()
+					Snacks.picker.lsp_references({})
+				end,
+				desc = "LSP refs",
+			},
+			{
+				"gd",
+				function()
+					Snacks.picker.lsp_definitions({})
+				end,
+				desc = "LSP defs",
+			},
+			{
+				"<leader>fC",
+				function()
+					Snacks.picker.colorschemes()
+				end,
+				desc = "Colorschemes",
+			},
+			{
+				"<leader>fn",
+				function()
+					Snacks.picker.registers()
+				end,
+				desc = "Registers",
+			},
+			{
+				"<leader>fu",
+				function()
+					Snacks.picker.undo()
+				end,
+				desc = "Undo history",
+			},
+			{
+				"<leader>fp",
+				function()
+					Snacks.picker.gh_pr()
+				end,
+				desc = "GitHub pull requests",
+			},
+		},
 	},
 }
