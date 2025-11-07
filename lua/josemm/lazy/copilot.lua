@@ -24,7 +24,7 @@ return {
 				provider = "copilot",
 				providers = {
 					copilot = {
-						model = "gpt-5", -- o1-preview | o1-mini | claude-3.5-sonnet
+						model = "gpt-5-codex", -- o1-preview | o1-mini | claude-3.5-sonnet
 					},
 				},
 				windows = {
@@ -56,6 +56,15 @@ return {
 					provider = "snacks", -- Avoid native provider issues
 					provider_opts = {},
 				},
+				input = {
+					provider = "snacks", -- "native" | "dressing" | "snacks"
+					provider_opts = {
+						-- Snacks input configuration
+						title = "Avante Input",
+						icon = " ",
+						placeholder = "Enter your API key...",
+					},
+				},
 				system_prompt = function()
 					local hub = require("mcphub").get_hub_instance()
 					return hub and hub:get_active_servers_prompt() or ""
@@ -70,7 +79,6 @@ return {
 		build = "make",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
-			"stevearc/dressing.nvim",
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
 			"ravitemer/mcphub.nvim",
