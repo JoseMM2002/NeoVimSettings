@@ -95,7 +95,7 @@ return {
 				select("@call.outer", "textobjects")
 			end)
 			vim.keymap.set({ "x", "o" }, "ic", function()
-				select("@call.outer", "textobjects")
+				select("@call.inner", "textobjects")
 			end)
 
 			-- Classes
