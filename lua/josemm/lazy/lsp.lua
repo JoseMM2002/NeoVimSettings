@@ -69,14 +69,12 @@ return {
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-
 			vim.keymap.set("n", "<leader>rn", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
 			vim.keymap.set("n", "<leader>ry", function()
 				vim.lsp.buf.rename(vim.fn.getreg('"'))
 			end, { desc = "Rename symbol with registry" })
-
 			vim.keymap.set("n", "K", function()
 				local winid = require("ufo").peekFoldedLinesUnderCursor()
 				if not winid then
@@ -98,24 +96,20 @@ return {
 					open_float()
 				end)
 			end, { desc = "Jump to prev diagnostic" })
-
 			vim.diagnostic.config({
 				signs = {
 					text = diagnostic_signs,
 				},
 			})
-
 			vim.lsp.config("*", { capabilities })
 			local vue_typescript_plugin = vim.fn.stdpath("data")
 				.. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
-
 			local vue_plugin = {
 				name = "@vue/typescript-plugin",
 				location = vue_typescript_plugin,
 				languages = { "vue" },
 				configNamespace = "typescript",
 			}
-
 			vim.lsp.config("vtsls", {
 				settings = {
 					vtsls = {
@@ -128,14 +122,12 @@ return {
 				},
 				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 			})
-
 			local base_on_attach = vim.lsp.config.eslint.on_attach
 			vim.lsp.config("eslint", {
 				on_attach = function(client, bufnr)
 					if not base_on_attach then
 						return
 					end
-
 					base_on_attach(client, bufnr)
 					vim.api.nvim_create_autocmd("BufWritePre", {
 						buffer = bufnr,
@@ -143,11 +135,9 @@ return {
 					})
 				end,
 			})
-
 			vim.lsp.config("angularls", {
 				filetypes = { "typescript", "html", "htmlangular" },
 			})
-
 			vim.lsp.enable((function()
 				local result = {}
 				for lsp, info in pairs(Lsps) do
