@@ -1,6 +1,9 @@
 return {
 	{
 		"zbirenbaum/copilot.lua",
+		dependencies = {
+			"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+		},
 		config = function()
 			require("copilot").setup({
 				panel = { enabled = false },
@@ -9,7 +12,7 @@ return {
 					auto_trigger = false,
 					trigger_on_accept = false,
 				},
-				copilot_model = "gpt-5-mini",
+				copilot_model = "claude-haiku-4.5",
 				markdown = true,
 				help = true,
 			})
