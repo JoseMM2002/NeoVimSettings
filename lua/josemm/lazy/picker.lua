@@ -5,29 +5,6 @@ return {
 			{ "nvim-tree/nvim-web-devicons" },
 			{ "tpope/vim-fugitive" },
 		},
-		---@type snacks.Config
-		opts = {
-			gh = {
-				-- your gh configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			},
-			input = { enabled = true },
-			picker = {
-				enabled = true,
-				matcher = { smart_case = true, fuzzy = true },
-				sources = {
-					gh_issue = {
-						-- your gh_issue picker configuration comes here
-						-- or leave it empty to use the default settings
-					},
-					gh_pr = {
-						-- your gh_pr picker configuration comes here
-						-- or leave it empty to use the default settings
-					},
-				},
-			},
-		},
 		keys = {
 			{
 				"<leader>ff",
@@ -128,7 +105,7 @@ return {
 				desc = "Colorschemes",
 			},
 			{
-				"<leader>fn",
+				"<leader>fN",
 				function()
 					Snacks.picker.registers()
 				end,
@@ -148,6 +125,49 @@ return {
 				end,
 				desc = "GitHub pull requests",
 			},
+			{
+				"<leader>fn",
+				function()
+					vim.cmd("SnacksNotifications")
+				end,
+				desc = "Notifications",
+			},
 		},
+		config = function()
+			require("snacks").setup({
+				gh = {
+					-- your gh configuration comes here
+					-- or leave it empty to use the default settings
+					-- refer to the configuration section below
+				},
+				input = { enabled = true },
+				picker = {
+					enabled = true,
+					matcher = { smart_case = true, fuzzy = true },
+					sources = {
+						gh_issue = {
+							-- your gh_issue picker configuration comes here
+							-- or leave it empty to use the default settings
+						},
+						gh_pr = {
+							-- your gh_pr picker configuration comes here
+							-- or leave it empty to use the default settings
+						},
+					},
+				},
+			})
+		end,
+	},
+	{
+		"JoseMM2002/snacks-nvim-notify",
+		dependencies = { "folke/snacks.nvim", "rcarriga/nvim-notify" },
+		config = function()
+			require("snacks-nvim-notify").setup({
+				width = 0.6,
+				height = 0.5,
+				border = "rounded",
+				truncate_width = 70,
+			})
+		end,
 	},
 }
