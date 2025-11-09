@@ -64,7 +64,7 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd("colorscheme nordic")
+			-- vim.cmd("colorscheme nordic")
 		end,
 	},
 	{
@@ -76,7 +76,7 @@ return {
 	{
 		"webhooked/kanso.nvim",
 		config = function()
-			-- vim.cmd("colorscheme kanso-ink")
+			vim.cmd("colorscheme kanso")
 		end,
 	},
 }
