@@ -188,6 +188,14 @@ return {
 			vim.keymap.set({ "x", "o" }, "iq", function()
 				select("@quote.inner", "textobjects")
 			end)
+
+			-- Return
+			vim.keymap.set({ "x", "o" }, "ar", function()
+				select("@return.outer", "textobjects")
+			end)
+			vim.keymap.set({ "x", "o" }, "ir", function()
+				select("@return.inner", "textobjects")
+			end)
 		end,
 	},
 }
