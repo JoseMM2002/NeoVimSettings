@@ -1,3 +1,3 @@
 ; extends
 ((string) @quote.outer)
-((string_content) @quote.inner)
+(string ((string_content) @quote.inner (interpolation)? @quote.inner)*)
