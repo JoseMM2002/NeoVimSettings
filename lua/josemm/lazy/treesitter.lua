@@ -44,6 +44,121 @@ local ensure_installed = {
 	"xml",
 }
 
+local queries_objects = {
+	{
+		suffix = "f",
+		textobject = { "function", {
+			{ suffix = "a", name = "outer" },
+			{ suffix = "i", name = "inner" },
+		} },
+	},
+	{
+		suffix = "c",
+		textobject = {
+			"call",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "/",
+		textobject = {
+			"comment",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "@",
+		textobject = {
+			"decorator",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "?",
+		textobject = {
+			"conditional",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "b",
+		textobject = {
+			"block",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "p",
+		textobject = {
+			"param",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "=",
+		textobject = {
+			"set",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "r", name = "rhs" },
+				{ suffix = "l", name = "lhs" },
+			},
+		},
+	},
+	{
+		suffix = "q",
+		textobject = {
+			"quote",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "r",
+		textobject = {
+			"return",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+			},
+		},
+	},
+	{
+		suffix = "o",
+		textobject = {
+			"object",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+				{ suffix = "f", name = "field" },
+				{ suffix = "p", name = "key" },
+				{ suffix = "v", name = "value" },
+				{ suffix = "t", name = "type" },
+			},
+		},
+	},
+}
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -71,125 +186,37 @@ return {
 			require("nvim-treesitter-textobjects").setup({
 				select = {
 					lookahead = true,
-					selection_modes = {
-						["@parameter.outer"] = "v", -- charwise
-						["@function.outer"] = "V", -- linewise
-						["@class.outer"] = "<c-v>", -- blockwise
-					},
-					include_surrounding_whitespace = false,
+					include_surrounding_whitespace = true,
+				},
+				move = {
+					set_jumps = true,
 				},
 			})
 
 			local select = require("nvim-treesitter-textobjects.select").select_textobject
+			local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+			local next = require("nvim-treesitter-textobjects.move").goto_next
+			local previous = require("nvim-treesitter-textobjects.move").goto_previous
 
-			-- Functions
+			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 
-			--Calls
-			vim.keymap.set({ "x", "o" }, "ac", function()
-				select("@call.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "ic", function()
-				select("@call.inner", "textobjects")
-			end)
-
-			-- Classes
-			vim.keymap.set({ "x", "o" }, "aC", function()
-				select("@class.outer", "textobjects")
-			end, { desc = "Around class" })
-			vim.keymap.set({ "x", "o" }, "iC", function()
-				select("@class.inner", "textobjects")
-			end, { desc = "Inside class" })
-
-			-- Loops
-			vim.keymap.set({ "x", "o" }, "al", function()
-				select("@loop.outer", "textobjects")
-			end, { desc = "Around loop" })
-			vim.keymap.set({ "x", "o" }, "il", function()
-				select("@loop.inner", "textobjects")
-			end, { desc = "Inside loop" })
-
-			-- Comments
-			vim.keymap.set({ "x", "o" }, "a/", function()
-				select("@comment.outer", "textobjects")
-			end, { desc = "Around comment" })
-			vim.keymap.set({ "x", "o" }, "i/", function()
-				select("@comment.inner", "textobjects")
-			end, { desc = "Inside comment" })
-
-			-- Attributes / decorators
-			vim.keymap.set({ "x", "o" }, "a@", function()
-				select("@attribute.outer", "textobjects")
-			end, { desc = "Around attribute/decorator" })
-			vim.keymap.set({ "x", "o" }, "i@", function()
-				select("@attribute.inner", "textobjects")
-			end, { desc = "Inside attribute/decorator" })
-
-			-- Frames (try/catch/with depending on language queries)
-			vim.keymap.set({ "x", "o" }, "aF", function()
-				select("@frame.outer", "textobjects")
-			end, { desc = "Around frame" })
-			vim.keymap.set({ "x", "o" }, "iF", function()
-				select("@frame.inner", "textobjects")
-			end, { desc = "Inside frame" })
-
-			-- Conditionals
-			vim.keymap.set({ "x", "o" }, "a?", function()
-				select("@conditional.outer", "textobjects")
-			end, { desc = "Around conditional" })
-			vim.keymap.set({ "x", "o" }, "i?", function()
-				select("@conditional.inner", "textobjects")
-			end, { desc = "Inside conditional" })
-
-			--Blocks
-			vim.keymap.set({ "x", "o" }, "ab", function()
-				select("@block.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "ib", function()
-				select("@block.inner", "textobjects")
-			end)
-
-			--Scope
-			vim.keymap.set({ "x", "o" }, "as", function()
-				select("@local.scope", "locals")
-			end)
-
-			-- Parameters
-			vim.keymap.set({ "x", "o" }, "ip", function()
-				select("@parameter.inner", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "ap", function()
-				select("@parameter.outer", "textobjects")
-			end)
-
-			-- Assignments
-			vim.keymap.set({ "x", "o" }, "a=", function()
-				select("@assignment.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "r=", function()
-				select("@assignment.rhs", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "i=", function()
-				select("@assignment.inner", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "l=", function()
-				select("@assignment.lhs", "textobjects")
-			end)
-
-			-- Quotes
-			vim.keymap.set({ "x", "o" }, "aq", function()
-				select("@quote.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "iq", function()
-				select("@quote.inner", "textobjects")
-			end)
-
-			-- Return
-			vim.keymap.set({ "x", "o" }, "ar", function()
-				select("@return.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "ir", function()
-				select("@return.inner", "textobjects")
-			end)
+			for _, obj in ipairs(queries_objects) do
+				local textobject = obj.textobject[1]
+				for _, part in ipairs(obj.textobject[2]) do
+					local composed_object = "@" .. textobject .. "." .. part.name
+					local motion = part.suffix .. obj.suffix
+					vim.keymap.set({ "x", "o" }, motion, function()
+						select(composed_object, "textobjects")
+					end)
+					vim.keymap.set("n", "m" .. motion, function()
+						next(composed_object)
+					end)
+					vim.keymap.set("n", "M" .. motion, function()
+						previous(composed_object)
+					end)
+				end
+			end
 		end,
 	},
 }
