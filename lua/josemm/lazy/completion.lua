@@ -165,10 +165,6 @@ return {
 						priority = 800,
 					},
 					{
-						name = "copilot",
-						priority = 10,
-					},
-					{
 						name = "buffer",
 						get_bufnrs = function()
 							return vim.api.nvim_list_bufs()

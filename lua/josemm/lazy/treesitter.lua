@@ -83,12 +83,6 @@ return {
 			local select = require("nvim-treesitter-textobjects.select").select_textobject
 
 			-- Functions
-			vim.keymap.set({ "x", "o" }, "af", function()
-				select("@function.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "if", function()
-				select("@function.inner", "textobjects")
-			end)
 
 			--Calls
 			vim.keymap.set({ "x", "o" }, "ac", function()
