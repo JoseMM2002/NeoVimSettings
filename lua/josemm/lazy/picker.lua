@@ -9,7 +9,7 @@ return {
 			{
 				"<leader>ff",
 				function()
-					Snacks.picker.files({ hidden = true, ignored = true })
+					Snacks.picker.files({ hidden = true, ignored = false })
 				end,
 				desc = "Find files",
 			},
