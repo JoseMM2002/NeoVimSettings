@@ -77,7 +77,7 @@ Formatters = {
 		filetypes = { "toml" },
 	},
 	shfmt = {
-		install = "taplo",
+		install = "shfmt",
 		filetypes = { "sh" },
 	},
 	sql_formatter = {
