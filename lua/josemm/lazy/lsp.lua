@@ -32,8 +32,15 @@ return {
 					end
 
 					for _, lsp in pairs(Lsps) do
+						local lsp_installation = {}
 						if lsp.install ~= nil then
-							table.insert(ensure_installed, lsp.install)
+							if lsp.version ~= nil then
+								lsp_installation = { lsp.install, version = lsp.version }
+							else
+								---@diagnostic disable-next-line: cast-local-type
+								lsp_installation = lsp.install
+							end
+							table.insert(ensure_installed, lsp_installation)
 						end
 					end
 					return ensure_installed
