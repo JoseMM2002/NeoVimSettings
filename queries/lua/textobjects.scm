@@ -5,7 +5,7 @@
 
 (table_constructor) @object.outer
 (table_constructor (","? @object.inner (_) @object.inner)*)
-(table_constructor  (field) @object.field . ","? @object.field . (comment)? @object.field)
+(table_constructor  (field) @object.value . ","? @object.value . (comment)? @object.value)
 (table_constructor
     (field
         name: (_) @object.key
