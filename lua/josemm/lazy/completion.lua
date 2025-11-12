@@ -117,14 +117,6 @@ return {
 	},
 
 	{
-		"zbirenbaum/copilot-cmp",
-		dependencies = { "zbirenbaum/copilot.lua" },
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	},
-
-	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
@@ -139,7 +131,6 @@ return {
 			"philosofonusus/ecolog.nvim",
 			"L3MON4D3/LuaSnip",
 			"kristijanhusak/vim-dadbod-completion",
-			"zbirenbaum/copilot-cmp",
 			"saadparwaiz1/cmp_luasnip",
 		},
 		event = { "InsertEnter", "CmdlineEnter" },
@@ -163,13 +154,6 @@ return {
 					{
 						name = "ecolog",
 						priority = 800,
-					},
-					{
-						name = "buffer",
-						get_bufnrs = function()
-							return vim.api.nvim_list_bufs()
-						end,
-						priority = 5,
 					},
 					{ name = "nvim_lsp_document_symbol" },
 					{ name = "nvim_lsp_signature_help" },

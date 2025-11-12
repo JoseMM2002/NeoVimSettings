@@ -5,17 +5,27 @@ return {
 			"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
 		},
 		config = function()
+			local suggestion = require("copilot.suggestion")
 			require("copilot").setup({
 				panel = { enabled = false },
 				suggestion = {
-					enabled = false,
-					auto_trigger = false,
+					enabled = true,
+					auto_trigger = true,
 					trigger_on_accept = false,
+					keymap = {
+						accept = "<Tab>",
+						next = "<C-[>",
+						prev = "<C-]>",
+						dismiss = "<C-e>",
+					},
 				},
-				copilot_model = "claude-haiku-4.5",
 				markdown = true,
 				help = true,
 			})
+			vim.keymap.set("i", "<C-c>", function()
+				suggestion.dismiss()
+				vim.cmd("stopinsert")
+			end, { desc = "Dismiss copilot suggestion on insert mode leave" })
 		end,
 	},
 	{
