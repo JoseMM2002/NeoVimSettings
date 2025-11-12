@@ -16,6 +16,8 @@ return {
 						accept = "<Tab>",
 						next = "<C-[>",
 						prev = "<C-]>",
+						accept_word = "<C-w>",
+						accept_line = "<C-l>",
 						dismiss = "<C-e>",
 					},
 				},
@@ -95,6 +97,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
 			"ravitemer/mcphub.nvim",
+			"folke/snacks.nvim",
 			{
 				-- support for image pasting
 				"HakonHarnes/img-clip.nvim",
@@ -116,6 +119,32 @@ return {
 				"MeanderingProgrammer/render-markdown.nvim",
 			},
 		},
+		keys = function(_, keys)
+			local avante = require("avante.api")
+
+			local mappings = {
+				{
+					"<leader>aa",
+					function()
+						avante.toggle()
+					end,
+					desc = "avante: ask",
+					mode = { "n", "v" },
+				},
+				{
+					"<leader>ae",
+					function()
+						require("avante.api").edit()
+					end,
+					desc = "avante: edit",
+					mode = { "n", "v" },
+				},
+			}
+			mappings = vim.tbl_filter(function(m)
+				return m[1] and #m[1] > 0
+			end, mappings)
+			return vim.list_extend(mappings, keys)
+		end,
 	},
 	{
 		"ravitemer/mcphub.nvim",
