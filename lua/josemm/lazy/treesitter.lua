@@ -47,10 +47,14 @@ local ensure_installed = {
 local queries_objects = {
 	{
 		suffix = "f",
-		textobject = { "function", {
-			{ suffix = "a", name = "outer" },
-			{ suffix = "i", name = "inner" },
-		} },
+		textobject = {
+			"function",
+			{
+				{ suffix = "a", name = "outer" },
+				{ suffix = "i", name = "inner" },
+				{ suffix = "r", name = "return" },
+			},
+		},
 	},
 	{
 		suffix = "c",
@@ -109,6 +113,7 @@ local queries_objects = {
 			{
 				{ suffix = "a", name = "outer" },
 				{ suffix = "i", name = "inner" },
+				{ suffix = "t", name = "type" },
 			},
 		},
 	},
@@ -120,6 +125,7 @@ local queries_objects = {
 				{ suffix = "a", name = "outer" },
 				{ suffix = "r", name = "rhs" },
 				{ suffix = "l", name = "lhs" },
+				{ suffix = "t", name = "type" },
 			},
 		},
 	},
@@ -154,6 +160,7 @@ local queries_objects = {
 				{ suffix = "p", name = "key" },
 				{ suffix = "v", name = "value" },
 				{ suffix = "t", name = "type" },
+				{ suffix = "s", name = "scope" },
 			},
 		},
 	},
@@ -195,8 +202,8 @@ return {
 
 			local select = require("nvim-treesitter-textobjects.select").select_textobject
 			local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
-			local next = require("nvim-treesitter-textobjects.move").goto_next
-			local previous = require("nvim-treesitter-textobjects.move").goto_previous
+			local next = require("nvim-treesitter-textobjects.move").goto_next_start
+			local previous = require("nvim-treesitter-textobjects.move").goto_previous_start
 
 			vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
 			vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)

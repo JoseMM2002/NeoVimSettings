@@ -55,7 +55,7 @@
     (comment)? @object.inner)*
 )
 
-(var_spec name:(_) @set.lhs value: (_) @set.rhs) @set.outer
+(var_spec name:(_)  @set.lhs type: (_)? @set.type value: (_)? @set.rhs) @set.outer
 (short_var_declaration left: (_) @set.lhs right: (_) @set.rhs) @set.outer
 (assignment_statement left: (_) @set.lhs right: (_) @set.rhs) @set.outer
 
@@ -65,7 +65,12 @@
     ","? @param.outer
 )
 (parameter_list
-    (_) @param.inner @param.outer
+    (parameter_declaration
+        type: (_) @param.type
+    ) @param.inner @param.outer
     .
     ","? @param.outer
 )
+
+(func_literal result: (_) @function.return)
+(function_declaration result: (_) @function.return)

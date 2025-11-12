@@ -30,9 +30,11 @@
 )
 (object_type ((_) @object.inner ";"? @object.inner)*)
 
-(type_arguments ","? @param.outer (_) @param.inner @param.outer)
-(arguments ","? @param.outer (_) @param.inner @param.outer)
-(formal_parameters ","? @param.outer (_) @param.inner @param.outer)
+(type_arguments (_) @param.inner @param.outer . ","? @param.outer)
+(arguments (_) @param.inner @param.outer . ","? @param.outer)
+(formal_parameters (required_parameter
+    type: (_) @param.type
+) @param.inner @param.outer . ","? @param.outer)
 
 (ternary_expression condition: (_) @conditional.inner) @conditional.outer
 
@@ -42,7 +44,8 @@
 ) @set.outer
 (variable_declarator
     name: (_) @set.lhs
-    value: (_) @set.rhs
+    type: (type_annotation (_)? @set.type)?
+    value: (_)? @set.rhs
 ) @set.outer
 (type_alias_declaration
     name: (_) @set.lhs
