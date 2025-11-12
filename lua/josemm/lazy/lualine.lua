@@ -24,7 +24,48 @@ end
 return {
 	{
 		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			{
+				"SmiteshP/nvim-navic",
+				opts = {
+					highlight = true,
+					lsp = { auto_attach = true },
+					icons = {
+						File = " ",
+						Module = " ",
+						Namespace = " ",
+						Package = " ",
+						Class = " ",
+						Method = " ",
+						Property = " ",
+						Field = " ",
+						Constructor = " ",
+						Enum = " ",
+						Interface = " ",
+						Function = " ",
+						Variable = " ",
+						Constant = " ",
+						String = " ",
+						Number = " ",
+						Boolean = " ",
+						Array = " ",
+						Object = " ",
+						Key = " ",
+						Null = " ",
+						EnumMember = " ",
+						Struct = " ",
+						Event = " ",
+						Operator = " ",
+						TypeParameter = " ",
+					},
+				},
+				config = function(_, opts)
+					require("nvim-navic").setup(opts)
+				end,
+			},
+		},
 		config = function()
+			local navic = require("nvim-navic")
 			require("lualine").setup({
 				options = {
 					component_separators = "",
@@ -43,6 +84,14 @@ return {
 					lualine_c = {
 						"diff",
 						"diagnostics",
+						{
+							function()
+								return navic.get_location()
+							end,
+							cond = function()
+								return navic.is_available()
+							end,
+						},
 					},
 					lualine_x = {},
 					lualine_y = { "filetype" },
@@ -50,6 +99,7 @@ return {
 						{ "location", separator = { left = "", right = "" } },
 					},
 				},
+
 				inactive_sections = {
 					lualine_a = { "filename" },
 					lualine_b = {},

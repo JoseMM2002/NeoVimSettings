@@ -29,6 +29,7 @@ Capabilities = {
 			lineFoldingOnly = true,
 		},
 	},
+	documentSymbolProvider = true,
 }
 
 Formatters = {
