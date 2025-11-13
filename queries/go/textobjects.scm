@@ -1,10 +1,7 @@
 ; extends
-((interpreted_string_literal) @quote.outer)
-((raw_string_literal) @quote.outer)
-((interpreted_string_literal) (interpreted_string_literal_content) @quotes.inner)
-((raw_string_literal)(raw_string_literal_content) @quote.inner)
+(interpreted_string_literal (interpreted_string_literal_content) @quote.inner) @quote.outer
+(raw_string_literal(raw_string_literal_content) @quote.inner) @quote.outer
 
-(composite_literal (literal_value) @object.outer) 
 (composite_literal
     (literal_value
         (keyed_element
@@ -14,7 +11,7 @@
         .
         ","? @object.field
     )
-)
+) @object.outer
 (composite_literal
     (literal_value
         (literal_element) @object.value
