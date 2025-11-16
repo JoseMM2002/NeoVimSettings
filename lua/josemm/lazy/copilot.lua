@@ -13,10 +13,10 @@ return {
 					auto_trigger = true,
 					trigger_on_accept = false,
 					keymap = {
-						accept = "<Tab>",
+						accept = "<C-j>",
 						next = "<C-[>",
 						prev = "<C-]>",
-						accept_word = "<C-w>",
+						accept_word = "<C-k>",
 						accept_line = "<C-l>",
 						dismiss = "<C-e>",
 					},
