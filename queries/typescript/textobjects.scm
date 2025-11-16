@@ -1,6 +1,6 @@
 ;; queries/typescript/textobjects.scm
 ; extends
-(template_string (_)* @quote.inner) @quote.outer
+(template_string ((string_fragment)? @quote.inner . (template_substitution)? @quote.inner)*) @quote.outer
 (string (string_fragment) @quote.inner) @quote.outer
 
 (object) @object.outer
