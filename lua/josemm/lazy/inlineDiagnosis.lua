@@ -9,6 +9,9 @@ return {
 				break_line = {
 					enabled = true,
 				},
+				show_source = {
+					enabled = true,
+				},
 			},
 		})
 	end,
