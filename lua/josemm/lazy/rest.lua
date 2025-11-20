@@ -8,8 +8,8 @@ return {
 		},
 		ft = { "http", "rest" },
 		opts = {
-			global_keymaps = false,
-			global_keymaps_prefix = "<leader>R",
+			global_keymaps = true,
+			global_keymaps_prefix = "<leader>r",
 			kulala_keymaps_prefix = "",
 		},
 	},
