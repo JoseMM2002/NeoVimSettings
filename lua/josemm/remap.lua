@@ -24,10 +24,10 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true, desc = "
 vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true, desc = "Move to right window" })
 vim.keymap.set("i", "<Esc>", "<C-c>", { noremap = true, silent = true, desc = "Exit insert mode" })
 
-vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]], { desc = "Make window bigger vertically" }) -- make the window bigger vertically
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]], { desc = "Make window smaller vertically" }) -- make the window smaller vertically
+vim.keymap.set("n", "<C-->", [[<cmd>horizontal resize +2<cr>]], { desc = "Make window bigger horizontally" }) -- make the window bigger horizontally by pressing shift and -
+vim.keymap.set("n", "<C-=>", [[<cmd>horizontal resize -2<cr>]], { desc = "Make window smaller horizontally" }) -- make the window smaller horizontally by pressing shift and =
 
 vim.keymap.set("n", "<leader>q", function()
 	vim.cmd("quitall")

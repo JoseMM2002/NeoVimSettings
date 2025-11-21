@@ -50,9 +50,9 @@ local queries_objects = {
 		textobject = {
 			"function",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
-				{ suffix = "r", name = "return" },
+				{ suffix = "a", name = "outer", description = "around function" },
+				{ suffix = "i", name = "inner", description = "inside function" },
+				{ suffix = "r", name = "return", description = "function return type" },
 			},
 		},
 	},
@@ -61,8 +61,8 @@ local queries_objects = {
 		textobject = {
 			"call",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", description = "around call" },
+				{ suffix = "i", name = "inner", description = "inside call" },
 			},
 		},
 	},
@@ -71,8 +71,8 @@ local queries_objects = {
 		textobject = {
 			"comment",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", desciption = "around comment" },
+				{ suffix = "i", name = "inner", description = "inside comment" },
 			},
 		},
 	},
@@ -81,8 +81,8 @@ local queries_objects = {
 		textobject = {
 			"decorator",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", description = "around decorator" },
+				{ suffix = "i", name = "inner", description = "inside decorator" },
 			},
 		},
 	},
@@ -91,8 +91,8 @@ local queries_objects = {
 		textobject = {
 			"conditional",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", description = "around conditional" },
+				{ suffix = "i", name = "inner", description = "inside conditional" },
 			},
 		},
 	},
@@ -101,19 +101,19 @@ local queries_objects = {
 		textobject = {
 			"block",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", description = "around block" },
+				{ suffix = "i", name = "inner", description = "inside block" },
 			},
 		},
 	},
 	{
-		suffix = "p",
+		suffix = "a",
 		textobject = {
 			"param",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
-				{ suffix = "t", name = "type" },
+				{ suffix = "a", name = "outer", description = "around parameter" },
+				{ suffix = "i", name = "inner", description = "inside parameter" },
+				{ suffix = "t", name = "type", description = "parameter type" },
 			},
 		},
 	},
@@ -122,10 +122,10 @@ local queries_objects = {
 		textobject = {
 			"set",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "r", name = "rhs" },
-				{ suffix = "l", name = "lhs" },
-				{ suffix = "t", name = "type" },
+				{ suffix = "a", name = "outer", description = "around assignment" },
+				{ suffix = "r", name = "rhs", description = "right-hand side" },
+				{ suffix = "l", name = "lhs", description = "left-hand side" },
+				{ suffix = "t", name = "type", description = "assigned type" },
 			},
 		},
 	},
@@ -134,8 +134,8 @@ local queries_objects = {
 		textobject = {
 			"quote",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", description = "around quotes" },
+				{ suffix = "i", name = "inner", description = "inside quotes" },
 			},
 		},
 	},
@@ -144,8 +144,8 @@ local queries_objects = {
 		textobject = {
 			"return",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
+				{ suffix = "a", name = "outer", description = "around return" },
+				{ suffix = "i", name = "inner", description = "inside return" },
 			},
 		},
 	},
@@ -154,13 +154,13 @@ local queries_objects = {
 		textobject = {
 			"object",
 			{
-				{ suffix = "a", name = "outer" },
-				{ suffix = "i", name = "inner" },
-				{ suffix = "f", name = "field" },
-				{ suffix = "p", name = "key" },
-				{ suffix = "v", name = "value" },
-				{ suffix = "t", name = "type" },
-				{ suffix = "s", name = "scope" },
+				{ suffix = "a", name = "outer", description = "around object" },
+				{ suffix = "i", name = "inner", description = "inside object" },
+				{ suffix = "f", name = "field", description = "object field" },
+				{ suffix = "e", name = "key", description = "object key" },
+				{ suffix = "v", name = "value", description = "object value" },
+				{ suffix = "t", name = "type", description = "object type" },
+				{ suffix = "s", name = "scope", description = "object scope" },
 			},
 		},
 	},
@@ -215,13 +215,13 @@ return {
 					local motion = part.suffix .. obj.suffix
 					vim.keymap.set({ "x", "o" }, motion, function()
 						select(composed_object, "textobjects")
-					end)
+					end, { desc = part.description })
 					vim.keymap.set("n", "m" .. motion, function()
 						next(composed_object)
-					end)
+					end, { desc = part.description })
 					vim.keymap.set("n", "M" .. motion, function()
 						previous(composed_object)
-					end)
+					end, { desc = part.description })
 				end
 			end
 		end,

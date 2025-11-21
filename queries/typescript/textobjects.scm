@@ -9,9 +9,10 @@
         key: (_) @object.key
         value: (_) @object.value
     ) @object.field
+    .
     ","? @object.field
 )
-(object ((_) @object.inner ","? @object.inner)*)
+(object ((_) @object.inner . ","? @object.inner)*)
 
 (array ((_) @object.inner . ","? @object.inner)*)
 (array ((_) @object.value . ","? @object.value)) @object.outer
@@ -29,11 +30,23 @@
   value: (_) @object.outer
 )
 (object_type ((_) @object.inner ";"? @object.inner)*)
+(interface_declaration
+  name: (type_identifier) @object.type
+)
+(interface_body 
+    (property_signature
+        name: (_) @object.key
+        type: (_) @object.value
+    ) @object.field
+    .
+    ";" @object.field
+) @object.outer
+(interface_body ((_) @object.inner . ";"? @object.inner)*)
 
 (type_arguments (_) @param.inner @param.outer . ","? @param.outer)
 (arguments (_) @param.inner @param.outer . ","? @param.outer)
 (formal_parameters (required_parameter
-    type: (_) @param.type
+    type: (_)? @param.type
 ) @param.inner @param.outer . ","? @param.outer)
 
 (ternary_expression condition: (_) @conditional.inner) @conditional.outer
@@ -51,3 +64,13 @@
     name: (_) @set.lhs
     value: (_) @set.rhs
 ) @set.outer
+
+(function_declaration
+   return_type: (_) @function.return
+) 
+(method_definition
+   return_type: (_) @function.return
+) 
+(arrow_function
+   return_type: (_) @function.return
+) 
