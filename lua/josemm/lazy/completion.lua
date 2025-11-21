@@ -245,13 +245,6 @@ return {
 				["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
 				["<Tab>"] = {
-					function(cmp)
-						if cmp.snippet_active() then
-							return cmp.accept()
-						else
-							return cmp.select_and_accept()
-						end
-					end,
 					"snippet_forward",
 					"accept",
 					"fallback",
