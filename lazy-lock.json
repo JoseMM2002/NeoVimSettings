@@ -6,7 +6,6 @@
   "charleston.nvim": { "branch": "main", "commit": "150f41fbc6f08092fa67c47b7b9a11774deaa8f4" },
   "colorful-menu.nvim": { "branch": "master", "commit": "932d589a55816063051ad9e599516a6e70a1c63f" },
   "conform.nvim": { "branch": "master", "commit": "1bf8b5b9caee51507aa51eaed3da5b0f2595c6b9" },
-  "copilot-lsp": { "branch": "main", "commit": "884034b23c3716d55b417984ad092dc2b011115b" },
   "copilot.lua": { "branch": "master", "commit": "4383e05a47493d7ff77b058c0548129eb38ec7fb" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "dotenv.nvim": { "branch": "main", "commit": "00dea2e558cd3de6d305832281537c9ca291e767" },
