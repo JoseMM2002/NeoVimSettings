@@ -28,6 +28,11 @@ Capabilities = {
 			dynamicRegistration = false,
 			lineFoldingOnly = true,
 		},
+		completion = {
+			completionItem = {
+				snippetSupport = true,
+			},
+		},
 	},
 	documentSymbolProvider = true,
 }

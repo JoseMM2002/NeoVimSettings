@@ -9,8 +9,6 @@ return {
 				},
 			},
 			"mason-org/mason-lspconfig.nvim",
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-nvim-lsp",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		init_options = {
@@ -71,8 +69,7 @@ return {
 				})
 			end
 
-			local capabilities =
-				vim.tbl_deep_extend("force", require("cmp_nvim_lsp").default_capabilities(), Capabilities)
+			local capabilities = require("blink.cmp").get_lsp_capabilities(Capabilities)
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })

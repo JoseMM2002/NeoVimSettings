@@ -8,7 +8,7 @@ return {
 		"philosofonusus/ecolog.nvim",
 		opts = {
 			integrations = {
-				nvim_cmp = true,
+				blink_cmp = true,
 				snacks = {
 					shelter = {
 						mask_on_copy = false, -- Whether to mask values when copying
@@ -105,6 +105,7 @@ return {
 			})
 		end,
 	},
+
 	{
 		"L3MON4D3/LuaSnip",
 		version = "v2.*",
@@ -112,167 +113,160 @@ return {
 		dependencies = { "rafamadriz/friendly-snippets" },
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
-			require("luasnip").filetype_extend("vue", { "typescript", "javascript", "html", "css" })
 		end,
 	},
 
 	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-nvim-lsp-document-symbol",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-path",
 
-			"onsails/lspkind.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"philosofonusus/ecolog.nvim",
-			"L3MON4D3/LuaSnip",
-			"kristijanhusak/vim-dadbod-completion",
-			"saadparwaiz1/cmp_luasnip",
-		},
-		event = { "InsertEnter", "CmdlineEnter" },
-
+		"onsails/lspkind.nvim",
 		config = function()
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
 			local lspkind = require("lspkind")
-
 			lspkind.init({
 				symbol_map = kind_icons,
 			})
-
-			cmp.setup({
-				sources = {
-					{
-						name = "nvim_lsp",
-						priority = 1000,
-					},
-					{ name = "luasnip", priority = 900 },
-					{
-						name = "ecolog",
-						priority = 800,
-					},
-					{ name = "nvim_lsp_document_symbol" },
-					{ name = "nvim_lsp_signature_help" },
-					{
-						name = "path",
-					},
-				},
-
-				formatting = {
-					fields = { "abbr", "kind", "menu" },
-					format = function(entry, vim_item)
-						local kind = lspkind.cmp_format({
-							mode = "symbol_text",
-						})(entry, vim.deepcopy(vim_item))
-						local highlights_info = require("colorful-menu").cmp_highlights(entry)
-						if highlights_info ~= nil then
-							vim_item.abbr_hl_group = highlights_info.highlights
-							vim_item.abbr = highlights_info.text
-						end
-						local strings = vim.split(kind.kind, "%s", { trimempty = true })
-						vim_item.kind = " " .. (strings[1] or "") .. " "
-						vim_item.menu = ""
-						return vim_item
-					end,
-				},
-
-				window = {
-					completion = { border = "rounded" },
-					documentation = { border = "rounded" },
-				},
-
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping(function(fallback)
-						local entry = cmp.get_selected_entry()
-						if entry then
-							if luasnip.expandable() then
-								luasnip.expand()
-							else
-								cmp.confirm({
-									behavior = cmp.ConfirmBehavior.Replace,
-									select = false,
-								})
-							end
-						else
-							fallback()
-						end
-					end),
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if luasnip.locally_jumpable(1) then
-							luasnip.jump(1)
-						else
-							cmp.abort()
-							fallback()
-						end
-					end, { "i", "s" }),
-					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						elseif luasnip.locally_jumpable(-1) then
-							luasnip.jump(-1)
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				}),
-
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
-				},
-
-				experimental = {
-					ghost_text = true,
-				},
-
-				preselect = cmp.PreselectMode.None,
-			})
-
-			local cmdline_preset = cmp.mapping.preset.cmdline({
-				["<Tab>"] = cmp.mapping({
-					i = function(fallback)
-						if cmp.visible() and cmp.get_active_entry() then
-							cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-						else
-							fallback()
-						end
-					end,
-					s = cmp.mapping.confirm({ select = true }),
-					c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-				}),
-			})
-
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmdline_preset,
-				sources = {
-					{ name = "buffer" },
-				},
-			})
-
-			cmp.setup.cmdline(":", {
-				mapping = cmdline_preset,
-				sources = cmp.config.sources({
-					{ name = "path" },
-				}, {
-					{ name = "cmdline" },
-				}),
-			})
-
-			cmp.event:on("menu_opened", function()
-				vim.b.copilot_suggestion_hidden = true
-			end)
-			cmp.event:on("menu_closed", function()
-				vim.b.copilot_suggestion_hidden = false
-			end)
 		end,
+	},
+
+	{
+		"saghen/blink.cmp",
+		version = "1.7.0",
+		dependencies = {
+			"onsails/lspkind.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"philosofonusus/ecolog.nvim",
+			"giuxtaposition/blink-cmp-copilot",
+		},
+		build = "cargo build --release",
+		opts = {
+			snippets = { preset = "luasnip" },
+			sources = {
+				default = {
+					"ecolog",
+					"lsp",
+					"snippets",
+					"path",
+					"copilot",
+				},
+				providers = {
+					ecolog = {
+						min_keyword_length = 1,
+						name = "ecolog",
+						module = "ecolog.integrations.cmp.blink_cmp",
+					},
+					copilot = {
+						name = "copilot",
+						module = "blink-cmp-copilot",
+						score_offset = -1000,
+						async = true,
+					},
+				},
+			},
+
+			fuzzy = {
+				sorts = {
+					"score", -- Primary sort: by fuzzy matching score
+					"sort_text", -- Secondary sort: by sortText field if scores are equal
+					"label", -- Tertiary sort: by label if still tied
+				},
+				implementation = "prefer_rust_with_warning",
+			},
+
+			completion = {
+				ghost_text = { enabled = true },
+				keyword = { range = "full" },
+				documentation = { auto_show = true, auto_show_delay_ms = 500, window = { border = "rounded" } },
+				accept = { auto_brackets = {
+					enabled = true,
+				} },
+				list = { selection = { preselect = false, auto_insert = false } },
+				menu = {
+					border = "rounded",
+					auto_show = true,
+					draw = {
+						columns = {
+							{ "kind_icon", "kind", gap = 1 },
+							{ "label", "label_description", gap = 1 },
+						},
+						components = {
+							label = {
+								text = function(ctx)
+									return require("colorful-menu").blink_components_text(ctx)
+								end,
+								highlight = function(ctx)
+									return require("colorful-menu").blink_components_highlight(ctx)
+								end,
+							},
+							kind_icon = {
+								text = function(ctx)
+									local icon = ctx.kind_icon
+									if vim.tbl_contains({ "Path" }, ctx.source_name) then
+										local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+										if dev_icon then
+											icon = dev_icon
+										end
+									else
+										icon = require("lspkind").symbolic(ctx.kind, {
+											mode = "symbol",
+										})
+									end
+
+									return icon .. ctx.icon_gap
+								end,
+
+								highlight = function(ctx)
+									local hl = ctx.kind_hl
+									if vim.tbl_contains({ "Path" }, ctx.source_name) then
+										local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+										if dev_icon then
+											hl = dev_hl
+										end
+									end
+									return hl
+								end,
+							},
+						},
+					},
+				},
+			},
+			signature = { enabled = true, window = { border = "rounded" } },
+			keymap = {
+				preset = "none",
+				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<C-e>"] = { "hide", "fallback" },
+				["<C-y>"] = { "select_and_accept", "fallback" },
+				["<CR>"] = { "select_and_accept", "fallback" },
+
+				["<Up>"] = { "select_prev", "fallback" },
+				["<Down>"] = { "select_next", "fallback" },
+				["<C-p>"] = { "select_prev", "fallback_to_mappings" },
+				["<C-n>"] = { "select_next", "fallback_to_mappings" },
+
+				["<C-b>"] = { "scroll_documentation_up", "fallback" },
+				["<C-f>"] = { "scroll_documentation_down", "fallback" },
+
+				["<Tab>"] = {
+					function(cmp)
+						if cmp.snippet_active() then
+							return cmp.accept()
+						else
+							return cmp.select_and_accept()
+						end
+					end,
+					"snippet_forward",
+					"accept",
+					"fallback",
+				},
+				["<S-Tab>"] = { "snippet_backward", "fallback" },
+
+				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+			},
+			cmdline = {
+				keymap = { preset = "inherit", ["<CR>"] = { "fallback" } },
+				completion = {
+					ghost_text = { enabled = true },
+					menu = { auto_show = true },
+				},
+			},
+		},
 	},
 }
