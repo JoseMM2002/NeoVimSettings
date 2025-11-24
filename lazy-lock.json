@@ -5,6 +5,7 @@
   "bloat.nvim": { "branch": "master", "commit": "f90bef655ac40fecbaae53e10db1cf7894d090b1" },
   "charleston.nvim": { "branch": "main", "commit": "8502b569f49cab87077c50f89365adc5d7a57411" },
   "colorful-menu.nvim": { "branch": "master", "commit": "932d589a55816063051ad9e599516a6e70a1c63f" },
+  "colorful-winsep.nvim": { "branch": "main", "commit": "e555611c8f39918e30d033a97ea1a5af457ce75e" },
   "conform.nvim": { "branch": "master", "commit": "6208aefd675939cc7c8f1a57176135974dad269f" },
   "copilot.lua": { "branch": "master", "commit": "4383e05a47493d7ff77b058c0548129eb38ec7fb" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
