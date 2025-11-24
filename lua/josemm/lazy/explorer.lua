@@ -12,6 +12,9 @@ return {
 					autosave_changes = false,
 				},
 				keymaps = {
+					["<C-h>"] = {},
+					["<C-l>"] = {},
+					["<C-r>"] = "actions.refresh",
 					["<C-v>"] = { "actions.select", opts = { vertical = true } },
 					["<C-s>"] = { "actions.select", opts = { horizontal = true } },
 				},
@@ -20,6 +23,9 @@ return {
 				},
 				win_options = {
 					signcolumn = "yes:2",
+				},
+				view_options = {
+					show_hidden = true,
 				},
 			})
 			vim.keymap.set("n", "<leader>fe", oil.open, { desc = "Open Oil File Explorer" })
