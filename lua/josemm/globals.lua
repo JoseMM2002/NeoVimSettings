@@ -94,4 +94,8 @@ Formatters = {
 		install = nil,
 		filetypes = { "go" },
 	},
+	rustfmt = {
+		install = nil,
+		filetypes = { "rust" },
+	},
 }
