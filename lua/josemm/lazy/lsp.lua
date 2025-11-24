@@ -142,6 +142,15 @@ return {
 			vim.lsp.config("angularls", {
 				filetypes = { "typescript", "html", "htmlangular" },
 			})
+			vim.lsp.config("rust_analyzer", {
+				settings = {
+					["rust-analyzer"] = {
+						check = {
+							command = "clippy",
+						},
+					},
+				},
+			})
 			vim.lsp.enable((function()
 				local result = {}
 				for lsp, info in pairs(Lsps) do
