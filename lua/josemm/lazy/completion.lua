@@ -118,7 +118,6 @@ return {
 			"onsails/lspkind.nvim",
 			"nvim-tree/nvim-web-devicons",
 			"philosofonusus/ecolog.nvim",
-			"giuxtaposition/blink-cmp-copilot",
 		},
 		build = "cargo build --release",
 		opts = {
@@ -129,29 +128,12 @@ return {
 					"lsp",
 					"snippets",
 					"path",
-					"copilot",
 				},
 				providers = {
 					ecolog = {
 						min_keyword_length = 1,
 						name = "ecolog",
 						module = "ecolog.integrations.cmp.blink_cmp",
-					},
-					copilot = {
-						name = "copilot",
-						module = "blink-cmp-copilot",
-						score_offset = -100,
-						async = true,
-
-						transform_items = function(_, items)
-							local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-							local kind_idx = #CompletionItemKind + 1
-							CompletionItemKind[kind_idx] = "Copilot"
-							for _, item in ipairs(items) do
-								item.kind = kind_idx
-							end
-							return items
-						end,
 					},
 				},
 			},

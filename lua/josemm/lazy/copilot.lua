@@ -5,9 +5,9 @@ return {
 			require("copilot").setup({
 				panel = { enabled = false },
 				suggestion = {
-					enabled = false,
+					enabled = true,
 					auto_trigger = false,
-					trigger_on_accept = false,
+					trigger_on_accept = true,
 					keymap = {
 						accept = "<C-j>",
 						next = "<C-[>",
