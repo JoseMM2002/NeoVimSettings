@@ -1,6 +1,6 @@
 Lsps = {
 	bashls = { install = "bash-language-server" },
-	basedpyright = { install = "basedpyright" },
+	ty = { install = "ty" },
 	clangd = { install = "clangd" },
 	cssls = { install = "css-lsp" },
 	eslint = { install = "eslint-lsp" },
