@@ -71,7 +71,7 @@ local queries_objects = {
 		textobject = {
 			"comment",
 			{
-				{ suffix = "a", name = "outer", desciption = "around comment" },
+				{ suffix = "a", name = "outer", description = "around comment" },
 				{ suffix = "i", name = "inner", description = "inside comment" },
 			},
 		},

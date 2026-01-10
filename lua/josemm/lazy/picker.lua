@@ -1,173 +1,132 @@
 return {
-	{
-		"folke/snacks.nvim",
-		dependencies = {
-			{ "nvim-tree/nvim-web-devicons" },
-			{ "tpope/vim-fugitive" },
+	"nvim-telescope/telescope.nvim",
+	branch = "master",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-telescope/telescope-live-grep-args.nvim",
+		"nvim-telescope/telescope-frecency.nvim",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
 		},
-		keys = {
-			{
-				"<leader>ff",
-				function()
-					Snacks.picker.files({ hidden = true, ignored = false })
-				end,
-				desc = "Find files",
-			},
-			{
-				"<leader>fb",
-				function()
-					Snacks.picker.buffers({ sort_lastused = true })
-				end,
-				desc = "Find buffers",
-			},
-			{
-				"<leader>fc",
-				function()
-					Snacks.picker.command_history({})
-				end,
-				desc = "Commands",
-			},
-			{
-				"<leader>fr",
-				function()
-					Snacks.picker.grep({})
-				end,
-				desc = "Live grep",
-			},
-			{
-				"<leader>fR",
-				function()
-					Snacks.picker.grep_buffers({})
-				end,
-				desc = "Recent files",
-			},
-			{
-				"<leader>fm",
-				function()
-					Snacks.picker.marks({})
-				end,
-				desc = "Marks",
-			},
-			{
-				"<leader>fh",
-				function()
-					Snacks.picker.help({})
-				end,
-				desc = "Help",
-			},
-			{
-				"<leader>fS",
-				function()
-					Snacks.picker.git_status({})
-				end,
-				desc = "Git status",
-			},
-			{
-				"<leader>fD",
-				function()
-					Snacks.picker.diagnostics({})
-				end,
-				desc = "Diagnostics (workspace)",
-			},
-			{
-				"<leader>fd",
-				function()
-					Snacks.picker.diagnostics_buffer({})
-				end,
-				desc = "Diagnostics (buffer)",
-			},
-			{
-				"<leader>fs",
-				function()
-					Snacks.picker.lsp_symbols({})
-				end,
-				desc = "Symbols",
-			},
-			{
-				"gr",
-				function()
-					Snacks.picker.lsp_references({})
-				end,
-				desc = "LSP refs",
-			},
-			{
-				"gd",
-				function()
-					Snacks.picker.lsp_definitions({})
-				end,
-				desc = "LSP defs",
-			},
-			{
-				"<leader>fC",
-				function()
-					Snacks.picker.colorschemes()
-				end,
-				desc = "Colorschemes",
-			},
-			{
-				"<leader>fN",
-				function()
-					Snacks.picker.registers()
-				end,
-				desc = "Registers",
-			},
-			{
-				"<leader>fu",
-				function()
-					Snacks.picker.undo()
-				end,
-				desc = "Undo history",
-			},
-			{
-				"<leader>fp",
-				function()
-					Snacks.picker.gh_pr()
-				end,
-				desc = "GitHub pull requests",
-			},
-			{
-				"<leader>fn",
-				function()
-					vim.cmd("SnacksNotifications")
-				end,
-				desc = "Notifications",
+		"nvim-tree/nvim-web-devicons",
+		{
+			"isak102/telescope-git-file-history.nvim",
+			dependencies = {
+				"tpope/vim-fugitive",
 			},
 		},
-		config = function()
-			require("snacks").setup({
-				gh = {
-					-- your gh configuration comes here
-					-- or leave it empty to use the default settings
-					-- refer to the configuration section below
+	},
+	config = function()
+		local builtin = require("telescope.builtin")
+		local lga_actions = require("telescope-live-grep-args.actions")
+		local gfh_actions = require("telescope").extensions.git_file_history.actions
+
+		require("telescope").setup({
+			defaults = {
+				mappings = {
+					i = {
+						["<Esc>"] = "close",
+					},
 				},
-				input = { enabled = true },
-				picker = {
-					enabled = true,
-					matcher = { smart_case = true, fuzzy = true },
-					sources = {
-						gh_issue = {
-							-- your gh_issue picker configuration comes here
-							-- or leave it empty to use the default settings
-						},
-						gh_pr = {
-							-- your gh_pr picker configuration comes here
-							-- or leave it empty to use the default settings
+			},
+			extensions = {
+				live_grep_args = {
+					auto_quoting = true, -- enable/disable auto-quoting
+					-- define mappings, e.g.
+					mappings = { -- extend mappings
+						i = {
+							["<C-k>"] = lga_actions.quote_prompt(),
+							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
 						},
 					},
 				},
+				fzf = {
+					fuzzy = true, -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+				},
+				git_file_history = {
+					mappings = {
+						i = {
+							["<C-g>"] = gfh_actions.open_in_browser,
+						},
+						n = {
+							["<C-g>"] = gfh_actions.open_in_browser,
+						},
+					},
+					browser_command = nil,
+				},
+				ecolog = {
+					shelter = {
+						mask_on_copy = false,
+					},
+					mappings = {
+						copy_value = "<C-y>",
+						copy_name = "<C-n>",
+						append_value = "<C-a>",
+						append_name = "<CR>",
+						edit_var = "<C-e>",
+					},
+				},
+			},
+		})
+
+		vim.keymap.set("n", "<leader>ff", function()
+			builtin.find_files({ hidden = true })
+		end, { desc = "Find files (including hidden)" })
+
+		vim.keymap.set("n", "<leader>fb", function()
+			require("telescope.builtin").buffers({ sort_lastused = true })
+		end, { desc = "Find buffers (sorted by last used)" })
+
+		vim.keymap.set("n", "<leader>fr", function()
+			require("telescope.builtin").live_grep({})
+		end, { desc = "Search text in files" })
+
+		vim.keymap.set("n", "<leader>fH", function()
+			builtin.help_tags({})
+		end, { desc = "Search help documentation" })
+
+		vim.keymap.set("n", "<leader>fs", function()
+			require("telescope.builtin").git_status({})
+		end, { desc = "Git status" })
+
+		vim.keymap.set("n", "<leader>fD", function()
+			require("telescope.builtin").diagnostics()
+		end, { desc = "Search all diagnostics" })
+
+		vim.keymap.set("n", "<leader>fd", function()
+			require("telescope.builtin").diagnostics({
+				bufnr = 0,
 			})
-		end,
-	},
-	{
-		"JoseMM2002/snacks-nvim-notify",
-		dependencies = { "folke/snacks.nvim", "rcarriga/nvim-notify" },
-		config = function()
-			require("snacks-nvim-notify").setup({
-				width = 0.6,
-				height = 0.5,
-				border = "rounded",
-				truncate_width = 70,
-			})
-		end,
-	},
+		end, { desc = "Search buffer diagnostics" })
+
+		vim.keymap.set("n", "<leader>fL", function()
+			require("telescope.builtin").lsp_document_symbols()
+		end, { noremap = true, silent = true, desc = "Search document symbols" })
+
+		vim.keymap.set("n", "gr", function()
+			require("telescope.builtin").lsp_references()
+		end, { noremap = true, silent = true, desc = "Find symbol references" })
+
+		vim.keymap.set("n", "gd", function()
+			require("telescope.builtin").lsp_definitions()
+		end, { noremap = true, silent = true, desc = "Go to symbol definition" })
+
+		vim.keymap.set("n", "<leader>tc", function()
+			require("telescope.builtin").colorscheme({ enable_preview = true })
+		end, { desc = "Browse colorschemes" })
+
+		vim.keymap.set("n", "<leader>fh", function()
+			require("telescope").extensions.git_file_history.git_file_history()
+		end, { noremap = true, silent = true, desc = "Git file history" })
+
+		require("telescope").load_extension("live_grep_args")
+		require("telescope").load_extension("fzf")
+		require("telescope").load_extension("git_file_history")
+		require("telescope").load_extension("frecency")
+		require("telescope").load_extension("ecolog")
+	end,
 }

@@ -35,3 +35,5 @@ end, { desc = "Quit vim" })
 vim.keymap.set("n", "<leader>so", function()
 	vim.cmd("so")
 end, { desc = "Source current file" })
+
+vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true, desc = "Exit insert mode" })
