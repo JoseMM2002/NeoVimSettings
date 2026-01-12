@@ -30,7 +30,6 @@ local ensure_installed = {
 	"gomod",
 	"jsdoc",
 	"json5",
-	"jsonc",
 	"jsx",
 	"luadoc",
 	"markdown",
