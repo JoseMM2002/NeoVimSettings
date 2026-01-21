@@ -152,7 +152,7 @@ return {
 				keyword = { range = "full" },
 				documentation = { auto_show = true, auto_show_delay_ms = 500, window = { border = "rounded" } },
 				accept = { auto_brackets = {
-					enabled = true,
+					enabled = false,
 				} },
 				list = { selection = { preselect = false, auto_insert = false } },
 				menu = {
@@ -181,9 +181,7 @@ return {
 											icon = dev_icon
 										end
 									else
-										icon = require("lspkind").symbolic(ctx.kind, {
-											mode = "symbol",
-										})
+										icon = require("lspkind").symbol_map[ctx.kind] or ""
 									end
 
 									return icon .. ctx.icon_gap
