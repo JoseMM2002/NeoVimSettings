@@ -21,12 +21,17 @@ return {
 		local builtin = require("telescope.builtin")
 		local lga_actions = require("telescope-live-grep-args.actions")
 		local gfh_actions = require("telescope").extensions.git_file_history.actions
+		local telescope_actions = require("telescope.actions")
 
 		require("telescope").setup({
 			defaults = {
 				mappings = {
 					i = {
 						["<Esc>"] = "close",
+						["<C-q>"] = telescope_actions.smart_send_to_qflist + telescope_actions.open_qflist,
+					},
+					n = {
+						["<C-q>"] = telescope_actions.smart_send_to_qflist + telescope_actions.open_qflist,
 					},
 				},
 			},
