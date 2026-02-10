@@ -76,7 +76,14 @@ return {
 	{
 		"webhooked/kanso.nvim",
 		config = function()
-			vim.cmd("colorscheme kanso")
+			-- vim.cmd("colorscheme kanso")
+		end,
+	},
+	{
+		"connormxfadden/petrolnoir.nvim",
+		priority = 1000, -- load before other UI plugins
+		config = function()
+			vim.cmd("colorscheme petrolnoir")
 		end,
 	},
 }
