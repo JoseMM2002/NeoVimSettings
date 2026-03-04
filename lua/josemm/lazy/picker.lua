@@ -128,6 +128,13 @@ return {
 			require("telescope").extensions.git_file_history.git_file_history()
 		end, { noremap = true, silent = true, desc = "Git file history" })
 
+		vim.keymap.set(
+			"n",
+			"<leader>fn",
+			":Telescope notify<cr>",
+			{ noremap = true, silent = true, desc = "Search notifications" }
+		)
+
 		require("telescope").load_extension("live_grep_args")
 		require("telescope").load_extension("fzf")
 		require("telescope").load_extension("git_file_history")
