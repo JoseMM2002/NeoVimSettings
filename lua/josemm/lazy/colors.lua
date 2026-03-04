@@ -49,11 +49,18 @@ return {
 		end,
 	},
 	{
-		"JoseMM2002/walltheme.nvim",
+		"RedsXDD/neopywal.nvim",
 		config = function()
-			require("walltheme").setup()
+			require("neopywal").setup({
+				use_palette = {
+					light = "wallust",
+					dark = "wallust",
+				},
+				transparent_background = true,
+				colorscheme_file = vim.fn.expand("~/.cache/wallust/colors_neopywal.vim"),
+			})
+			vim.cmd.colorscheme("neopywal")
 		end,
-		enabled = false,
 	},
 	{
 		"xiyaowong/transparent.nvim",
@@ -83,7 +90,7 @@ return {
 		"connormxfadden/petrolnoir.nvim",
 		priority = 1000, -- load before other UI plugins
 		config = function()
-			vim.cmd("colorscheme petrolnoir")
+			-- vim.cmd("colorscheme petrolnoir")
 		end,
 	},
 }
