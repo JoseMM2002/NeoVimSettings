@@ -113,11 +113,12 @@ return {
 
 	{
 		"saghen/blink.cmp",
-		branch = "main",
+		version = "1.*",
 		dependencies = {
 			"onsails/lspkind.nvim",
 			"nvim-tree/nvim-web-devicons",
 			"philosofonusus/ecolog.nvim",
+			{ "saghen/blink.compat", version = "2.*" },
 		},
 		build = "cargo build --release",
 		opts = {
