@@ -99,3 +99,5 @@ Formatters = {
 		filetypes = { "rust" },
 	},
 }
+
+OpenCodePort = 4242
