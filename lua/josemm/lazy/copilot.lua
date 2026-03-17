@@ -10,10 +10,8 @@ return {
 					trigger_on_accept = true,
 					keymap = {
 						accept = "<C-j>",
-						next = "<C-[>",
-						prev = "<C-]>",
-						accept_word = "<C-k>",
-						accept_line = "<C-l>",
+						next = "<C-n>",
+						prev = "<C-p>",
 						dismiss = "<C-e>",
 					},
 				},
