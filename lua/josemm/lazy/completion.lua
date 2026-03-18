@@ -136,6 +136,11 @@ return {
 						name = "ecolog",
 						module = "ecolog.integrations.cmp.blink_cmp",
 					},
+					snippets = {
+						enabled = function()
+							return vim.bo.filetype ~= "oil"
+						end,
+					},
 				},
 			},
 
