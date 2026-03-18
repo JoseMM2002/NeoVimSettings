@@ -79,7 +79,10 @@ return {
 		})
 
 		vim.keymap.set("n", "<leader>ff", function()
-			builtin.find_files({ hidden = true })
+			builtin.find_files({
+				hidden = true,
+				find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+			})
 		end, { desc = "Find files (including hidden)" })
 
 		vim.keymap.set("n", "<leader>fb", function()
