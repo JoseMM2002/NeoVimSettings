@@ -3,37 +3,40 @@ return {
 		"nickjvandyke/opencode.nvim",
 		version = "*", -- Latest stable release
 		config = function()
+			local opencode = require("opencode")
 			vim.g.opencode_opts = {
 				server = {
 					port = OpenCodePort,
-
-					-- Open a new Zellij pane running opencode
-					start = function() end,
-
-					-- Kill the opencode process (Zellij pane will close on its own)
-					stop = function() end,
-
-					-- Focus the opencode Zellij pane by name
-					toggle = function() end,
+					start = function()
+						vim.fn.jobstart(
+							("zellij action new-pane --name opencode -- opencode --port %d"):format(OpenCodePort),
+							{ detach = true }
+						)
+					end,
+					stop = function()
+						vim.fn.jobstart(("pkill -f 'opencode --port %d'"):format(OpenCodePort), { detach = true })
+					end,
+					toggle = function()
+						vim.fn.jobstart("zellij action focus-next-pane", { detach = true })
+					end,
 				},
 			}
 
-			vim.o.autoread = true -- Required for `opts.events.reload`
+			vim.o.autoread = true
 
-			-- Recommended/example keymaps
 			vim.keymap.set({ "n", "x" }, "<leader>aa", function()
-				require("opencode").ask("@this: ", { submit = true })
+				opencode.ask("@this: ", { submit = true })
 			end, { desc = "Ask opencode…" })
 			vim.keymap.set({ "n", "x" }, "<leader>aA", function()
-				require("opencode").select()
+				opencode.select()
 			end, { desc = "Execute opencode action…" })
 
 			vim.keymap.set({ "n", "x" }, "<leader>al", function()
-				return require("opencode").operator("@this ")
+				return opencode.operator("@this ")
 			end, { desc = "Add range to opencode", expr = true })
 
 			vim.keymap.set("n", "<leader>all", function()
-				return require("opencode").operator("@this ") .. "_"
+				return opencode.operator("@this ") .. "_"
 			end, { desc = "Add line to opencode", expr = true })
 		end,
 	},
