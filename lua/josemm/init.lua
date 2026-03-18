@@ -1,5 +1,5 @@
 require("josemm.globals")
 require("josemm.remap")
+require("josemm.custom")
 require("josemm.set")
 require("josemm.lazy_init")
-require("josemm.custom")

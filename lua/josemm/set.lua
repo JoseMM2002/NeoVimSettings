@@ -44,3 +44,8 @@ vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 vim.g.sessionregisters = {}
+
+SetTelescopeGitStatusHighlights()
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = SetTelescopeGitStatusHighlights,
+})

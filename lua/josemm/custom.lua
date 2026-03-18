@@ -18,3 +18,10 @@ function SetTabWidth(width)
 	-- Mensaje de confirmación (opcional)
 	vim.notify(string.format("Tab width set to %d", int_width), vim.log.levels.INFO)
 end
+
+function SetTelescopeGitStatusHighlights()
+	vim.api.nvim_set_hl(0, "TelescopeResultsDiffAdd", { fg = "#a6e22e" })
+	vim.api.nvim_set_hl(0, "TelescopeResultsDiffChange", { fg = "#ff5fd7" })
+	vim.api.nvim_set_hl(0, "TelescopeResultsDiffDelete", { fg = "#ff5f5f" })
+	vim.api.nvim_set_hl(0, "TelescopeResultsDiffUntracked", { fg = "#ff5fd7" })
+end
