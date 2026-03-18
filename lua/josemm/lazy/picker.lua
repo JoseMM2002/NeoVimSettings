@@ -98,7 +98,17 @@ return {
 		end, { desc = "Search help documentation" })
 
 		vim.keymap.set("n", "<leader>fs", function()
-			require("telescope.builtin").git_status({})
+			require("telescope.builtin").git_status({
+				git_icons = {
+					added = "A",
+					changed = "M",
+					copied = "C",
+					deleted = "D",
+					renamed = "R",
+					unmerged = "U",
+					untracked = "?",
+				},
+			})
 		end, { desc = "Git status" })
 
 		vim.keymap.set("n", "<leader>fD", function()
