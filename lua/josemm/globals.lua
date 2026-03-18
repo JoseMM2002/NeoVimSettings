@@ -100,4 +100,4 @@ Formatters = {
 	},
 }
 
-OpenCodePort = 4242
+OpenCodePort = 40000 + (vim.fn.getpid() % 10000)
