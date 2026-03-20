@@ -173,7 +173,7 @@ return {
 				list = { selection = { preselect = false, auto_insert = false } },
 				menu = {
 					border = "rounded",
-					auto_show = true,
+					auto_show = false,
 					draw = {
 						columns = {
 							{ "kind_icon", "kind", gap = 1 },
