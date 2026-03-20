@@ -3,6 +3,16 @@ local kind_icons = {
 	Copilot = "",
 }
 
+local closing_chars = {
+	["]"] = true,
+	[")"] = true,
+	["}"] = true,
+	['"'] = true,
+	["'"] = true,
+	["`"] = true,
+	[">"] = true,
+}
+
 return {
 	{
 		"philosofonusus/ecolog.nvim",
@@ -226,6 +236,15 @@ return {
 
 				["<Tab>"] = {
 					"snippet_forward",
+					function(_)
+						local _, col = unpack(vim.api.nvim_win_get_cursor(0))
+						local next_char = vim.api.nvim_get_current_line():sub(col + 1, col + 1)
+						if not closing_chars[next_char] then
+							return false
+						end
+
+						return vim.keycode("<Right>")
+					end,
 					"accept",
 					"fallback",
 				},
