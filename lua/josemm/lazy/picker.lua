@@ -16,6 +16,7 @@ return {
 				"tpope/vim-fugitive",
 			},
 		},
+		{ "nvim-telescope/telescope-ui-select.nvim" },
 	},
 	config = function()
 		local builtin = require("telescope.builtin")
@@ -153,5 +154,6 @@ return {
 		require("telescope").load_extension("git_file_history")
 		require("telescope").load_extension("frecency")
 		require("telescope").load_extension("ecolog")
+		require("telescope").load_extension("ui-select")
 	end,
 }
