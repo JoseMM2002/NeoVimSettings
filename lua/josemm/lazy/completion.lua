@@ -173,7 +173,7 @@ return {
 				list = { selection = { preselect = false, auto_insert = false } },
 				menu = {
 					border = "rounded",
-					auto_show = false,
+					auto_show = true,
 					draw = {
 						columns = {
 							{ "kind_icon", "kind", gap = 1 },
@@ -253,7 +253,9 @@ return {
 				["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 			},
 			cmdline = {
-				keymap = { preset = "inherit", ["<CR>"] = { "fallback" } },
+				keymap = { preset = "inherit", ["<CR>"] = { "fallback" }, ["<Tab>"] = {
+					"accept",
+				} },
 				completion = {
 					ghost_text = { enabled = true },
 					menu = { auto_show = true },
