@@ -49,3 +49,7 @@ SetTelescopeGitStatusHighlights()
 vim.api.nvim_create_autocmd("ColorScheme", {
 	callback = SetTelescopeGitStatusHighlights,
 })
+
+require("vim._core.ui2").enable({
+	enable = true,
+})
