@@ -1,5 +1,17 @@
 return {
 	{
+		"rachartier/tiny-code-action.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope.nvim" },
+		},
+		event = "LspAttach",
+		opts = {
+			backend = "delta",
+			picker = "telescope",
+		},
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			{
@@ -10,6 +22,7 @@ return {
 			},
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			"rachartier/tiny-code-action.nvim",
 		},
 		init_options = {
 			userLanguages = {
@@ -72,7 +85,9 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities(Capabilities)
 
 			vim.keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Open Mason LSP manager" })
-			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+			vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+				require("tiny-code-action").code_action()
+			end, { noremap = true, silent = true })
 			vim.keymap.set("n", "<leader>rn", function()
 				vim.lsp.buf.rename()
 			end, { desc = "Rename symbol" })
