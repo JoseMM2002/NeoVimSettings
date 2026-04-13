@@ -27,31 +27,21 @@ end
 return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
-		"rcarriga/nvim-dap-ui",
-		"nvim-neotest/nvim-nio",
-		"theHamsta/nvim-dap-virtual-text",
+		"igorlfs/nvim-dap-view",
 	},
 	config = function()
 		local dap = require("dap")
-		local dapui = require("dapui")
+		local dapview = require("dap-view")
 
-		dapui.setup({
-			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-			controls = {
-				icons = {
-					pause = "⏸",
-					play = "▶",
-					step_into = "⏎",
-					step_over = "⏭",
-					step_out = "⏮",
-					step_back = "b",
-					run_last = "▶▶",
-					terminate = "⏹",
-					disconnect = "⏏",
-				},
+		dapview.setup({
+			winbar = {
+				sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
+			},
+			auto_toggle = true,
+			virtual_text = {
+				enabled = true,
 			},
 		})
-		require("nvim-dap-virtual-text").setup()
 
 		dap.set_log_level("DEBUG")
 
@@ -117,6 +107,7 @@ return {
 					name = "Launch file with node",
 					program = "${file}",
 					cwd = "${workspaceFolder}",
+					console = "integratedTerminal",
 				},
 				{
 					type = "pwa-node",
@@ -139,6 +130,7 @@ return {
 						"${workspaceFolder}/**",
 						"!**/node_modules/**",
 					},
+					console = "integratedTerminal",
 				},
 				{
 					name = "Launch work file with ts-node",
@@ -154,6 +146,7 @@ return {
 						"${workspaceFolder}/**",
 						"!**/node_modules/**",
 					},
+					console = "integratedTerminal",
 				},
 				{
 					type = "pwa-chrome",
@@ -214,6 +207,7 @@ return {
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,
 				args = get_args,
+				console = "integratedTerminal",
 			},
 		}
 		dap.configurations.cpp = dap.configurations.c
@@ -226,6 +220,7 @@ return {
 				request = "launch",
 				showLog = true,
 				program = "${file}",
+				console = "integratedTerminal",
 			},
 			{
 				name = "Launch Kualibot Server",
@@ -234,21 +229,9 @@ return {
 				mode = "debug",
 				program = "${workspaceFolder}/main.go",
 				cwd = "${workspaceFolder}",
+				console = "integratedTerminal",
 			},
 		}
-
-		dap.listeners.before.attach.dapui_config = function()
-			dapui.open()
-		end
-		dap.listeners.before.launch.dapui_config = function()
-			dapui.open()
-		end
-		dap.listeners.before.event_terminated.dapui_config = function()
-			dapui.close()
-		end
-		dap.listeners.before.event_exited.dapui_config = function()
-			dapui.close()
-		end
 
 		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
 		vim.keymap.set("n", "<leader>dc", continue, { desc = "Continue debugging" })
@@ -258,7 +241,10 @@ return {
 		vim.keymap.set("n", "<leader>dx", dap.terminate, { desc = "Terminate debug session" })
 		vim.keymap.set("n", "<leader>dr", dap.restart, { desc = "Restart debug session" })
 		vim.keymap.set("n", "<leader>dU", function()
-			require("dapui").toggle()
+			require("dap-view").toggle()
 		end, { desc = "Toggle debug UI" })
+		vim.keymap.set({ "n", "v" }, "<leader>dw", function()
+			require("dap-view").add_expr()
+		end, { desc = "Add expression to watch list" })
 	end,
 }
