@@ -11,6 +11,20 @@ local function get_args()
 	return vim.split(args_string, " ")
 end
 
+local function resolve_executable(env, env_var, fallback)
+	local env_path = env.var(env_var)
+	if env_path and env_path ~= "" then
+		return env_path
+	end
+
+	local executable_path = vim.fn.exepath(fallback)
+	if executable_path ~= nil and executable_path ~= "" then
+		return executable_path
+	end
+
+	return fallback
+end
+
 local enter_launch_url = function()
 	local co = coroutine.running()
 	return coroutine.create(function()
@@ -32,6 +46,11 @@ return {
 	config = function()
 		local dap = require("dap")
 		local dapview = require("dap-view")
+		local env = require("dotenv")
+		local gdb_path = resolve_executable(env, "GDB_PATH", "gdb")
+		local lldb_path = resolve_executable(env, "LLDB_PATH", "lldb-dap")
+		local dlv_path = resolve_executable(env, "DLV_PATH", "dlv")
+		local dap_debug_server_path = resolve_executable(env, "DAP_DEBUG_SERVER_PATH", "dapDebugServer.js")
 
 		dapview.setup({
 			winbar = {
@@ -48,19 +67,19 @@ return {
 		dap.adapters = {
 			gdb = {
 				type = "executable",
-				command = "gdb",
+				command = gdb_path,
 				args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
 			},
 			lldb = {
 				type = "executable",
-				command = "lldb-dap",
+				command = lldb_path,
 				name = "lldb",
 			},
 			["pwa-node"] = {
 				type = "server",
 				port = "${port}",
 				executable = {
-					command = "dapDebugServer.js",
+					command = dap_debug_server_path,
 					args = {
 						"${port}",
 						"127.0.0.1",
@@ -71,7 +90,7 @@ return {
 				type = "server",
 				port = "${port}",
 				executable = {
-					command = "dapDebugServer.js",
+					command = dap_debug_server_path,
 					args = {
 						"${port}",
 						"127.0.0.1",
@@ -90,7 +109,7 @@ return {
 						type = "server",
 						port = "${port}",
 						executable = {
-							command = "dlv",
+							command = dlv_path,
 							args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
 							detached = vim.fn.has("win32") == 0,
 						},
