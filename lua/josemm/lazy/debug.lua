@@ -7,7 +7,7 @@ local function get_args()
 	if args_string == "" then
 		return {}
 	end
-	-- Simply split by space for array format that DAP expects
+
 	return vim.split(args_string, " ")
 end
 
@@ -25,7 +25,7 @@ local function resolve_executable(env, env_var, fallback)
 	return fallback
 end
 
-local enter_launch_url = function()
+local function enter_launch_url()
 	local co = coroutine.running()
 	return coroutine.create(function()
 		vim.ui.input({ prompt = "Enter URL: ", default = "http://localhost:" }, function(url)
@@ -36,6 +36,64 @@ local enter_launch_url = function()
 			end
 		end)
 	end)
+end
+
+local function get_highlight_fg(groups, fallback)
+	for _, group in ipairs(groups) do
+		local ok, highlight = pcall(vim.api.nvim_get_hl, 0, { name = group, link = false })
+		if ok and highlight and highlight.fg then
+			return string.format("#%06x", highlight.fg)
+		end
+	end
+
+	return fallback
+end
+
+local function set_dap_signs()
+	local breakpoint_fg = get_highlight_fg({
+		"DiagnosticVirtualTextError",
+		"DiagnosticSignError",
+		"DiagnosticError",
+	}, "#ff5f5f")
+	local stopped_fg = get_highlight_fg({
+		"DiagnosticVirtualTextWarn",
+		"DiagnosticSignWarn",
+		"DiagnosticWarn",
+	}, "#ffcc66")
+	local info_fg = get_highlight_fg({
+		"DiagnosticVirtualTextInfo",
+		"DiagnosticSignInfo",
+		"DiagnosticInfo",
+	}, "#7dcfff")
+
+	vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = breakpoint_fg, bg = "NONE", bold = true })
+	vim.api.nvim_set_hl(0, "DapBreakpointCondition", { fg = breakpoint_fg, bg = "NONE", bold = true })
+	vim.api.nvim_set_hl(0, "DapBreakpointRejected", { fg = breakpoint_fg, bg = "NONE", bold = true })
+	vim.api.nvim_set_hl(0, "DapStopped", { fg = stopped_fg, bg = "NONE", bold = true })
+	vim.api.nvim_set_hl(0, "DapLogPoint", { fg = info_fg, bg = "NONE", bold = true })
+	vim.api.nvim_set_hl(0, "DapStoppedLine", { bg = "NONE" })
+
+	vim.fn.sign_define(
+		"DapBreakpoint",
+		{ text = "⬢", texthl = "DapBreakpoint", linehl = "", numhl = "DapBreakpoint" }
+	)
+	vim.fn.sign_define("DapBreakpointCondition", {
+		text = "⬢",
+		texthl = "DapBreakpointCondition",
+		linehl = "",
+		numhl = "DapBreakpointCondition",
+	})
+	vim.fn.sign_define("DapBreakpointRejected", {
+		text = "",
+		texthl = "DapBreakpointRejected",
+		linehl = "",
+		numhl = "DapBreakpointRejected",
+	})
+	vim.fn.sign_define(
+		"DapLogPoint",
+		{ text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "DapLogPoint" }
+	)
+	vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DapStopped", linehl = "", numhl = "DapStopped" })
 end
 
 return {
@@ -52,9 +110,18 @@ return {
 		local dlv_path = resolve_executable(env, "DLV_PATH", "dlv")
 		local dap_debug_server_path = resolve_executable(env, "DAP_DEBUG_SERVER_PATH", "dapDebugServer.js")
 
+		set_dap_signs()
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			callback = set_dap_signs,
+		})
+
 		dapview.setup({
 			winbar = {
 				sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
+			},
+			windows = {
+				size = 0.3,
+				position = "right",
 			},
 			auto_toggle = true,
 			virtual_text = {
