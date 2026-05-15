@@ -20,6 +20,7 @@ Lsps = {
 	zls = { install = "zls" },
 	nushell = { install = nil },
 	angularls = { install = "angular-language-server", disabled = true },
+	tsgo = { install = "tsgo" },
 }
 
 Capabilities = {

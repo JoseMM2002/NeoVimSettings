@@ -140,6 +140,21 @@ return {
 					},
 				},
 				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+				capabilities = {
+					hoverProvider = false,
+					definitionProvider = false,
+					referencesProvider = false,
+					documentSymbolProvider = false,
+					workspaceSymbolProvider = false,
+					completionProvider = false,
+					signatureHelpProvider = false,
+					renameProvider = false,
+					documentFormattingProvider = false,
+					documentRangeFormattingProvider = false,
+					implementationProvider = false,
+					typeDefinitionProvider = false,
+					declarationProvider = false,
+				},
 			})
 			local base_on_attach = vim.lsp.config.eslint.on_attach
 			vim.lsp.config("eslint", {
