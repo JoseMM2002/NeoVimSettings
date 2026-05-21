@@ -99,6 +99,10 @@ Formatters = {
 		install = nil,
 		filetypes = { "rust" },
 	},
+	nufmt = {
+		install = nil,
+		filetypes = { "nu" },
+	},
 }
 
 OpenCodePort = 40000 + (vim.fn.getpid() % 10000)
