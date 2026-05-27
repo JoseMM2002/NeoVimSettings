@@ -21,6 +21,7 @@ Lsps = {
 	nushell = { install = nil },
 	angularls = { install = "angular-language-server", disabled = true },
 	tsgo = { install = "tsgo" },
+	biome = { install = "biome" },
 }
 
 Capabilities = {
@@ -39,6 +40,24 @@ Capabilities = {
 }
 
 Formatters = {
+	biome = {
+		install = "biome",
+		filetypes = {
+			"javascript",
+			"typescript",
+			"vue",
+			"javascriptreact",
+			"typescriptreact",
+			"html",
+			"css",
+			"json",
+			"jsonc",
+			"scss",
+			"markdown",
+			"sass",
+			"yaml",
+		},
+	},
 	prettier = {
 		install = "prettier",
 		filetypes = {
