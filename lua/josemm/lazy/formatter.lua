@@ -14,7 +14,9 @@ return {
 					local result = {}
 					for formatter, info_table in pairs(Formatters) do
 						for _, filetype in ipairs(info_table.filetypes) do
-							result[filetype] = vim.list_extend(result[filetype] or {}, { formatter })
+							if not info_table.disabled then
+								result[filetype] = vim.list_extend(result[filetype] or {}, { formatter })
+							end
 						end
 					end
 					return result
