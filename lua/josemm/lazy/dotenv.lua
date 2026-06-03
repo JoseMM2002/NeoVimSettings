@@ -3,7 +3,10 @@ return {
 	priority = 1000,
 	config = function()
 		require("dotenv").setup({
-			env_path = vim.fn.expand("~/.config/nvim/.env"),
+			env_paths = {
+				vim.fn.expand("~/.config/nvim/.env"),
+				(ProjectRoot or vim.uv.cwd()) .. "/.env",
+			},
 		})
 	end,
 }
