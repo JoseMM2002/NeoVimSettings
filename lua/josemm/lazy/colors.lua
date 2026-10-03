@@ -34,7 +34,7 @@ return {
 	{
 		"EdenEast/nightfox.nvim",
 		config = function()
-			-- vim.cmd("colorscheme terafox")
+			-- vim.cmd("colorscheme duskfox")
 		end,
 	},
 	{
@@ -59,7 +59,7 @@ return {
 				transparent_background = true,
 				colorscheme_file = vim.fn.expand("~/.cache/wallust/colors_neopywal.vim"),
 			})
-			vim.cmd.colorscheme("neopywal")
+			-- vim.cmd.colorscheme("neopywal")
 		end,
 	},
 	{
@@ -83,7 +83,7 @@ return {
 	{
 		"webhooked/kanso.nvim",
 		config = function()
-			-- vim.cmd("colorscheme kanso")
+			vim.cmd("colorscheme kanso")
 		end,
 	},
 	{

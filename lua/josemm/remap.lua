@@ -44,3 +44,5 @@ vim.keymap.set("n", "<leader>u", require("undotree").open, { desc = "Open undo t
 
 vim.keymap.set("n", "<leader>p", '"+p')
 vim.keymap.set("n", "<leader>P", '"+P')
+
+vim.keymap.set("n", "<leader>re", ":restart<CR>", { noremap = true, silent = true, desc = "Restart Neovim" })

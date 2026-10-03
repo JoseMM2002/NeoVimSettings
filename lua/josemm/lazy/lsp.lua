@@ -166,6 +166,7 @@ return {
 					},
 				},
 			})
+
 			vim.lsp.enable((function()
 				local result = {}
 				for lsp, info in pairs(Lsps) do

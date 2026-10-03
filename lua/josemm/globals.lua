@@ -61,23 +61,17 @@ local default_lsps = {
 	cssls = { install = "css-lsp" },
 	eslint = { install = "eslint-lsp" },
 	gopls = { install = "gopls" },
-	gradle_ls = { install = "gradle-language-server" },
 	html = { install = "html-lsp" },
-	jdtls = { install = "jdtls" },
 	jsonls = { install = "json-lsp" },
 	lua_ls = { install = "lua-language-server" },
 	postgres_lsp = { install = "postgres-language-server" },
-	prismals = { install = "prisma-language-server" },
 	rust_analyzer = { install = "rust-analyzer" },
-	somesass_ls = { install = "some-sass-language-server" },
 	tailwindcss = { install = "tailwindcss-language-server" },
-	vtsls = { install = "vtsls" },
 	vue_ls = { install = "vue-language-server" },
 	zls = { install = "zls" },
 	nushell = { install = nil },
 	angularls = { install = "angular-language-server" },
-	tsgo = { install = "tsgo" },
-	biome = { install = "biome" },
+	tsc = { install = "tsc" },
 }
 
 Capabilities = {
@@ -96,24 +90,6 @@ Capabilities = {
 }
 
 local default_formatters = {
-	biome = {
-		install = "biome",
-		filetypes = {
-			"javascript",
-			"typescript",
-			"vue",
-			"javascriptreact",
-			"typescriptreact",
-			"html",
-			"css",
-			"json",
-			"jsonc",
-			"scss",
-			"markdown",
-			"sass",
-			"yaml",
-		},
-	},
 	prettier = {
 		install = "prettier",
 		filetypes = {
